@@ -24,10 +24,10 @@ const statusVariant: Record<string, 'default' | 'secondary' | 'destructive'> = {
 }
 
 const quickLinks = [
-  { href: '/vendas', label: 'Vendas', description: 'Registrar e gerenciar vendas', icon: BarChart3, color: 'bg-blue-100 text-blue-600' },
-  { href: '/clientes', label: 'Clientes', description: 'Consultar e cadastrar clientes', icon: Users, color: 'bg-green-100 text-green-600' },
-  { href: '/desempenho', label: 'Desempenho', description: 'Ver métricas e gráficos', icon: TrendingUp, color: 'bg-purple-100 text-purple-600' },
-  { href: '/perfil', label: 'Perfil', description: 'Gerenciar sua conta', icon: User, color: 'bg-orange-100 text-orange-600' },
+  { href: '/vendedor/vendas', label: 'Vendas', description: 'Registrar e gerenciar vendas', icon: BarChart3, color: 'bg-blue-100 text-blue-600' },
+  { href: '/vendedor/clientes', label: 'Clientes', description: 'Consultar e cadastrar clientes', icon: Users, color: 'bg-green-100 text-green-600' },
+  { href: '/vendedor/desempenho', label: 'Desempenho', description: 'Ver métricas e gráficos', icon: TrendingUp, color: 'bg-purple-100 text-purple-600' },
+  { href: '/vendedor/perfil', label: 'Perfil', description: 'Gerenciar sua conta', icon: User, color: 'bg-orange-100 text-orange-600' },
 ]
 
 const now = new Date()
@@ -60,7 +60,7 @@ export default function DashboardPage() {
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-semibold text-foreground">Vendas Recentes</h2>
             <Button variant="ghost" size="sm" asChild>
-              <Link href="/vendas" className="gap-1 flex items-center text-sm">
+              <Link href="/vendedor/vendas" className="gap-1 flex items-center text-sm">
                 Ver todas <ArrowRight className="w-3 h-3" />
               </Link>
             </Button>
