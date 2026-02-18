@@ -6,11 +6,11 @@ import { BarChart3, Home, Users, TrendingUp, User, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 const navItems = [
-  { href: '/seller', label: 'Dashboard', icon: Home },
-  { href: '/seller/vendas', label: 'Vendas', icon: BarChart3 },
-  { href: '/seller/clientes', label: 'Clientes', icon: Users },
-  { href: '/seller/desempenho', label: 'Desempenho', icon: TrendingUp },
-  { href: '/seller/perfil', label: 'Perfil', icon: User },
+  { href: '/dashboard', label: 'Dashboard', icon: Home },
+  { href: '/vendas', label: 'Vendas', icon: BarChart3 },
+  { href: '/clientes', label: 'Clientes', icon: Users },
+  { href: '/desempenho', label: 'Desempenho', icon: TrendingUp },
+  { href: '/perfil', label: 'Perfil', icon: User },
 ]
 
 interface SellerMobileNavProps {
@@ -40,7 +40,7 @@ export function SellerMobileNav({ open, onClose }: SellerMobileNavProps) {
         <nav className="p-4 space-y-2">
           {navItems.map((item) => {
             const Icon = item.icon
-            const isActive = pathname === item.href || pathname?.startsWith(item.href + '/')
+            const isActive = pathname === item.href
             return (
               <Link key={item.href} href={item.href} onClick={onClose} className="block">
                 <Button
