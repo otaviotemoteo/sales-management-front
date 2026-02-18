@@ -1,0 +1,151 @@
+{
+  "day": {
+    "totalSales": 3,
+    "totalRevenue": 5649.6,
+    "totalCustomers": 3,
+    "averageTicket": 1883.2,
+    "chartData": [
+      { "date": "08h", "sales": 0, "revenue": 0 },
+      { "date": "09h", "sales": 1, "revenue": 1799.8 },
+      { "date": "10h", "sales": 0, "revenue": 0 },
+      { "date": "11h", "sales": 1, "revenue": 2099.8 },
+      { "date": "12h", "sales": 0, "revenue": 0 },
+      { "date": "13h", "sales": 0, "revenue": 0 },
+      { "date": "14h", "sales": 1, "revenue": 1750.0 },
+      { "date": "15h", "sales": 0, "revenue": 0 },
+      { "date": "16h", "sales": 0, "revenue": 0 },
+      { "date": "17h", "sales": 0, "revenue": 0 }
+    ],
+    "paymentMethods": [
+      { "method": "PIX", "count": 1, "percentage": 33 },
+      { "method": "Débito", "count": 1, "percentage": 33 },
+      { "method": "Crédito", "count": 1, "percentage": 33 },
+      { "method": "Dinheiro", "count": 0, "percentage": 1 }
+    ],
+    "topProducts": [
+      { "id": "p001", "name": "Notebook Dell Inspiron 15", "quantity": 1, "revenue": 3499.9, "growth": 5 },
+      { "id": "p009", "name": "Cadeira Gamer ThunderX3", "quantity": 1, "revenue": 1299.9, "growth": 2 },
+      { "id": "p010", "name": "Mesa de Escritório 1.5m", "quantity": 1, "revenue": 799.9, "growth": -1 },
+      { "id": "p007", "name": "SSD Samsung 1TB", "quantity": 2, "revenue": 899.8, "growth": 8 },
+      { "id": "p008", "name": "Memória RAM 16GB DDR4", "quantity": 3, "revenue": 899.7, "growth": 3 }
+    ],
+    "performanceCards": [
+      { "title": "Taxa de Conversão", "value": "72%", "change": 5, "changeType": "increase" },
+      { "title": "Ticket Médio", "value": "R$ 1.883", "change": 12, "changeType": "increase" },
+      { "title": "Novos Clientes", "value": 3, "change": 50, "changeType": "increase" },
+      { "title": "Melhor Horário", "value": "09h–11h", "change": 0, "changeType": "increase" }
+    ]
+  },
+  "week": {
+    "totalSales": 18,
+    "totalRevenue": 28347.6,
+    "totalCustomers": 12,
+    "averageTicket": 1574.87,
+    "chartData": [
+      { "date": "Seg", "sales": 3, "revenue": 5649.6 },
+      { "date": "Ter", "sales": 4, "revenue": 8199.6 },
+      { "date": "Qua", "sales": 2, "revenue": 3199.8 },
+      { "date": "Qui", "sales": 3, "revenue": 4049.7 },
+      { "date": "Sex", "sales": 4, "revenue": 5849.0 },
+      { "date": "Sáb", "sales": 1, "revenue": 849.9 },
+      { "date": "Dom", "sales": 1, "revenue": 549.9 }
+    ],
+    "paymentMethods": [
+      { "method": "PIX", "count": 8, "percentage": 44 },
+      { "method": "Crédito", "count": 5, "percentage": 28 },
+      { "method": "Débito", "count": 4, "percentage": 22 },
+      { "method": "Dinheiro", "count": 1, "percentage": 6 }
+    ],
+    "topProducts": [
+      { "id": "p001", "name": "Notebook Dell Inspiron 15", "quantity": 5, "revenue": 17499.5, "growth": 18 },
+      { "id": "p002", "name": "Monitor LG 24\" Full HD", "quantity": 4, "revenue": 3599.6, "growth": 10 },
+      { "id": "p003", "name": "Mouse Logitech MX Master 3", "quantity": 6, "revenue": 2999.4, "growth": 25 },
+      { "id": "p007", "name": "SSD Samsung 1TB", "quantity": 5, "revenue": 2249.5, "growth": 8 },
+      { "id": "p009", "name": "Cadeira Gamer ThunderX3", "quantity": 2, "revenue": 2599.8, "growth": -3 }
+    ],
+    "performanceCards": [
+      { "title": "Taxa de Conversão", "value": "68%", "change": 3, "changeType": "increase" },
+      { "title": "Ticket Médio", "value": "R$ 1.575", "change": 8, "changeType": "increase" },
+      { "title": "Novos Clientes", "value": 5, "change": 25, "changeType": "increase" },
+      { "title": "Melhor Dia", "value": "Terça-feira", "change": 0, "changeType": "increase" }
+    ]
+  },
+  "month": {
+    "totalSales": 47,
+    "totalRevenue": 74892.3,
+    "totalCustomers": 23,
+    "averageTicket": 1593.45,
+    "chartData": [
+      { "date": "01/01", "sales": 2, "revenue": 3899.8 },
+      { "date": "05/01", "sales": 3, "revenue": 5249.7 },
+      { "date": "08/01", "sales": 4, "revenue": 7199.6 },
+      { "date": "10/01", "sales": 3, "revenue": 5649.7 },
+      { "date": "12/01", "sales": 5, "revenue": 8799.5 },
+      { "date": "14/01", "sales": 4, "revenue": 6999.6 },
+      { "date": "15/01", "sales": 3, "revenue": 5349.7 },
+      { "date": "18/01", "sales": 4, "revenue": 7099.6 },
+      { "date": "20/01", "sales": 5, "revenue": 8999.5 },
+      { "date": "22/01", "sales": 4, "revenue": 6899.6 },
+      { "date": "23/01", "sales": 5, "revenue": 8749.5 },
+      { "date": "25/01", "sales": 3, "revenue": 4999.7 }
+    ],
+    "paymentMethods": [
+      { "method": "PIX", "count": 20, "percentage": 43 },
+      { "method": "Crédito", "count": 15, "percentage": 32 },
+      { "method": "Débito", "count": 9, "percentage": 19 },
+      { "method": "Dinheiro", "count": 3, "percentage": 6 }
+    ],
+    "topProducts": [
+      { "id": "p001", "name": "Notebook Dell Inspiron 15", "quantity": 14, "revenue": 48998.6, "growth": 22 },
+      { "id": "p002", "name": "Monitor LG 24\" Full HD", "quantity": 11, "revenue": 9898.9, "growth": 15 },
+      { "id": "p003", "name": "Mouse Logitech MX Master 3", "quantity": 16, "revenue": 7998.4, "growth": 30 },
+      { "id": "p007", "name": "SSD Samsung 1TB", "quantity": 12, "revenue": 5398.8, "growth": 12 },
+      { "id": "p009", "name": "Cadeira Gamer ThunderX3", "quantity": 5, "revenue": 6499.5, "growth": -5 }
+    ],
+    "performanceCards": [
+      { "title": "Taxa de Conversão", "value": "71%", "change": 7, "changeType": "increase" },
+      { "title": "Ticket Médio", "value": "R$ 1.593", "change": 4, "changeType": "increase" },
+      { "title": "Novos Clientes", "value": 12, "change": 20, "changeType": "increase" },
+      { "title": "Melhor Semana", "value": "3ª semana", "change": 0, "changeType": "increase" }
+    ]
+  },
+  "year": {
+    "totalSales": 342,
+    "totalRevenue": 542180.0,
+    "totalCustomers": 89,
+    "averageTicket": 1585.03,
+    "chartData": [
+      { "date": "Jan", "sales": 28, "revenue": 43200.0 },
+      { "date": "Fev", "sales": 25, "revenue": 39800.0 },
+      { "date": "Mar", "sales": 30, "revenue": 47600.0 },
+      { "date": "Abr", "sales": 27, "revenue": 43100.0 },
+      { "date": "Mai", "sales": 32, "revenue": 50800.0 },
+      { "date": "Jun", "sales": 29, "revenue": 46200.0 },
+      { "date": "Jul", "sales": 26, "revenue": 41300.0 },
+      { "date": "Ago", "sales": 31, "revenue": 49400.0 },
+      { "date": "Set", "sales": 28, "revenue": 44600.0 },
+      { "date": "Out", "sales": 33, "revenue": 52500.0 },
+      { "date": "Nov", "sales": 38, "revenue": 60400.0 },
+      { "date": "Dez", "sales": 35, "revenue": 55600.0 }
+    ],
+    "paymentMethods": [
+      { "method": "PIX", "count": 148, "percentage": 43 },
+      { "method": "Crédito", "count": 110, "percentage": 32 },
+      { "method": "Débito", "count": 63, "percentage": 18 },
+      { "method": "Dinheiro", "count": 21, "percentage": 7 }
+    ],
+    "topProducts": [
+      { "id": "p001", "name": "Notebook Dell Inspiron 15", "quantity": 98, "revenue": 342990.2, "growth": 28 },
+      { "id": "p002", "name": "Monitor LG 24\" Full HD", "quantity": 74, "revenue": 66593.0, "growth": 18 },
+      { "id": "p003", "name": "Mouse Logitech MX Master 3", "quantity": 110, "revenue": 54989.0, "growth": 35 },
+      { "id": "p009", "name": "Cadeira Gamer ThunderX3", "quantity": 32, "revenue": 41596.8, "growth": 10 },
+      { "id": "p007", "name": "SSD Samsung 1TB", "quantity": 88, "revenue": 39591.2, "growth": 22 }
+    ],
+    "performanceCards": [
+      { "title": "Taxa de Conversão", "value": "69%", "change": 9, "changeType": "increase" },
+      { "title": "Ticket Médio", "value": "R$ 1.585", "change": 6, "changeType": "increase" },
+      { "title": "Novos Clientes", "value": 89, "change": 34, "changeType": "increase" },
+      { "title": "Melhor Mês", "value": "Novembro", "change": 0, "changeType": "increase" }
+    ]
+  }
+}

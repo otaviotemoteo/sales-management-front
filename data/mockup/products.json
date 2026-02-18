@@ -1,0 +1,12 @@
+[
+  { "id": "p001", "name": "Notebook Dell Inspiron 15", "price": 3499.9, "category": "Informática", "stock": 12 },
+  { "id": "p002", "name": "Monitor LG 24\" Full HD", "price": 899.9, "category": "Informática", "stock": 25 },
+  { "id": "p003", "name": "Mouse Logitech MX Master 3", "price": 499.9, "category": "Periféricos", "stock": 40 },
+  { "id": "p004", "name": "Teclado Mecânico Redragon", "price": 349.9, "category": "Periféricos", "stock": 35 },
+  { "id": "p005", "name": "Headset HyperX Cloud II", "price": 599.9, "category": "Áudio", "stock": 18 },
+  { "id": "p006", "name": "Webcam Logitech C920", "price": 699.9, "category": "Periféricos", "stock": 22 },
+  { "id": "p007", "name": "SSD Samsung 1TB", "price": 449.9, "category": "Armazenamento", "stock": 50 },
+  { "id": "p008", "name": "Memória RAM 16GB DDR4", "price": 299.9, "category": "Componentes", "stock": 30 },
+  { "id": "p009", "name": "Cadeira Gamer ThunderX3", "price": 1299.9, "category": "Mobiliário", "stock": 8 },
+  { "id": "p010", "name": "Mesa de Escritório 1.5m", "price": 799.9, "category": "Mobiliário", "stock": 6 }
+]

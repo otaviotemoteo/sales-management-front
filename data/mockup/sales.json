@@ -1,0 +1,305 @@
+[
+  {
+    "id": "VDA-001",
+    "customer": "Lucas Barbosa",
+    "customerId": "c012",
+    "date": "23/01/2025",
+    "amount": 4899.8,
+    "status": "completed",
+    "items": 2,
+    "paymentMethod": "credit",
+    "products": [
+      { "name": "Notebook Dell Inspiron 15", "quantity": 1, "unitPrice": 3499.9, "total": 3499.9 },
+      { "name": "Monitor LG 24\" Full HD", "quantity": 1, "unitPrice": 899.9, "total": 899.9 },
+      { "name": "Mouse Logitech MX Master 3", "quantity": 1, "unitPrice": 499.9, "total": 499.9 }
+    ],
+    "subtotal": 4899.7,
+    "tax": 0.1,
+    "total": 4899.8
+  },
+  {
+    "id": "VDA-002",
+    "customer": "Carla Mendes",
+    "customerId": "c009",
+    "date": "22/01/2025",
+    "amount": 3199.7,
+    "status": "completed",
+    "items": 3,
+    "paymentMethod": "pix",
+    "products": [
+      { "name": "Notebook Dell Inspiron 15", "quantity": 1, "unitPrice": 3499.9, "total": 3499.9 },
+      { "name": "Teclado Mecânico Redragon", "quantity": 1, "unitPrice": 349.9, "total": 349.9 },
+      { "name": "Mouse Logitech MX Master 3", "quantity": 1, "unitPrice": 499.9, "total": 499.9 }
+    ],
+    "subtotal": 4349.7,
+    "tax": 0.0,
+    "total": 3199.7
+  },
+  {
+    "id": "VDA-003",
+    "customer": "Pedro Almeida",
+    "customerId": "c004",
+    "date": "20/01/2025",
+    "amount": 1799.8,
+    "status": "completed",
+    "items": 2,
+    "paymentMethod": "pix",
+    "products": [
+      { "name": "SSD Samsung 1TB", "quantity": 2, "unitPrice": 449.9, "total": 899.8 },
+      { "name": "Memória RAM 16GB DDR4", "quantity": 3, "unitPrice": 299.9, "total": 899.7 }
+    ],
+    "subtotal": 1799.5,
+    "tax": 0.3,
+    "total": 1799.8
+  },
+  {
+    "id": "VDA-004",
+    "customer": "Ricardo Oliveira",
+    "customerId": "c006",
+    "date": "18/01/2025",
+    "amount": 2099.8,
+    "status": "pending",
+    "items": 2,
+    "paymentMethod": "debit",
+    "products": [
+      { "name": "Cadeira Gamer ThunderX3", "quantity": 1, "unitPrice": 1299.9, "total": 1299.9 },
+      { "name": "Mesa de Escritório 1.5m", "quantity": 1, "unitPrice": 799.9, "total": 799.9 }
+    ],
+    "subtotal": 2099.8,
+    "tax": 0.0,
+    "total": 2099.8
+  },
+  {
+    "id": "VDA-005",
+    "customer": "Maria Silva",
+    "customerId": "c001",
+    "date": "15/01/2025",
+    "amount": 849.8,
+    "status": "completed",
+    "items": 2,
+    "paymentMethod": "pix",
+    "products": [
+      { "name": "Headset HyperX Cloud II", "quantity": 1, "unitPrice": 599.9, "total": 599.9 },
+      { "name": "Mouse Logitech MX Master 3", "quantity": 1, "unitPrice": 499.9, "total": 499.9 }
+    ],
+    "subtotal": 1099.8,
+    "tax": 0.0,
+    "total": 849.8
+  },
+  {
+    "id": "VDA-006",
+    "customer": "Fernanda Costa",
+    "customerId": "c005",
+    "date": "14/01/2025",
+    "amount": 1899.8,
+    "status": "completed",
+    "items": 2,
+    "paymentMethod": "credit",
+    "products": [
+      { "name": "Monitor LG 24\" Full HD", "quantity": 2, "unitPrice": 899.9, "total": 1799.8 },
+      { "name": "Webcam Logitech C920", "quantity": 1, "unitPrice": 699.9, "total": 699.9 }
+    ],
+    "subtotal": 2499.7,
+    "tax": 0.1,
+    "total": 1899.8
+  },
+  {
+    "id": "VDA-007",
+    "customer": "Thiago Lima",
+    "customerId": "c010",
+    "date": "12/01/2025",
+    "amount": 449.9,
+    "status": "completed",
+    "items": 1,
+    "paymentMethod": "credit",
+    "products": [
+      { "name": "SSD Samsung 1TB", "quantity": 1, "unitPrice": 449.9, "total": 449.9 }
+    ],
+    "subtotal": 449.9,
+    "tax": 0.0,
+    "total": 449.9
+  },
+  {
+    "id": "VDA-008",
+    "customer": "Marcos Ferreira",
+    "customerId": "c008",
+    "date": "12/01/2025",
+    "amount": 1199.8,
+    "status": "pending",
+    "items": 2,
+    "paymentMethod": "debit",
+    "products": [
+      { "name": "Teclado Mecânico Redragon", "quantity": 2, "unitPrice": 349.9, "total": 699.8 },
+      { "name": "Mouse Logitech MX Master 3", "quantity": 1, "unitPrice": 499.9, "total": 499.9 }
+    ],
+    "subtotal": 1199.7,
+    "tax": 0.1,
+    "total": 1199.8
+  },
+  {
+    "id": "VDA-009",
+    "customer": "João Pereira",
+    "customerId": "c002",
+    "date": "10/01/2025",
+    "amount": 3499.9,
+    "status": "completed",
+    "items": 1,
+    "paymentMethod": "pix",
+    "products": [
+      { "name": "Notebook Dell Inspiron 15", "quantity": 1, "unitPrice": 3499.9, "total": 3499.9 }
+    ],
+    "subtotal": 3499.9,
+    "tax": 0.0,
+    "total": 3499.9
+  },
+  {
+    "id": "VDA-010",
+    "customer": "Ana Rodrigues",
+    "customerId": "c003",
+    "date": "05/01/2025",
+    "amount": 699.9,
+    "status": "completed",
+    "items": 1,
+    "paymentMethod": "cash",
+    "products": [
+      { "name": "Webcam Logitech C920", "quantity": 1, "unitPrice": 699.9, "total": 699.9 }
+    ],
+    "subtotal": 699.9,
+    "tax": 0.0,
+    "total": 699.9
+  },
+  {
+    "id": "VDA-011",
+    "customer": "Carla Mendes",
+    "customerId": "c009",
+    "date": "03/01/2025",
+    "amount": 2599.8,
+    "status": "cancelled",
+    "items": 2,
+    "paymentMethod": "credit",
+    "products": [
+      { "name": "Cadeira Gamer ThunderX3", "quantity": 1, "unitPrice": 1299.9, "total": 1299.9 },
+      { "name": "Mesa de Escritório 1.5m", "quantity": 1, "unitPrice": 799.9, "total": 799.9 },
+      { "name": "Monitor LG 24\" Full HD", "quantity": 1, "unitPrice": 899.9, "total": 899.9 }
+    ],
+    "subtotal": 2999.7,
+    "tax": 0.1,
+    "total": 2599.8
+  },
+  {
+    "id": "VDA-012",
+    "customer": "Juliana Santos",
+    "customerId": "c007",
+    "date": "02/01/2025",
+    "amount": 349.9,
+    "status": "completed",
+    "items": 1,
+    "paymentMethod": "pix",
+    "products": [
+      { "name": "Teclado Mecânico Redragon", "quantity": 1, "unitPrice": 349.9, "total": 349.9 }
+    ],
+    "subtotal": 349.9,
+    "tax": 0.0,
+    "total": 349.9
+  },
+  {
+    "id": "VDA-013",
+    "customer": "Lucas Barbosa",
+    "customerId": "c012",
+    "date": "28/12/2024",
+    "amount": 5999.8,
+    "status": "completed",
+    "items": 3,
+    "paymentMethod": "credit",
+    "products": [
+      { "name": "Notebook Dell Inspiron 15", "quantity": 1, "unitPrice": 3499.9, "total": 3499.9 },
+      { "name": "Cadeira Gamer ThunderX3", "quantity": 1, "unitPrice": 1299.9, "total": 1299.9 },
+      { "name": "Monitor LG 24\" Full HD", "quantity": 1, "unitPrice": 899.9, "total": 899.9 }
+    ],
+    "subtotal": 5699.7,
+    "tax": 300.1,
+    "total": 5999.8
+  },
+  {
+    "id": "VDA-014",
+    "customer": "Beatriz Gomes",
+    "customerId": "c011",
+    "date": "25/12/2024",
+    "amount": 299.9,
+    "status": "completed",
+    "items": 1,
+    "paymentMethod": "debit",
+    "products": [
+      { "name": "Memória RAM 16GB DDR4", "quantity": 1, "unitPrice": 299.9, "total": 299.9 }
+    ],
+    "subtotal": 299.9,
+    "tax": 0.0,
+    "total": 299.9
+  },
+  {
+    "id": "VDA-015",
+    "customer": "Pedro Almeida",
+    "customerId": "c004",
+    "date": "20/12/2024",
+    "amount": 1099.8,
+    "status": "completed",
+    "items": 2,
+    "paymentMethod": "pix",
+    "products": [
+      { "name": "Headset HyperX Cloud II", "quantity": 1, "unitPrice": 599.9, "total": 599.9 },
+      { "name": "Webcam Logitech C920", "quantity": 1, "unitPrice": 699.9, "total": 699.9 }
+    ],
+    "subtotal": 1299.8,
+    "tax": 0.0,
+    "total": 1099.8
+  },
+  {
+    "id": "VDA-016",
+    "customer": "Maria Silva",
+    "customerId": "c001",
+    "date": "15/12/2024",
+    "amount": 3499.9,
+    "status": "completed",
+    "items": 1,
+    "paymentMethod": "credit",
+    "products": [
+      { "name": "Notebook Dell Inspiron 15", "quantity": 1, "unitPrice": 3499.9, "total": 3499.9 }
+    ],
+    "subtotal": 3499.9,
+    "tax": 0.0,
+    "total": 3499.9
+  },
+  {
+    "id": "VDA-017",
+    "customer": "Ricardo Oliveira",
+    "customerId": "c006",
+    "date": "10/12/2024",
+    "amount": 749.8,
+    "status": "cancelled",
+    "items": 2,
+    "paymentMethod": "debit",
+    "products": [
+      { "name": "Mouse Logitech MX Master 3", "quantity": 1, "unitPrice": 499.9, "total": 499.9 },
+      { "name": "Teclado Mecânico Redragon", "quantity": 1, "unitPrice": 349.9, "total": 349.9 }
+    ],
+    "subtotal": 849.8,
+    "tax": 0.0,
+    "total": 749.8
+  },
+  {
+    "id": "VDA-018",
+    "customer": "Thiago Lima",
+    "customerId": "c010",
+    "date": "07/01/2025",
+    "amount": 599.9,
+    "status": "pending",
+    "items": 1,
+    "paymentMethod": "credit",
+    "products": [
+      { "name": "Headset HyperX Cloud II", "quantity": 1, "unitPrice": 599.9, "total": 599.9 }
+    ],
+    "subtotal": 599.9,
+    "tax": 0.0,
+    "total": 599.9
+  }
+]

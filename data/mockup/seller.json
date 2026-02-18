@@ -1,0 +1,15 @@
+{
+  "id": "v001",
+  "fullName": "Carlos Eduardo Souza",
+  "email": "carlos.souza@vendaflow.com",
+  "phone": "(11) 98765-4321",
+  "cpf": "123.456.789-00",
+  "city": "São Paulo",
+  "state": "SP",
+  "bio": "Vendedor especializado em tecnologia e eletrônicos com mais de 5 anos de experiência. Focado em soluções para pequenas e médias empresas.",
+  "avatarUrl": null,
+  "joinDate": "Jan 2024",
+  "totalSales": 342,
+  "totalRevenue": 187500.0,
+  "averageRating": 4.8
+}
