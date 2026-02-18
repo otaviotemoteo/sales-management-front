@@ -6,11 +6,11 @@ import { BarChart3, Home, Users, TrendingUp, User, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 const navItems = [
-  { href: '/dashboard', label: 'Dashboard', icon: Home },
-  { href: '/vendas', label: 'Vendas', icon: BarChart3 },
-  { href: '/clientes', label: 'Clientes', icon: Users },
-  { href: '/desempenho', label: 'Desempenho', icon: TrendingUp },
-  { href: '/perfil', label: 'Perfil', icon: User },
+  { href: '/vendedor/dashboard', label: 'Dashboard', icon: Home },
+  { href: '/vendedor/vendas', label: 'Vendas', icon: BarChart3 },
+  { href: '/vendedor/clientes', label: 'Clientes', icon: Users },
+  { href: '/vendedor/desempenho', label: 'Desempenho', icon: TrendingUp },
+  { href: '/vendedor/perfil', label: 'Perfil', icon: User },
 ]
 
 interface SellerMobileNavProps {
@@ -30,6 +30,7 @@ export function SellerMobileNav({ open, onClose }: SellerMobileNavProps) {
       <aside className="fixed inset-y-0 left-0 w-72 max-w-full border-r border-border bg-background shadow-lg">
         <div className="flex h-16 items-center justify-between border-b border-border px-4">
           <div className="flex items-center gap-2">
+            <BarChart3 className="w-5 h-5 text-primary-foreground" />
             <span className="font-bold text-lg text-foreground">VendaFlow</span>
           </div>
           <Button variant="ghost" size="sm" onClick={onClose} aria-label="Fechar menu">
