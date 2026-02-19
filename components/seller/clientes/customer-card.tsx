@@ -1,9 +1,9 @@
 'use client'
 
 import { Card } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { MoreVertical, MapPin, Phone, Mail } from 'lucide-react'
+import { MapPin, Phone, Mail } from 'lucide-react'
+import { CustomerActionsMenu } from './customer-actions-menu'
 
 interface CustomerCardProps {
   id: string
@@ -13,6 +13,7 @@ interface CustomerCardProps {
   city: string
   totalSpent: number
   lastPurchase: string
+  onView?: () => void
   onEdit?: () => void
   onDelete?: () => void
 }
@@ -25,11 +26,12 @@ export function CustomerCard({
   city,
   totalSpent,
   lastPurchase,
+  onView,
   onEdit,
   onDelete,
 }: CustomerCardProps) {
   return (
-    <Card className="p-4 hover:shadow-md transition-shadow">
+    <Card className="p-4 hover:shadow-md transition-shadow flex flex-col">
       <div className="flex items-start justify-between mb-3">
         <div>
           <h3 className="font-semibold text-foreground">{name}</h3>
@@ -38,9 +40,12 @@ export function CustomerCard({
             {city}
           </p>
         </div>
-        <Button variant="ghost" size="sm">
-          <MoreVertical className="w-4 h-4" />
-        </Button>
+        <CustomerActionsMenu
+          customerId={id}
+          onView={onView}
+          onEdit={onEdit}
+          onDelete={onDelete}
+        />
       </div>
 
       <div className="space-y-2 text-sm mb-4 pb-4 border-b border-border">
@@ -54,7 +59,7 @@ export function CustomerCard({
         </div>
       </div>
 
-      <div className="flex justify-between items-end">
+      <div className="flex justify-between items-end mb-4">
         <div>
           <p className="text-xs text-muted-foreground">Gasto Total</p>
           <p className="font-bold text-foreground">R$ {totalSpent.toFixed(2)}</p>
@@ -63,6 +68,12 @@ export function CustomerCard({
           <p className="text-xs text-muted-foreground">Última compra</p>
           <p className="text-xs text-foreground">{lastPurchase}</p>
         </div>
+      </div>
+
+      <div className="border-t border-border pt-3 mt-auto">
+        <Button variant="outline" size="sm" className="w-full" onClick={onView}>
+          Ver Detalhes
+        </Button>
       </div>
     </Card>
   )
