@@ -27,6 +27,7 @@ export default function VendasPage() {
   const [search, setSearch] = useState('')
   const [activeTab, setActiveTab] = useState<Status>('all')
   const [selectedSale, setSelectedSale] = useState<(typeof salesData)[0] | null>(null)
+  const [saleDetailsOpen, setSaleDetailsOpen] = useState(false)
   const [newSaleOpen, setNewSaleOpen] = useState(false)
   const [selectedPayment, setSelectedPayment] = useState<string>('pix')
 
@@ -102,7 +103,7 @@ export default function VendasPage() {
               <div className="absolute top-3 right-3">
                 <SaleActionsMenu
                   saleId={sale.id}
-                  onView={() => setSelectedSale(sale)}
+                  onView={() => { setSelectedSale(sale); setSaleDetailsOpen(true) }}
                 />
               </div>
             </div>
@@ -110,7 +111,7 @@ export default function VendasPage() {
         </div>
       )}
 
-      <Dialog open={!!selectedSale} onOpenChange={(open) => !open && setSelectedSale(null)}>
+      <Dialog open={saleDetailsOpen} onOpenChange={setSaleDetailsOpen}>
         <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Detalhes da Venda</DialogTitle>
