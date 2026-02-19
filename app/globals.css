@@ -77,12 +77,6 @@
 @theme {
   --breakpoint-ssm: 400px;
   --breakpoint-xxl: 1360px;
-
-  --spacing-xl: 30px;
-  --spacing-lg: 20px;
-  --spacing-md: 10px;
-  --spacing-sm: 8px;
-  --spacing-esm: 4px;
 }
 
 @theme inline {
