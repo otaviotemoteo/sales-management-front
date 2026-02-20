@@ -42,7 +42,6 @@ export function CustomerCard({
         </div>
         <CustomerActionsMenu
           customerId={id}
-          onView={onView}
           onEdit={onEdit}
           onDelete={onDelete}
         />

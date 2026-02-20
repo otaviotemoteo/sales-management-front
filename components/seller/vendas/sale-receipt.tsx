@@ -31,7 +31,7 @@ export function SaleReceipt({
   paymentMethod,
 }: SaleReceiptProps) {
   return (
-    <Card className="p-8 max-w-md mx-auto bg-white">
+    <Card className="p-4 w-full">
       <div className="text-center mb-6 pb-6 border-b border-border">
         <h2 className="text-2xl font-bold text-foreground">VendaFlow</h2>
         <p className="text-sm text-muted-foreground">Recibo de Venda</p>
