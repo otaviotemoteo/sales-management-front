@@ -7,19 +7,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { MoreVertical, Eye, Edit, Trash2, Download } from 'lucide-react'
+import { MoreVertical, Edit, Trash2, Download } from 'lucide-react'
 
 interface SaleActionsMenuProps {
   saleId: string
-  onView?: () => void
   onEdit?: () => void
   onDownload?: () => void
   onDelete?: () => void
 }
 
 export function SaleActionsMenu({
-  saleId,
-  onView,
   onEdit,
   onDownload,
   onDelete,
@@ -32,10 +29,6 @@ export function SaleActionsMenu({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={onView} className="gap-2">
-          <Eye className="w-4 h-4" />
-          Ver Detalhes
-        </DropdownMenuItem>
         <DropdownMenuItem onClick={onEdit} className="gap-2">
           <Edit className="w-4 h-4" />
           Editar
