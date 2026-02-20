@@ -4,8 +4,8 @@ import { useState, useMemo } from 'react'
 import { Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { SalesFilters } from '@/components/seller/vendas/sales-filters'
+import { SaleStatusFilter } from '@/components/seller/vendas/sale-status-filter'
 import { SaleCard } from '@/components/seller/vendas/sale-card'
 import { SaleActionsMenu } from '@/components/seller/vendas/sale-actions-menu'
 import { NewSaleForm } from '@/components/seller/vendas/new-sale-form'
@@ -74,15 +74,12 @@ export default function VendasPage() {
 
       <SalesFilters onSearch={setSearch} />
 
-      <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as Status)}>
-        <TabsList>
-          {tabs.map((t) => (
-            <TabsTrigger key={t.value} value={t.value}>
-              {t.label} ({counts[t.value]})
-            </TabsTrigger>
-          ))}
-        </TabsList>
-      </Tabs>
+      <SaleStatusFilter
+        value={activeTab}
+        onChange={setActiveTab}
+        tabs={tabs}
+        counts={counts}
+      />
 
       {filtered.length === 0 ? (
         <Card className="p-12 text-center">
@@ -99,11 +96,11 @@ export default function VendasPage() {
                 amount={sale.amount}
                 status={sale.status as 'pending' | 'completed' | 'cancelled'}
                 items={sale.items}
+                onView={() => { setSelectedSale(sale); setSaleDetailsOpen(true) }}
               />
               <div className="absolute top-3 right-3">
                 <SaleActionsMenu
                   saleId={sale.id}
-                  onView={() => { setSelectedSale(sale); setSaleDetailsOpen(true) }}
                 />
               </div>
             </div>
@@ -112,7 +109,7 @@ export default function VendasPage() {
       )}
 
       <Dialog open={saleDetailsOpen} onOpenChange={setSaleDetailsOpen}>
-        <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Detalhes da Venda</DialogTitle>
           </DialogHeader>
