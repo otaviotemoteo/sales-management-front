@@ -14,20 +14,12 @@ export function CTASection() {
           Comece gratuitamente hoje e descubra como o VendaFlow pode
           revolucionar a gestão do seu negócio.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+        <div className="flex justify-center pt-4">
           <Button size="lg" variant="secondary" className="text-base" asChild>
-            <Link href="/signup">
+            <Link href="/registrar">
               Criar Conta Grátis
               <ArrowRight className="ml-2 w-5 h-5" />
             </Link>
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            className="text-base bg-transparent border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10"
-            asChild
-          >
-            <Link href="/contact">Falar com Vendas</Link>
           </Button>
         </div>
       </Card>

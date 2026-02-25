@@ -18,7 +18,7 @@ export function Header() {
             <Link href="/login">Entrar</Link>
           </Button>
           <Button asChild>
-            <Link href="/signup">Criar Conta</Link>
+            <Link href="/registrar">Criar Conta</Link>
           </Button>
         </div>
       </div>

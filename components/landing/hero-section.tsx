@@ -1,48 +1,95 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Zap, ArrowRight, TrendingUp } from "lucide-react";
+'use client'
+
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { Zap, ArrowRight, TrendingUp } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 export function HeroSection() {
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
   return (
     <section className="container mx-auto px-4 py-20 lg:py-28">
       <div className="grid lg:grid-cols-2 gap-12 items-center">
+        {/* Left column */}
         <div className="space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent text-accent-foreground text-sm">
+          <div
+            className={cn(
+              'inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent text-accent-foreground text-sm',
+              isMounted
+                ? 'animate-in fade-in-0 slide-in-from-bottom-4 duration-500 fill-mode-both'
+                : 'opacity-0'
+            )}
+            style={{ animationDelay: '0ms' }}
+          >
             <Zap className="w-4 h-4" />
             <span>Sistema completo de gestão de vendas</span>
           </div>
 
-          <h1 className="text-4xl lg:text-6xl font-bold text-foreground text-balance leading-tight">
+          <h1
+            className={cn(
+              'text-4xl lg:text-6xl font-bold text-foreground text-balance leading-tight',
+              isMounted
+                ? 'animate-in fade-in-0 slide-in-from-bottom-4 duration-700 fill-mode-both'
+                : 'opacity-0'
+            )}
+            style={{ animationDelay: '100ms' }}
+          >
             Controle total das suas vendas em tempo real
           </h1>
 
-          <p className="text-lg text-muted-foreground text-pretty leading-relaxed">
+          <p
+            className={cn(
+              'text-lg text-muted-foreground text-pretty leading-relaxed',
+              isMounted
+                ? 'animate-in fade-in-0 slide-in-from-bottom-4 duration-500 fill-mode-both'
+                : 'opacity-0'
+            )}
+            style={{ animationDelay: '200ms' }}
+          >
             Plataforma completa para gerenciar produtos, vendedores, clientes e
             vendas. Dashboards inteligentes, relatórios detalhados e controle de
             pagamentos em um só lugar.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 pt-4">
+          <div
+            className={cn(
+              'flex flex-col sm:flex-row gap-4 pt-4',
+              isMounted
+                ? 'animate-in fade-in-0 slide-in-from-bottom-4 duration-500 fill-mode-both'
+                : 'opacity-0'
+            )}
+            style={{ animationDelay: '300ms' }}
+          >
             <Button size="lg" className="text-base" asChild>
-              <Link href="/signup">
-                Começar Gratuitamente
+              <Link href="/registrar">
+                Começar Grátis
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="text-base bg-transparent"
-              asChild
-            >
-              <Link href="/demo">Ver Demonstração</Link>
             </Button>
           </div>
         </div>
 
-        <div className="relative">
-          <div className="bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl p-8 backdrop-blur">
+        {/* Right column: dashboard card */}
+        <div
+          className={cn(
+            'relative',
+            isMounted
+              ? 'animate-in fade-in-0 slide-in-from-bottom-4 duration-700 fill-mode-both'
+              : 'opacity-0'
+          )}
+          style={{ animationDelay: '150ms' }}
+        >
+          <div
+            className="bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl p-8 backdrop-blur"
+            style={isMounted ? { animation: 'float 4s ease-in-out infinite' } : {}}
+          >
             <Card className="p-6 space-y-4 shadow-xl">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-muted-foreground">
@@ -68,5 +115,5 @@ export function HeroSection() {
         </div>
       </div>
     </section>
-  );
+  )
 }
