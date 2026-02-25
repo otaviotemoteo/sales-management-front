@@ -1,4 +1,6 @@
-import { Card } from "@/components/ui/card";
+'use client'
+
+import { Card } from '@/components/ui/card'
 import {
   Package,
   Users,
@@ -10,65 +12,71 @@ import {
   CheckCircle2,
   Clock,
   Shield,
-} from "lucide-react";
+} from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { useInView } from '@/hooks/use-in-view'
 
 const features = [
   {
     icon: Package,
-    title: "Gestão de Produtos",
+    title: 'Gestão de Produtos',
     description:
-      "Cadastre e gerencie produtos com fotos, preços, categorias e estoque de forma simples e rápida.",
+      'Cadastre e gerencie produtos com fotos, preços, categorias e estoque de forma simples e rápida.',
   },
   {
     icon: Users,
-    title: "Controle de Vendedores",
+    title: 'Controle de Vendedores',
     description:
-      "Gerencie sua equipe de vendas, acompanhe performance individual e defina permissões de acesso.",
+      'Gerencie sua equipe de vendas, acompanhe performance individual e defina permissões de acesso.',
   },
   {
     icon: BarChart3,
-    title: "Registro de Vendas",
+    title: 'Registro de Vendas',
     description:
-      "Registre vendas rapidamente com seleção de produtos, clientes e formas de pagamento integradas.",
+      'Registre vendas rapidamente com seleção de produtos, clientes e formas de pagamento integradas.',
   },
   {
     icon: DollarSign,
-    title: "Fechamento por Cliente",
+    title: 'Fechamento por Cliente',
     description:
-      "Agrupe vendas por cliente, visualize histórico completo e gerencie pagamentos pendentes.",
+      'Agrupe vendas por cliente, visualize histórico completo e gerencie pagamentos pendentes.',
   },
   {
     icon: TrendingUp,
-    title: "Dashboard Inteligente",
+    title: 'Dashboard Inteligente',
     description:
-      "Métricas em tempo real, gráficos de evolução e relatórios detalhados para tomada de decisão.",
+      'Métricas em tempo real, gráficos de evolução e relatórios detalhados para tomada de decisão.',
   },
   {
     icon: Smartphone,
-    title: "Mobile First",
+    title: 'Mobile First',
     description:
-      "Interface otimizada para vendedores em campo, funciona perfeitamente em smartphones e tablets.",
+      'Interface otimizada para vendedores em campo, funciona perfeitamente em smartphones e tablets.',
   },
-];
+]
 
 const paymentMethods = [
-  { name: "Dinheiro", icon: DollarSign },
-  { name: "PIX", icon: Zap },
-  { name: "Cartão Débito", icon: CheckCircle2 },
-  { name: "Cartão Crédito", icon: CheckCircle2 },
-];
+  { name: 'Dinheiro', icon: DollarSign },
+  { name: 'PIX', icon: Zap },
+  { name: 'Cartão Débito', icon: CheckCircle2 },
+  { name: 'Cartão Crédito', icon: CheckCircle2 },
+]
 
 const stats = [
-  { value: "< 2s", label: "Tempo de carregamento", icon: Clock },
-  { value: "100%", label: "Segurança de dados", icon: Shield },
-  { value: "24/7", label: "Disponibilidade", icon: Zap },
-];
+  { value: '< 2s', label: 'Tempo de carregamento', icon: Clock },
+  { value: '100%', label: 'Segurança de dados', icon: Shield },
+  { value: '24/7', label: 'Disponibilidade', icon: Zap },
+]
 
 export function FeaturesSection() {
+  const { ref: featuresRef, inView: featuresInView } = useInView()
+  const { ref: paymentsRef, inView: paymentsInView } = useInView()
+  const { ref: statsRef, inView: statsInView } = useInView()
+
   return (
     <>
       {/* Features Grid */}
-      <section className="container mx-auto px-4 py-20 bg-muted/30">
+      <section className="container mx-auto px-4 py-20">
         <div className="text-center space-y-4 mb-16">
           <h2 className="text-3xl lg:text-5xl font-bold text-foreground text-balance">
             Tudo que você precisa para vender mais
@@ -78,11 +86,17 @@ export function FeaturesSection() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div ref={featuresRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, i) => (
             <Card
               key={i}
-              className="p-6 space-y-4 hover:shadow-lg transition-shadow"
+              className={cn(
+                'p-6 space-y-4 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl',
+                featuresInView
+                  ? 'animate-in fade-in-0 slide-in-from-bottom-4 duration-500 fill-mode-both'
+                  : 'opacity-0'
+              )}
+              style={{ animationDelay: `${i * 100}ms` }}
             >
               <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
                 <feature.icon className="w-6 h-6 text-primary" />
@@ -99,22 +113,27 @@ export function FeaturesSection() {
       </section>
 
       {/* Payment Methods */}
-      <section className="container mx-auto px-4 py-20 bg-muted/30">
+      <section className="container mx-auto px-4 py-20">
         <div className="text-center space-y-4 mb-12">
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground text-balance">
             Múltiplas formas de pagamento
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Registre vendas com diferentes métodos de pagamento e acompanhe o
-            status
+            Registre vendas com diferentes métodos de pagamento e acompanhe o status
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
+        <div ref={paymentsRef} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
           {paymentMethods.map((method, i) => (
             <Card
               key={i}
-              className="p-6 text-center space-y-3 hover:shadow-lg transition-shadow"
+              className={cn(
+                'p-6 text-center space-y-3 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg',
+                paymentsInView
+                  ? 'animate-in fade-in-0 slide-in-from-bottom-4 duration-500 fill-mode-both'
+                  : 'opacity-0'
+              )}
+              style={{ animationDelay: `${i * 75}ms` }}
             >
               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
                 <method.icon className="w-6 h-6 text-primary" />
@@ -127,9 +146,18 @@ export function FeaturesSection() {
 
       {/* Stats Section */}
       <section className="container mx-auto px-4 py-20">
-        <div className="grid md:grid-cols-3 gap-8 text-center">
+        <div ref={statsRef} className="grid md:grid-cols-3 gap-8 text-center">
           {stats.map((stat, i) => (
-            <div key={i} className="space-y-3">
+            <div
+              key={i}
+              className={cn(
+                'space-y-3',
+                statsInView
+                  ? 'animate-in fade-in-0 slide-in-from-bottom-4 duration-500 fill-mode-both'
+                  : 'opacity-0'
+              )}
+              style={{ animationDelay: `${i * 150}ms` }}
+            >
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
                 <stat.icon className="w-8 h-8 text-primary" />
               </div>
@@ -140,5 +168,5 @@ export function FeaturesSection() {
         </div>
       </section>
     </>
-  );
+  )
 }
