@@ -1,0 +1,92 @@
+[
+  {
+    "id": "s001",
+    "fullName": "Carlos Eduardo Souza",
+    "email": "carlos.souza@vendaflow.com",
+    "phone": "(11) 98765-4321",
+    "status": "active",
+    "joinedAt": "2024-01-15",
+    "stats": {
+      "totalSales": 342,
+      "totalRevenue": 187500.00,
+      "totalCustomers": 85,
+      "averageTicket": 548.25,
+      "rating": 4.8
+    }
+  },
+  {
+    "id": "s002",
+    "fullName": "Ana Paula Ferreira",
+    "email": "ana.ferreira@vendaflow.com",
+    "phone": "(21) 97654-3210",
+    "status": "active",
+    "joinedAt": "2024-02-20",
+    "stats": {
+      "totalSales": 278,
+      "totalRevenue": 142300.50,
+      "totalCustomers": 67,
+      "averageTicket": 511.87,
+      "rating": 4.6
+    }
+  },
+  {
+    "id": "s003",
+    "fullName": "Marcos Vinicius Lima",
+    "email": "marcos.lima@vendaflow.com",
+    "phone": "(31) 96543-2109",
+    "status": "active",
+    "joinedAt": "2024-03-10",
+    "stats": {
+      "totalSales": 195,
+      "totalRevenue": 98750.00,
+      "totalCustomers": 52,
+      "averageTicket": 506.41,
+      "rating": 4.4
+    }
+  },
+  {
+    "id": "s004",
+    "fullName": "Juliana Costa Mendes",
+    "email": "juliana.mendes@vendaflow.com",
+    "phone": "(41) 95432-1098",
+    "status": "active",
+    "joinedAt": "2024-04-05",
+    "stats": {
+      "totalSales": 156,
+      "totalRevenue": 76400.75,
+      "totalCustomers": 41,
+      "averageTicket": 489.75,
+      "rating": 4.7
+    }
+  },
+  {
+    "id": "s005",
+    "fullName": "Roberto Alves Neto",
+    "email": "roberto.neto@vendaflow.com",
+    "phone": "(51) 94321-0987",
+    "status": "inactive",
+    "joinedAt": "2023-11-08",
+    "stats": {
+      "totalSales": 89,
+      "totalRevenue": 41200.00,
+      "totalCustomers": 28,
+      "averageTicket": 462.92,
+      "rating": 3.9
+    }
+  },
+  {
+    "id": "s006",
+    "fullName": "Fernanda Oliveira Silva",
+    "email": "fernanda.silva@vendaflow.com",
+    "phone": "(61) 93210-9876",
+    "status": "active",
+    "joinedAt": "2024-06-18",
+    "stats": {
+      "totalSales": 112,
+      "totalRevenue": 58900.25,
+      "totalCustomers": 34,
+      "averageTicket": 525.89,
+      "rating": 4.5
+    }
+  }
+]

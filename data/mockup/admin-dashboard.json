@@ -1,0 +1,201 @@
+{
+  "day": {
+    "totalSales": 8,
+    "totalRevenue": 12450.50,
+    "totalCustomers": 6,
+    "averageTicket": 1556.31,
+    "activeSellers": 5,
+    "totalProducts": 10,
+    "pendingPaymentsCount": 2,
+    "pendingPaymentsValue": 3200.00,
+    "chartData": [
+      { "date": "08h", "sales": 1, "revenue": 1299.90 },
+      { "date": "09h", "sales": 0, "revenue": 0 },
+      { "date": "10h", "sales": 2, "revenue": 2899.80 },
+      { "date": "11h", "sales": 1, "revenue": 3499.90 },
+      { "date": "12h", "sales": 0, "revenue": 0 },
+      { "date": "13h", "sales": 1, "revenue": 899.90 },
+      { "date": "14h", "sales": 2, "revenue": 2649.80 },
+      { "date": "15h", "sales": 1, "revenue": 1200.20 }
+    ],
+    "paymentMethods": [
+      { "name": "PIX", "value": 45, "color": "var(--color-primary)" },
+      { "name": "Crédito", "value": 28, "color": "var(--color-chart-2)" },
+      { "name": "Débito", "value": 17, "color": "var(--color-chart-3)" },
+      { "name": "Dinheiro", "value": 10, "color": "var(--color-chart-4)" }
+    ],
+    "topProducts": [
+      { "name": "Notebook Dell Inspiron 15", "quantity": 2, "revenue": 6999.80, "growth": 12.5 },
+      { "name": "Monitor LG 24\" Full HD", "quantity": 3, "revenue": 2699.70, "growth": 8.3 },
+      { "name": "Cadeira Gamer ThunderX3", "quantity": 1, "revenue": 1299.90, "growth": -2.1 },
+      { "name": "SSD Samsung 1TB", "quantity": 2, "revenue": 899.80, "growth": 5.7 }
+    ],
+    "salesBySeller": [
+      { "name": "Carlos", "sales": 3, "revenue": 5499.80 },
+      { "name": "Ana", "sales": 2, "revenue": 3199.80 },
+      { "name": "Marcos", "sales": 1, "revenue": 1299.90 },
+      { "name": "Juliana", "sales": 1, "revenue": 1750.50 },
+      { "name": "Fernanda", "sales": 1, "revenue": 700.50 }
+    ],
+    "pendingPayments": [
+      { "id": "VDA-016", "customer": "Pedro Almeida", "seller": "Carlos", "amount": 1600.00, "date": "2025-01-22" },
+      { "id": "VDA-017", "customer": "Fernanda Costa", "seller": "Ana", "amount": 1600.00, "date": "2025-01-22" }
+    ]
+  },
+  "week": {
+    "totalSales": 47,
+    "totalRevenue": 68920.30,
+    "totalCustomers": 32,
+    "averageTicket": 1466.39,
+    "activeSellers": 5,
+    "totalProducts": 10,
+    "pendingPaymentsCount": 5,
+    "pendingPaymentsValue": 8750.00,
+    "chartData": [
+      { "date": "Seg", "sales": 7, "revenue": 9800.50 },
+      { "date": "Ter", "sales": 9, "revenue": 13200.00 },
+      { "date": "Qua", "sales": 6, "revenue": 8450.80 },
+      { "date": "Qui", "sales": 11, "revenue": 16500.00 },
+      { "date": "Sex", "sales": 8, "revenue": 11200.00 },
+      { "date": "Sáb", "sales": 4, "revenue": 6250.00 },
+      { "date": "Dom", "sales": 2, "revenue": 3519.00 }
+    ],
+    "paymentMethods": [
+      { "name": "PIX", "value": 42, "color": "var(--color-primary)" },
+      { "name": "Crédito", "value": 31, "color": "var(--color-chart-2)" },
+      { "name": "Débito", "value": 18, "color": "var(--color-chart-3)" },
+      { "name": "Dinheiro", "value": 9, "color": "var(--color-chart-4)" }
+    ],
+    "topProducts": [
+      { "name": "Notebook Dell Inspiron 15", "quantity": 9, "revenue": 31499.10, "growth": 15.2 },
+      { "name": "Monitor LG 24\" Full HD", "quantity": 14, "revenue": 12598.60, "growth": 7.8 },
+      { "name": "SSD Samsung 1TB", "quantity": 11, "revenue": 4948.90, "growth": 11.4 },
+      { "name": "Mouse Logitech MX Master 3", "quantity": 8, "revenue": 3999.20, "growth": 3.5 }
+    ],
+    "salesBySeller": [
+      { "name": "Carlos", "sales": 14, "revenue": 22500.00 },
+      { "name": "Ana", "sales": 12, "revenue": 18200.30 },
+      { "name": "Marcos", "sales": 9, "revenue": 12800.00 },
+      { "name": "Juliana", "sales": 8, "revenue": 9820.00 },
+      { "name": "Fernanda", "sales": 4, "revenue": 5600.00 }
+    ],
+    "pendingPayments": [
+      { "id": "VDA-011", "customer": "João Pereira", "seller": "Ana", "amount": 2100.00, "date": "2025-01-18" },
+      { "id": "VDA-013", "customer": "Lucas Martins", "seller": "Marcos", "amount": 1850.00, "date": "2025-01-19" },
+      { "id": "VDA-015", "customer": "Camila Rocha", "seller": "Juliana", "amount": 1500.00, "date": "2025-01-20" },
+      { "id": "VDA-016", "customer": "Pedro Almeida", "seller": "Carlos", "amount": 1600.00, "date": "2025-01-22" },
+      { "id": "VDA-017", "customer": "Fernanda Costa", "seller": "Ana", "amount": 1700.00, "date": "2025-01-22" }
+    ]
+  },
+  "month": {
+    "totalSales": 178,
+    "totalRevenue": 254350.80,
+    "totalCustomers": 98,
+    "averageTicket": 1429.50,
+    "activeSellers": 5,
+    "totalProducts": 10,
+    "pendingPaymentsCount": 12,
+    "pendingPaymentsValue": 19800.00,
+    "chartData": [
+      { "date": "01/01", "sales": 5, "revenue": 7200.00 },
+      { "date": "03/01", "sales": 8, "revenue": 11500.00 },
+      { "date": "05/01", "sales": 6, "revenue": 8400.00 },
+      { "date": "07/01", "sales": 10, "revenue": 14200.00 },
+      { "date": "09/01", "sales": 7, "revenue": 9800.00 },
+      { "date": "11/01", "sales": 9, "revenue": 13100.00 },
+      { "date": "13/01", "sales": 11, "revenue": 16500.00 },
+      { "date": "15/01", "sales": 8, "revenue": 11200.00 },
+      { "date": "17/01", "sales": 13, "revenue": 19800.00 },
+      { "date": "19/01", "sales": 9, "revenue": 12900.00 },
+      { "date": "21/01", "sales": 12, "revenue": 17400.00 },
+      { "date": "23/01", "sales": 7, "revenue": 9800.00 },
+      { "date": "25/01", "sales": 10, "revenue": 14500.00 },
+      { "date": "27/01", "sales": 8, "revenue": 11200.00 },
+      { "date": "29/01", "sales": 6, "revenue": 8500.00 },
+      { "date": "31/01", "sales": 4, "revenue": 5800.00 }
+    ],
+    "paymentMethods": [
+      { "name": "PIX", "value": 44, "color": "var(--color-primary)" },
+      { "name": "Crédito", "value": 30, "color": "var(--color-chart-2)" },
+      { "name": "Débito", "value": 17, "color": "var(--color-chart-3)" },
+      { "name": "Dinheiro", "value": 9, "color": "var(--color-chart-4)" }
+    ],
+    "topProducts": [
+      { "name": "Notebook Dell Inspiron 15", "quantity": 38, "revenue": 132996.20, "growth": 18.4 },
+      { "name": "Monitor LG 24\" Full HD", "quantity": 54, "revenue": 48594.60, "growth": 9.2 },
+      { "name": "SSD Samsung 1TB", "quantity": 47, "revenue": 21145.30, "growth": 14.1 },
+      { "name": "Mouse Logitech MX Master 3", "quantity": 31, "revenue": 15496.90, "growth": 6.8 }
+    ],
+    "salesBySeller": [
+      { "name": "Carlos", "sales": 52, "revenue": 78200.00 },
+      { "name": "Ana", "sales": 45, "revenue": 65300.80 },
+      { "name": "Marcos", "sales": 38, "revenue": 52100.00 },
+      { "name": "Juliana", "sales": 28, "revenue": 38500.00 },
+      { "name": "Fernanda", "sales": 15, "revenue": 20250.00 }
+    ],
+    "pendingPayments": [
+      { "id": "VDA-003", "customer": "Ana Rodrigues", "seller": "Carlos", "amount": 1800.00, "date": "2025-01-05" },
+      { "id": "VDA-007", "customer": "Pedro Almeida", "seller": "Ana", "amount": 2200.00, "date": "2025-01-10" },
+      { "id": "VDA-009", "customer": "Lucas Martins", "seller": "Marcos", "amount": 1500.00, "date": "2025-01-12" },
+      { "id": "VDA-011", "customer": "João Pereira", "seller": "Ana", "amount": 2100.00, "date": "2025-01-18" },
+      { "id": "VDA-013", "customer": "Lucas Martins", "seller": "Marcos", "amount": 1850.00, "date": "2025-01-19" },
+      { "id": "VDA-015", "customer": "Camila Rocha", "seller": "Juliana", "amount": 1500.00, "date": "2025-01-20" },
+      { "id": "VDA-016", "customer": "Pedro Almeida", "seller": "Carlos", "amount": 1600.00, "date": "2025-01-22" },
+      { "id": "VDA-017", "customer": "Fernanda Costa", "seller": "Ana", "amount": 1700.00, "date": "2025-01-22" }
+    ]
+  },
+  "year": {
+    "totalSales": 1172,
+    "totalRevenue": 1648250.60,
+    "totalCustomers": 312,
+    "averageTicket": 1406.36,
+    "activeSellers": 5,
+    "totalProducts": 10,
+    "pendingPaymentsCount": 28,
+    "pendingPaymentsValue": 41200.00,
+    "chartData": [
+      { "date": "Jan", "sales": 89, "revenue": 124500.00 },
+      { "date": "Fev", "sales": 76, "revenue": 105800.00 },
+      { "date": "Mar", "sales": 98, "revenue": 138200.00 },
+      { "date": "Abr", "sales": 82, "revenue": 114600.00 },
+      { "date": "Mai", "sales": 115, "revenue": 162100.00 },
+      { "date": "Jun", "sales": 103, "revenue": 144800.00 },
+      { "date": "Jul", "sales": 124, "revenue": 174200.00 },
+      { "date": "Ago", "sales": 118, "revenue": 166000.00 },
+      { "date": "Set", "sales": 97, "revenue": 136500.00 },
+      { "date": "Out", "sales": 109, "revenue": 153100.00 },
+      { "date": "Nov", "sales": 133, "revenue": 187000.00 },
+      { "date": "Dez", "sales": 178, "revenue": 254350.80 }
+    ],
+    "paymentMethods": [
+      { "name": "PIX", "value": 43, "color": "var(--color-primary)" },
+      { "name": "Crédito", "value": 29, "color": "var(--color-chart-2)" },
+      { "name": "Débito", "value": 19, "color": "var(--color-chart-3)" },
+      { "name": "Dinheiro", "value": 9, "color": "var(--color-chart-4)" }
+    ],
+    "topProducts": [
+      { "name": "Notebook Dell Inspiron 15", "quantity": 248, "revenue": 867752.00, "growth": 22.1 },
+      { "name": "Monitor LG 24\" Full HD", "quantity": 312, "revenue": 280756.80, "growth": 11.5 },
+      { "name": "SSD Samsung 1TB", "quantity": 285, "revenue": 128236.50, "growth": 17.3 },
+      { "name": "Mouse Logitech MX Master 3", "quantity": 198, "revenue": 98980.20, "growth": 8.9 }
+    ],
+    "salesBySeller": [
+      { "name": "Carlos", "sales": 342, "revenue": 487500.00 },
+      { "name": "Ana", "sales": 278, "revenue": 392300.60 },
+      { "name": "Marcos", "sales": 195, "revenue": 273750.00 },
+      { "name": "Juliana", "sales": 156, "revenue": 218900.00 },
+      { "name": "Fernanda", "sales": 112, "revenue": 156800.00 },
+      { "name": "Roberto", "sales": 89, "revenue": 119000.00 }
+    ],
+    "pendingPayments": [
+      { "id": "VDA-003", "customer": "Ana Rodrigues", "seller": "Carlos", "amount": 1800.00, "date": "2025-01-05" },
+      { "id": "VDA-007", "customer": "Pedro Almeida", "seller": "Ana", "amount": 2200.00, "date": "2025-01-10" },
+      { "id": "VDA-009", "customer": "Lucas Martins", "seller": "Marcos", "amount": 1500.00, "date": "2025-01-12" },
+      { "id": "VDA-011", "customer": "João Pereira", "seller": "Ana", "amount": 2100.00, "date": "2025-01-18" },
+      { "id": "VDA-013", "customer": "Lucas Martins", "seller": "Marcos", "amount": 1850.00, "date": "2025-01-19" },
+      { "id": "VDA-015", "customer": "Camila Rocha", "seller": "Juliana", "amount": 1500.00, "date": "2025-01-20" },
+      { "id": "VDA-016", "customer": "Pedro Almeida", "seller": "Carlos", "amount": 1600.00, "date": "2025-01-22" },
+      { "id": "VDA-017", "customer": "Fernanda Costa", "seller": "Ana", "amount": 1700.00, "date": "2025-01-22" }
+    ]
+  }
+}
