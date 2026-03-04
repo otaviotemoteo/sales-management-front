@@ -95,7 +95,8 @@ export default function VendasPage() {
                 date={sale.date}
                 amount={sale.amount}
                 status={sale.status as 'pending' | 'completed' | 'cancelled'}
-                items={sale.items}
+                paymentMethod={sale.paymentMethod}
+                products={sale.products}
                 onView={() => { setSelectedSale(sale); setSaleDetailsOpen(true) }}
               />
               <div className="absolute top-3 right-3">
