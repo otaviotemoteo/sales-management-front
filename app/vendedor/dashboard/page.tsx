@@ -87,23 +87,6 @@ export default function DashboardPage() {
 
         <TopProducts products={monthData.topProducts} />
       </div>
-
-      <div>
-        <h2 className="font-semibold text-foreground mb-4">Acesso Rápido</h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {quickLinks.map(({ href, label, description, icon: Icon, color }) => (
-            <Link key={href} href={href}>
-              <Card className="p-4 hover:shadow-md transition-shadow cursor-pointer h-full">
-                <div className={`w-10 h-10 rounded-lg flex items-center justify-center mb-3 ${color}`}>
-                  <Icon className="w-5 h-5" />
-                </div>
-                <h3 className="font-semibold text-foreground text-sm">{label}</h3>
-                <p className="text-xs text-muted-foreground mt-1">{description}</p>
-              </Card>
-            </Link>
-          ))}
-        </div>
-      </div>
     </div>
   )
 }
