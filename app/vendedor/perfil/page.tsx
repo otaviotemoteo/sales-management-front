@@ -25,6 +25,12 @@ export default function PerfilPage() {
         <ProfileAvatar
           name={sellerData.fullName}
           email={sellerData.email}
+          phone={sellerData.phone}
+          cpf={sellerData.cpf}
+          city={sellerData.city}
+          state={sellerData.state}
+          bio={sellerData.bio}
+          joinDate={sellerData.joinDate}
           avatarUrl={sellerData.avatarUrl ?? undefined}
         />
         <div className="lg:col-span-2">

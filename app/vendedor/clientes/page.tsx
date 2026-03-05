@@ -15,6 +15,25 @@ import salesData from '@/data/mockup/sales.json'
 
 type Customer = (typeof customersData)[0]
 
+type LastSaleInfo = { date: string; items: number; productName?: string; amount: number }
+
+function getLastSale(customerId: string): LastSaleInfo | null {
+  const customerSales = salesData.filter((s) => s.customerId === customerId)
+  if (customerSales.length === 0) return null
+  const sorted = [...customerSales].sort((a, b) => {
+    const [da, ma, ya] = a.date.split('/').map(Number)
+    const [db, mb, yb] = b.date.split('/').map(Number)
+    return new Date(yb, mb - 1, db).getTime() - new Date(ya, ma - 1, da).getTime()
+  })
+  const last = sorted[0]
+  return {
+    date: last.date,
+    items: last.products.length,
+    productName: last.products.length === 1 ? last.products[0].name : undefined,
+    amount: last.amount,
+  }
+}
+
 export default function ClientesPage() {
   const [search, setSearch] = useState('')
   const [newClientOpen, setNewClientOpen] = useState(false)
@@ -73,7 +92,7 @@ export default function ClientesPage() {
               phone={customer.phone}
               city={customer.city}
               totalSpent={customer.totalSpent}
-              lastPurchase={customer.lastPurchase}
+              lastSaleInfo={getLastSale(customer.id)}
               onView={() => { setSelectedCustomer(customer); setCustomerDetailsOpen(true) }}
             />
           ))}
