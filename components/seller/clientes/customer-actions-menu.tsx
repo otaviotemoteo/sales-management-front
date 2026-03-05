@@ -33,7 +33,7 @@ export function CustomerActionsMenu({
           Editar
         </DropdownMenuItem>
         <DropdownMenuItem onClick={onDelete} className="gap-2 text-destructive">
-          <Trash2 className="w-4 h-4" />
+          <Trash2 className="w-4 h-4 text-red-500" />
           Deletar
         </DropdownMenuItem>
       </DropdownMenuContent>
