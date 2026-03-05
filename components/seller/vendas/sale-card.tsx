@@ -58,7 +58,7 @@ export function SaleCard({ customer, date, amount, status, paymentMethod, produc
           )}
         </div>
         <Badge
-          className="mr-8 shrink-0"
+          className="mr-9 shrink-0"
           variant={status === 'completed' ? 'default' : status === 'pending' ? 'secondary' : 'destructive'}
         >
           {statusLabel[status] ?? status}
