@@ -8,7 +8,7 @@ interface VendasStatsProps {
   totalRevenue: number
   pendingValue: number
   completionRate: number
-  paymentBreakdown: Array<{ name: string; pct: number; color: string }>
+  paymentBreakdown: Array<{ name: string; pct: number }>
 }
 
 const paymentColors: Record<string, string> = {

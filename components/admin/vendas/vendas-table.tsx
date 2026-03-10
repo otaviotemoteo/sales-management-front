@@ -70,8 +70,8 @@ export function VendasTable({ sales, onStatusChange, onEdit, onViewDetail }: Ven
             <TableHead>Vendedor</TableHead>
             <TableHead>Data</TableHead>
             <TableHead>Pagamento</TableHead>
-            <TableHead className="text-right">Valor</TableHead>
-            <TableHead>Status</TableHead>
+            <TableHead className="text-center w-36">Valor</TableHead>
+            <TableHead className="w-40 px-6">Status</TableHead>
             <TableHead className="pr-4 w-12" />
           </TableRow>
         </TableHeader>
@@ -83,10 +83,10 @@ export function VendasTable({ sales, onStatusChange, onEdit, onViewDetail }: Ven
               <TableCell className="text-muted-foreground">{sale.seller}</TableCell>
               <TableCell className="text-muted-foreground">{sale.date}</TableCell>
               <TableCell className="text-muted-foreground">{paymentLabel[sale.paymentMethod] ?? sale.paymentMethod}</TableCell>
-              <TableCell className="text-right font-semibold text-foreground">
+              <TableCell className="text-center font-semibold text-foreground whitespace-nowrap">
                 R$ {sale.amount.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
               </TableCell>
-              <TableCell>
+              <TableCell className="px-6">
                 <SaleStatusSelect id={sale.id} status={sale.status} onStatusChange={onStatusChange} />
               </TableCell>
               <TableCell className="pr-4">
