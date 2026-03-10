@@ -53,7 +53,7 @@ export function ProfileForm({ onSubmit, defaultValues = {}, isLoading }: Profile
     setValues((v) => ({ ...v, [field]: e.target.value }))
 
   return (
-    <Card className="p-6 gap-0">
+    <Card className="p-6 gap-0 h-full">
       <div className="flex items-center justify-between mb-4">
         <h3 className="font-semibold text-foreground">Informações Pessoais</h3>
         {isEditing && (
@@ -147,7 +147,7 @@ export function ProfileForm({ onSubmit, defaultValues = {}, isLoading }: Profile
                 placeholder="Conte um pouco sobre você..."
                 value={values.bio}
                 onChange={set('bio')}
-                className="mt-1.5"
+                className="mt-1.5 resize-none"
               />
             </div>
 

@@ -18,7 +18,14 @@ export function ChangePasswordForm({ onSubmit, isLoading }: ChangePasswordFormPr
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
   return (
-    <Card className="p-6">
+    <Card className="p-6 h-full">
+      <div className="mb-6">
+        <h3 className="font-semibold text-foreground">Alterar Senha</h3>
+        <p className="text-sm text-muted-foreground mt-1">
+          Atualize sua senha de acesso à conta
+        </p>
+      </div>
+
       <form onSubmit={(e) => { e.preventDefault(); onSubmit?.({}); }} className="space-y-4">
         <div>
           <Label htmlFor="currentPassword">Senha Atual</Label>
