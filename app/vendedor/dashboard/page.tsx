@@ -1,10 +1,13 @@
 'use client'
 
 import Link from 'next/link'
-import { BarChart3, Users, TrendingUp, User, ArrowRight } from 'lucide-react'
+import { useState } from 'react'
+import { BarChart3, Users, TrendingUp, User, ArrowRight, Plus } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { NewSaleForm } from '@/components/seller/vendas/new-sale-form'
 import { StatsOverview } from '@/components/seller/desempenho/stats-overview'
 import { TopProducts } from '@/components/seller/desempenho/top-products'
 import sellerData from '@/data/mockup/seller.json'
@@ -39,13 +42,33 @@ const monthData = performanceData.month
 const recentSales = salesData.slice(0, 6)
 
 export default function DashboardPage() {
+  const [newSaleOpen, setNewSaleOpen] = useState(false)
+
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">
-          {greeting}, {sellerData.fullName.split(' ')[0]}!
-        </h1>
-        <p className="text-muted-foreground mt-1 capitalize">{dateLabel}</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-foreground">
+            {greeting}, {sellerData.fullName.split(' ')[0]}!
+          </h1>
+          <p className="text-muted-foreground mt-1 capitalize">{dateLabel}</p>
+        </div>
+        <Dialog open={newSaleOpen} onOpenChange={setNewSaleOpen}>
+          <DialogTrigger asChild>
+            <Button className="gap-2">
+              <Plus className="w-4 h-4" />
+              Nova Venda
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Registrar Nova Venda</DialogTitle>
+            </DialogHeader>
+            <div className="pt-2">
+              <NewSaleForm onSubmit={() => setNewSaleOpen(false)} />
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
 
       <StatsOverview
