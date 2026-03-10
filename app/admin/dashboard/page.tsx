@@ -6,6 +6,7 @@ import { SalesEvolutionChart } from '@/components/admin/dashboard/sales-evolutio
 import { SalesBySellerChart } from '@/components/admin/dashboard/sales-by-seller-chart'
 import { PaymentMethodsChart } from '@/components/admin/dashboard/payment-methods-chart'
 import { PendingPaymentsList } from '@/components/admin/dashboard/pending-payments-list'
+import { SalesStatusChart } from '@/components/admin/dashboard/sales-status-chart'
 import { PeriodSelector } from '@/components/seller/desempenho/period-selector'
 import { TopProducts } from '@/components/seller/desempenho/top-products'
 import adminData from '@/data/mockup/admin-dashboard.json'
@@ -46,7 +47,10 @@ export default function AdminDashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <PaymentMethodsChart methods={data.paymentMethods} />
+        <div className="space-y-6">
+          <PaymentMethodsChart methods={data.paymentMethods} />
+          <SalesStatusChart statuses={data.salesByStatus} />
+        </div>
         <PendingPaymentsList payments={data.pendingPayments} />
       </div>
 
