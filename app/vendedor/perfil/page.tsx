@@ -4,6 +4,7 @@ import { ProfileAvatar } from '@/components/seller/perfil/profile-avatar'
 import { ProfileForm } from '@/components/seller/perfil/profile-form'
 import { ProfileStats } from '@/components/seller/perfil/profile-stats'
 import { ChangePasswordForm } from '@/components/seller/perfil/change-password-form'
+import { AccountActionsCard } from '@/components/seller/perfil/account-actions-card'
 import sellerData from '@/data/mockup/seller.json'
 
 export default function PerfilPage() {
@@ -48,7 +49,14 @@ export default function PerfilPage() {
         </div>
       </div>
 
-      <ChangePasswordForm />
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="order-2 lg:order-1">
+          <AccountActionsCard />
+        </div>
+        <div className="lg:col-span-2 order-1 lg:order-2">
+          <ChangePasswordForm />
+        </div>
+      </div>
     </div>
   )
 }
