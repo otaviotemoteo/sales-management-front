@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Plus, Trash2 } from 'lucide-react'
 import { useState } from 'react'
+import { PaymentMethodSelector } from './payment-method-selector'
 
 interface SaleItem {
   id: string
@@ -20,6 +21,7 @@ interface NewSaleFormProps {
 
 export function NewSaleForm({ onSubmit }: NewSaleFormProps) {
   const [items, setItems] = useState<SaleItem[]>([])
+  const [selectedPayment, setSelectedPayment] = useState('pix')
 
   return (
     <Card className="p-6">
@@ -57,6 +59,8 @@ export function NewSaleForm({ onSubmit }: NewSaleFormProps) {
             </div>
           )}
         </div>
+
+        <PaymentMethodSelector selected={selectedPayment} onChange={setSelectedPayment} />
 
         <div className="pt-4 border-t border-border space-y-3">
           <div className="flex justify-between text-sm">

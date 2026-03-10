@@ -9,7 +9,6 @@ import { SaleStatusFilter } from '@/components/seller/vendas/sale-status-filter'
 import { SaleCard } from '@/components/seller/vendas/sale-card'
 import { SaleActionsMenu } from '@/components/seller/vendas/sale-actions-menu'
 import { NewSaleForm } from '@/components/seller/vendas/new-sale-form'
-import { PaymentMethodSelector } from '@/components/seller/vendas/payment-method-selector'
 import { SaleReceipt } from '@/components/seller/vendas/sale-receipt'
 import { Card } from '@/components/ui/card'
 import salesData from '@/data/mockup/sales.json'
@@ -29,7 +28,6 @@ export default function VendasPage() {
   const [selectedSale, setSelectedSale] = useState<(typeof salesData)[0] | null>(null)
   const [saleDetailsOpen, setSaleDetailsOpen] = useState(false)
   const [newSaleOpen, setNewSaleOpen] = useState(false)
-  const [selectedPayment, setSelectedPayment] = useState<string>('pix')
 
   const filtered = useMemo(() => {
     return salesData.filter((s) => {
@@ -64,9 +62,8 @@ export default function VendasPage() {
             <DialogHeader>
               <DialogTitle>Registrar Nova Venda</DialogTitle>
             </DialogHeader>
-            <div className="space-y-4 pt-2">
+            <div className="pt-2">
               <NewSaleForm onSubmit={() => setNewSaleOpen(false)} />
-              <PaymentMethodSelector selected={selectedPayment} onChange={setSelectedPayment} />
             </div>
           </DialogContent>
         </Dialog>
