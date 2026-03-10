@@ -22,6 +22,11 @@
       { "method": "Crédito", "count": 1, "percentage": 33 },
       { "method": "Dinheiro", "count": 0, "percentage": 1 }
     ],
+    "salesByStatus": [
+      { "status": "Concluída", "count": 2, "percentage": 67 },
+      { "status": "Pendente", "count": 1, "percentage": 33 },
+      { "status": "Cancelada", "count": 0, "percentage": 0 }
+    ],
     "topProducts": [
       { "id": "p001", "name": "Notebook Dell Inspiron 15", "quantity": 1, "revenue": 3499.9, "growth": 5 },
       { "id": "p009", "name": "Cadeira Gamer ThunderX3", "quantity": 1, "revenue": 1299.9, "growth": 2 },
@@ -55,6 +60,11 @@
       { "method": "Crédito", "count": 5, "percentage": 28 },
       { "method": "Débito", "count": 4, "percentage": 22 },
       { "method": "Dinheiro", "count": 1, "percentage": 6 }
+    ],
+    "salesByStatus": [
+      { "status": "Concluída", "count": 12, "percentage": 67 },
+      { "status": "Pendente", "count": 4, "percentage": 22 },
+      { "status": "Cancelada", "count": 2, "percentage": 11 }
     ],
     "topProducts": [
       { "id": "p001", "name": "Notebook Dell Inspiron 15", "quantity": 5, "revenue": 17499.5, "growth": 18 },
@@ -95,6 +105,11 @@
       { "method": "Débito", "count": 9, "percentage": 19 },
       { "method": "Dinheiro", "count": 3, "percentage": 6 }
     ],
+    "salesByStatus": [
+      { "status": "Concluída", "count": 32, "percentage": 68 },
+      { "status": "Pendente", "count": 10, "percentage": 21 },
+      { "status": "Cancelada", "count": 5, "percentage": 11 }
+    ],
     "topProducts": [
       { "id": "p001", "name": "Notebook Dell Inspiron 15", "quantity": 14, "revenue": 48998.6, "growth": 22 },
       { "id": "p002", "name": "Monitor LG 24\" Full HD", "quantity": 11, "revenue": 9898.9, "growth": 15 },
@@ -133,6 +148,11 @@
       { "method": "Crédito", "count": 110, "percentage": 32 },
       { "method": "Débito", "count": 63, "percentage": 18 },
       { "method": "Dinheiro", "count": 21, "percentage": 7 }
+    ],
+    "salesByStatus": [
+      { "status": "Concluída", "count": 230, "percentage": 67 },
+      { "status": "Pendente", "count": 72, "percentage": 21 },
+      { "status": "Cancelada", "count": 40, "percentage": 12 }
     ],
     "topProducts": [
       { "id": "p001", "name": "Notebook Dell Inspiron 15", "quantity": 98, "revenue": 342990.2, "growth": 28 },

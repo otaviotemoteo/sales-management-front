@@ -24,6 +24,11 @@
       { "name": "Débito", "value": 17, "color": "var(--color-chart-3)" },
       { "name": "Dinheiro", "value": 10, "color": "var(--color-chart-4)" }
     ],
+    "salesByStatus": [
+      { "status": "Concluída", "count": 5, "percentage": 62 },
+      { "status": "Pendente", "count": 2, "percentage": 25 },
+      { "status": "Cancelada", "count": 1, "percentage": 13 }
+    ],
     "topProducts": [
       { "name": "Notebook Dell Inspiron 15", "quantity": 2, "revenue": 6999.80, "growth": 12.5 },
       { "name": "Monitor LG 24\" Full HD", "quantity": 3, "revenue": 2699.70, "growth": 8.3 },
@@ -65,6 +70,11 @@
       { "name": "Crédito", "value": 31, "color": "var(--color-chart-2)" },
       { "name": "Débito", "value": 18, "color": "var(--color-chart-3)" },
       { "name": "Dinheiro", "value": 9, "color": "var(--color-chart-4)" }
+    ],
+    "salesByStatus": [
+      { "status": "Concluída", "count": 31, "percentage": 66 },
+      { "status": "Pendente", "count": 11, "percentage": 23 },
+      { "status": "Cancelada", "count": 5, "percentage": 11 }
     ],
     "topProducts": [
       { "name": "Notebook Dell Inspiron 15", "quantity": 9, "revenue": 31499.10, "growth": 15.2 },
@@ -120,6 +130,11 @@
       { "name": "Débito", "value": 17, "color": "var(--color-chart-3)" },
       { "name": "Dinheiro", "value": 9, "color": "var(--color-chart-4)" }
     ],
+    "salesByStatus": [
+      { "status": "Concluída", "count": 118, "percentage": 66 },
+      { "status": "Pendente", "count": 42, "percentage": 24 },
+      { "status": "Cancelada", "count": 18, "percentage": 10 }
+    ],
     "topProducts": [
       { "name": "Notebook Dell Inspiron 15", "quantity": 38, "revenue": 132996.20, "growth": 18.4 },
       { "name": "Monitor LG 24\" Full HD", "quantity": 54, "revenue": 48594.60, "growth": 9.2 },
@@ -172,6 +187,11 @@
       { "name": "Crédito", "value": 29, "color": "var(--color-chart-2)" },
       { "name": "Débito", "value": 19, "color": "var(--color-chart-3)" },
       { "name": "Dinheiro", "value": 9, "color": "var(--color-chart-4)" }
+    ],
+    "salesByStatus": [
+      { "status": "Concluída", "count": 784, "percentage": 67 },
+      { "status": "Pendente", "count": 268, "percentage": 23 },
+      { "status": "Cancelada", "count": 120, "percentage": 10 }
     ],
     "topProducts": [
       { "name": "Notebook Dell Inspiron 15", "quantity": 248, "revenue": 867752.00, "growth": 22.1 },
