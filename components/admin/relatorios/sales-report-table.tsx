@@ -63,8 +63,8 @@ export function SalesReportTable({ sales }: SalesReportTableProps) {
             <TableHead>Vendedor</TableHead>
             <TableHead>Data</TableHead>
             <TableHead>Pagamento</TableHead>
-            <TableHead className="text-right">Valor</TableHead>
-            <TableHead className="pr-4">Status</TableHead>
+            <TableHead className="text-center w-36">Valor</TableHead>
+            <TableHead className="w-40 px-6">Status</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -75,10 +75,10 @@ export function SalesReportTable({ sales }: SalesReportTableProps) {
               <TableCell className="text-muted-foreground">{sale.seller}</TableCell>
               <TableCell className="text-muted-foreground">{sale.date}</TableCell>
               <TableCell className="text-muted-foreground">{paymentLabel[sale.paymentMethod] ?? sale.paymentMethod}</TableCell>
-              <TableCell className="text-right font-semibold text-foreground">
+              <TableCell className="text-center font-semibold text-foreground whitespace-nowrap">
                 R$ {sale.amount.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
               </TableCell>
-              <TableCell className="pr-4">
+              <TableCell className="px-6">
                 <Badge variant={statusVariant[sale.status] ?? 'secondary'}>
                   {statusLabel[sale.status] ?? sale.status}
                 </Badge>
