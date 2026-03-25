@@ -1,40 +1,61 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { Download } from 'lucide-react'
+import { Download, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ReportsFilters } from '@/components/admin/relatorios/reports-filters'
 import { ReportSummary } from '@/components/admin/relatorios/report-summary'
 import { SalesReportTable } from '@/components/admin/relatorios/sales-report-table'
-import salesData from '@/data/mockup/sales.json'
-import sellersData from '@/data/mockup/sellers.json'
+import { useSales } from '@/hooks/use-sales'
+import { useUsers } from '@/hooks/use-users'
+import { formatSaleId, formatDate } from '@/lib/constants'
 
-// Assign sellers to sales deterministically for mockup purposes
-const sellerNames = sellersData.filter((s) => s.status === 'active').map((s) => s.fullName.split(' ')[0])
+const STATUS_TO_MOCK: Record<string, string> = {
+  CONFIRMED: 'completed',
+  PENDING: 'pending',
+  CANCELLED: 'cancelled',
+}
 
-const enrichedSales = salesData.map((sale, idx) => ({
-  ...sale,
-  seller: sellerNames[idx % sellerNames.length],
-  sellerId: sellersData[idx % sellersData.length].id,
-}))
-
-const sellerOptions = sellersData.map((s) => ({
-  id: s.id,
-  name: s.fullName,
-}))
+const PAYMENT_TO_MOCK: Record<string, string> = {
+  PIX: 'pix',
+  CREDIT_CARD: 'credit',
+  DEBIT_CARD: 'debit',
+  CASH: 'cash',
+}
 
 export default function RelatoriosPage() {
+  const { sales, isLoading } = useSales({ own: false, size: 100 })
+  const { users: sellers } = useUsers({ role: 'SELLER', size: 100 })
   const [period, setPeriod] = useState('all')
   const [seller, setSeller] = useState('all')
   const [status, setStatus] = useState('all')
 
+  const sellerOptions = useMemo(() =>
+    sellers.map(s => ({ id: String(s.id), name: s.name })),
+    [sellers]
+  )
+
+  const mappedSales = useMemo(() =>
+    sales.map(sale => ({
+      id: formatSaleId(sale.id),
+      customer: sale.customer?.name ?? 'Cliente',
+      seller: sale.seller?.name?.split(' ')[0] ?? 'Vendedor',
+      sellerId: String(sale.seller?.id ?? ''),
+      date: formatDate(sale.saleDate),
+      amount: sale.finalAmount,
+      paymentMethod: PAYMENT_TO_MOCK[sale.paymentMethod] ?? sale.paymentMethod,
+      status: STATUS_TO_MOCK[sale.status] ?? sale.status,
+    })),
+    [sales]
+  )
+
   const filtered = useMemo(() => {
-    return enrichedSales.filter((sale) => {
+    return mappedSales.filter((sale) => {
       const matchSeller = seller === 'all' || sale.sellerId === seller
       const matchStatus = status === 'all' || sale.status === status
       return matchSeller && matchStatus
     })
-  }, [seller, status])
+  }, [mappedSales, seller, status])
 
   const summary = useMemo(() => {
     const totalSales = filtered.length
@@ -43,6 +64,14 @@ export default function RelatoriosPage() {
     const pendingCount = filtered.filter((s) => s.status === 'pending').length
     return { totalSales, totalRevenue, completedCount, pendingCount }
   }, [filtered])
+
+  if (isLoading && sales.length === 0) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-6">
