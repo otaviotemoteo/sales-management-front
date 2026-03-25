@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { Plus, Search } from 'lucide-react'
+import { Plus, Search, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -9,22 +9,47 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { SellerCard } from '@/components/admin/vendedores/seller-card'
 import { SellerDetailsModal } from '@/components/admin/vendedores/seller-details-modal'
 import { SellerForm } from '@/components/admin/vendedores/seller-form'
-import sellersData from '@/data/mockup/sellers.json'
+import { useUsers } from '@/hooks/use-users'
+import * as usersService from '@/services/users.service'
+import type { UserResponse } from '@/types/auth'
 
-type Seller = (typeof sellersData)[0] & { status: 'active' | 'inactive' }
+type SellerView = {
+  id: string
+  fullName: string
+  email: string
+  phone: string
+  status: 'active' | 'inactive'
+  joinedAt: string
+  stats: {
+    totalSales: number
+    totalRevenue: number
+    totalCustomers: number
+    averageTicket: number
+    rating: number
+  }
+}
 
-const initialSellers: Seller[] = sellersData.map((s) => ({
-  ...s,
-  status: s.status as 'active' | 'inactive',
-}))
+function mapUserToSeller(user: UserResponse): SellerView {
+  return {
+    id: String(user.id),
+    fullName: user.name,
+    email: user.email,
+    phone: '',
+    status: user.active ? 'active' : 'inactive',
+    joinedAt: user.createdAt ? new Date(user.createdAt).toISOString().slice(0, 10) : '',
+    stats: { totalSales: 0, totalRevenue: 0, totalCustomers: 0, averageTicket: 0, rating: 0 },
+  }
+}
 
 export default function VendedoresPage() {
-  const [sellers, setSellers] = useState<Seller[]>(initialSellers)
+  const { users, isLoading, refresh } = useUsers({ role: 'SELLER', size: 100 })
   const [search, setSearch] = useState('')
   const [newSellerOpen, setNewSellerOpen] = useState(false)
-  const [selectedSeller, setSelectedSeller] = useState<Seller | null>(null)
+  const [selectedSeller, setSelectedSeller] = useState<SellerView | null>(null)
   const [detailsOpen, setDetailsOpen] = useState(false)
-  const [editSeller, setEditSeller] = useState<Seller | null>(null)
+  const [editSeller, setEditSeller] = useState<SellerView | null>(null)
+
+  const sellers = useMemo(() => users.map(mapUserToSeller), [users])
 
   const filtered = useMemo(() => {
     const q = search.toLowerCase()
@@ -35,33 +60,49 @@ export default function VendedoresPage() {
     )
   }, [sellers, search])
 
-  function handleCreate(values: { fullName: string; email: string; phone: string }) {
-    const newSeller: Seller = {
-      id: `s${String(sellers.length + 1).padStart(3, '0')}`,
-      ...values,
-      status: 'active',
-      joinedAt: new Date().toISOString().slice(0, 10),
-      stats: { totalSales: 0, totalRevenue: 0, totalCustomers: 0, averageTicket: 0, rating: 0 },
-    }
-    setSellers((prev) => [newSeller, ...prev])
+  async function handleCreate(values: { fullName: string; email: string; phone: string }) {
+    await usersService.createUser({
+      name: values.fullName,
+      email: values.email,
+      password: 'VendaFlow@123',
+      role: 'SELLER',
+    })
     setNewSellerOpen(false)
+    refresh()
   }
 
-  function handleEdit(values: { fullName: string; email: string; phone: string }) {
+  async function handleEdit(values: { fullName: string; email: string; phone: string }) {
     if (!editSeller) return
-    setSellers((prev) =>
-      prev.map((s) => (s.id === editSeller.id ? { ...s, ...values } : s))
-    )
+    const numericId = parseInt(editSeller.id, 10)
+    await usersService.updateUser(numericId, {
+      name: values.fullName,
+      email: values.email,
+    })
     setEditSeller(null)
+    refresh()
   }
 
-  function handleToggleActive(id: string) {
-    setSellers((prev) =>
-      prev.map((s) => (s.id === id ? { ...s, status: s.status === 'active' ? 'inactive' : 'active' } : s))
-    )
+  async function handleToggleActive(id: string) {
+    const numericId = parseInt(id, 10)
+    const user = users.find(u => u.id === numericId)
+    if (!user) return
+    if (user.active) {
+      await usersService.deleteUser(numericId)
+    } else {
+      await usersService.reactivateUser(numericId)
+    }
+    refresh()
   }
 
   const activeSellers = sellers.filter((s) => s.status === 'active').length
+
+  if (isLoading && users.length === 0) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-6">
@@ -107,18 +148,18 @@ export default function VendedoresPage() {
         </Card>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filtered.map((seller) => (
+          {filtered.map((s) => (
             <SellerCard
-              key={seller.id}
-              id={seller.id}
-              fullName={seller.fullName}
-              email={seller.email}
-              phone={seller.phone}
-              status={seller.status}
-              stats={seller.stats}
-              onViewDetails={() => { setSelectedSeller(seller); setDetailsOpen(true) }}
-              onEdit={() => setEditSeller(seller)}
-              onToggleActive={() => handleToggleActive(seller.id)}
+              key={s.id}
+              id={s.id}
+              fullName={s.fullName}
+              email={s.email}
+              phone={s.phone}
+              status={s.status}
+              stats={s.stats}
+              onViewDetails={() => { setSelectedSeller(s); setDetailsOpen(true) }}
+              onEdit={() => setEditSeller(s)}
+              onToggleActive={() => handleToggleActive(s.id)}
             />
           ))}
         </div>
