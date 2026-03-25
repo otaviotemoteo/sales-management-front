@@ -1,10 +1,11 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { BarChart3, LayoutDashboard, ShoppingCart, Package, Users, FileText, X, LogOut } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { useAuth } from '@/hooks/use-auth'
 
 const navItems = [
   { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -21,6 +22,8 @@ interface AdminMobileNavProps {
 
 export function AdminMobileNav({ open, onClose }: AdminMobileNavProps) {
   const pathname = usePathname()
+  const router = useRouter()
+  const { logout } = useAuth()
 
   return (
     <div
@@ -77,12 +80,14 @@ export function AdminMobileNav({ open, onClose }: AdminMobileNavProps) {
         </nav>
 
         <div className="border-t border-border p-4">
-          <Link href="/" onClick={onClose} className="block">
-            <Button variant="ghost" className="w-full justify-start gap-3 h-10 text-foreground/60">
-              <LogOut className="w-4 h-4" />
-              <span>Sair</span>
-            </Button>
-          </Link>
+          <Button
+            variant="ghost"
+            className="w-full justify-start gap-3 h-10 text-foreground/60"
+            onClick={async () => { onClose(); await logout(); router.push('/login') }}
+          >
+            <LogOut className="w-4 h-4" />
+            <span>Sair</span>
+          </Button>
         </div>
       </aside>
     </div>
