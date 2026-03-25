@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { BarChart3, Users, TrendingUp, User, ArrowRight, Plus } from 'lucide-react'
+import { BarChart3, Users, TrendingUp, User, ArrowRight, Plus, Loader2 } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -10,20 +10,15 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { NewSaleForm } from '@/components/seller/vendas/new-sale-form'
 import { StatsOverview } from '@/components/seller/desempenho/stats-overview'
 import { TopProducts } from '@/components/seller/desempenho/top-products'
-import sellerData from '@/data/mockup/seller.json'
-import salesData from '@/data/mockup/sales.json'
-import performanceData from '@/data/mockup/performance.json'
-
-const statusLabel: Record<string, string> = {
-  completed: 'Concluída',
-  pending: 'Pendente',
-  cancelled: 'Cancelada',
-}
+import { useAuth } from '@/hooks/use-auth'
+import { useSales } from '@/hooks/use-sales'
+import { useDashboard } from '@/hooks/use-dashboard'
+import { SALE_STATUS_LABELS, formatDate, formatCurrency } from '@/lib/constants'
 
 const statusVariant: Record<string, 'default' | 'secondary' | 'destructive'> = {
-  completed: 'default',
-  pending: 'secondary',
-  cancelled: 'destructive',
+  CONFIRMED: 'default',
+  PENDING: 'secondary',
+  CANCELLED: 'destructive',
 }
 
 const quickLinks = [
@@ -38,18 +33,30 @@ const hour = now.getHours()
 const greeting = hour < 12 ? 'Bom dia' : hour < 18 ? 'Boa tarde' : 'Boa noite'
 const dateLabel = now.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
 
-const monthData = performanceData.month
-const recentSales = salesData.slice(0, 6)
-
 export default function DashboardPage() {
+  const { user } = useAuth()
+  const { sales, isLoading: salesLoading } = useSales({ own: true, size: 6 })
+  const { dashboard, isLoading: dashLoading } = useDashboard({ period: 'month' })
   const [newSaleOpen, setNewSaleOpen] = useState(false)
+
+  const isLoading = salesLoading || dashLoading
+
+  if (isLoading && !dashboard && sales.length === 0) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+      </div>
+    )
+  }
+
+  const firstName = user?.name?.split(' ')[0] ?? 'Vendedor'
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-foreground">
-            {greeting}, {sellerData.fullName.split(' ')[0]}!
+            {greeting}, {firstName}!
           </h1>
           <p className="text-muted-foreground mt-1 capitalize">{dateLabel}</p>
         </div>
@@ -72,10 +79,10 @@ export default function DashboardPage() {
       </div>
 
       <StatsOverview
-        totalSales={monthData.totalSales}
-        totalRevenue={monthData.totalRevenue}
-        totalCustomers={monthData.totalCustomers}
-        averageTicket={monthData.averageTicket}
+        totalSales={dashboard?.salesCount ?? 0}
+        totalRevenue={dashboard?.totalSalesAmount ?? 0}
+        totalCustomers={0}
+        averageTicket={dashboard && dashboard.salesCount > 0 ? dashboard.totalSalesAmount / dashboard.salesCount : 0}
       />
 
       <div className="grid lg:grid-cols-2 gap-6">
@@ -89,26 +96,35 @@ export default function DashboardPage() {
             </Button>
           </div>
           <div className="space-y-3">
-            {recentSales.map((sale) => (
+            {sales.map((sale) => (
               <div key={sale.id} className="flex items-center justify-between py-2 border-b border-border last:border-0">
                 <div>
-                  <p className="text-sm font-medium text-foreground">{sale.customer}</p>
-                  <p className="text-xs text-muted-foreground">{sale.date}</p>
+                  <p className="text-sm font-medium text-foreground">{sale.customer.name}</p>
+                  <p className="text-xs text-muted-foreground">{formatDate(sale.saleDate)}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-semibold text-foreground">
-                    R$ {sale.amount.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                    {formatCurrency(sale.finalAmount)}
                   </span>
-                  <Badge variant={statusVariant[sale.status]}>
-                    {statusLabel[sale.status]}
+                  <Badge variant={statusVariant[sale.status] ?? 'secondary'}>
+                    {SALE_STATUS_LABELS[sale.status] ?? sale.status}
                   </Badge>
                 </div>
               </div>
             ))}
+            {sales.length === 0 && (
+              <p className="text-sm text-muted-foreground text-center py-4">Nenhuma venda recente</p>
+            )}
           </div>
         </Card>
 
-        <TopProducts products={monthData.topProducts} />
+        <TopProducts products={dashboard?.topProducts?.map(p => ({
+          id: String(p.productId),
+          name: p.productName,
+          quantity: p.quantity,
+          revenue: p.revenue,
+          growth: 0,
+        })) ?? []} />
       </div>
     </div>
   )
