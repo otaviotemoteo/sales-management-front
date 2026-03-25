@@ -1,53 +1,40 @@
 'use client'
 
+import type { CustomerResponse } from '@/types/customer'
+import { formatDate } from '@/lib/constants'
+
 interface CustomerDetailsModalProps {
-  customer: {
-    id: string
-    name: string
-    email: string
-    phone: string
-    city: string
-    state: string
-    zip: string
-    notes?: string
-    createdAt: string
-  }
+  customer: CustomerResponse
 }
 
 export function CustomerDetailsModal({ customer }: CustomerDetailsModalProps) {
   return (
     <div className="space-y-4">
-      <div>
-        <p className="text-sm text-muted-foreground">Email</p>
-        <p className="font-medium text-foreground">{customer.email}</p>
-      </div>
-      <div>
-        <p className="text-sm text-muted-foreground">Telefone</p>
-        <p className="font-medium text-foreground">{customer.phone}</p>
-      </div>
-      <div className="grid grid-cols-2 gap-4">
+      {customer.email && (
         <div>
-          <p className="text-sm text-muted-foreground">Cidade</p>
-          <p className="font-medium text-foreground">{customer.city}</p>
+          <p className="text-sm text-muted-foreground">Email</p>
+          <p className="font-medium text-foreground">{customer.email}</p>
         </div>
+      )}
+      {customer.phone && (
         <div>
-          <p className="text-sm text-muted-foreground">Estado</p>
-          <p className="font-medium text-foreground">{customer.state}</p>
+          <p className="text-sm text-muted-foreground">Telefone</p>
+          <p className="font-medium text-foreground">{customer.phone}</p>
         </div>
-      </div>
-      <div>
-        <p className="text-sm text-muted-foreground">CEP</p>
-        <p className="font-medium text-foreground">{customer.zip}</p>
-      </div>
-      {customer.notes && (
+      )}
+      {customer.address && (
         <div>
-          <p className="text-sm text-muted-foreground">Observações</p>
-          <p className="font-medium text-foreground">{customer.notes}</p>
+          <p className="text-sm text-muted-foreground">Endereço</p>
+          <p className="font-medium text-foreground">{customer.address}</p>
         </div>
       )}
       <div>
+        <p className="text-sm text-muted-foreground">Cadastrado por</p>
+        <p className="font-medium text-foreground">{customer.createdByUsername}</p>
+      </div>
+      <div>
         <p className="text-sm text-muted-foreground">Cadastrado em</p>
-        <p className="font-medium text-foreground">{customer.createdAt}</p>
+        <p className="font-medium text-foreground">{formatDate(customer.createdAt)}</p>
       </div>
     </div>
   )
