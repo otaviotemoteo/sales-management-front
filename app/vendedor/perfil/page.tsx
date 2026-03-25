@@ -1,13 +1,26 @@
 'use client'
 
+import { Loader2 } from 'lucide-react'
 import { ProfileAvatar } from '@/components/seller/perfil/profile-avatar'
 import { ProfileForm } from '@/components/seller/perfil/profile-form'
 import { ProfileStats } from '@/components/seller/perfil/profile-stats'
 import { ChangePasswordForm } from '@/components/seller/perfil/change-password-form'
 import { AccountActionsCard } from '@/components/seller/perfil/account-actions-card'
-import sellerData from '@/data/mockup/seller.json'
+import { useAuth } from '@/hooks/use-auth'
+import { useDashboard } from '@/hooks/use-dashboard'
 
 export default function PerfilPage() {
+  const { user, isLoading: authLoading } = useAuth()
+  const { dashboard } = useDashboard({ period: 'year' })
+
+  if (authLoading || !user) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+      </div>
+    )
+  }
+
   return (
     <div className="space-y-6">
       <div>
@@ -16,34 +29,34 @@ export default function PerfilPage() {
       </div>
 
       <ProfileStats
-        totalSales={sellerData.totalSales}
-        totalRevenue={sellerData.totalRevenue}
-        averageRating={sellerData.averageRating}
-        joinDate={sellerData.joinDate}
+        totalSales={dashboard?.salesCount ?? 0}
+        totalRevenue={dashboard?.totalSalesAmount ?? 0}
+        averageRating={0}
+        joinDate={user.createdAt ? new Date(user.createdAt).toLocaleDateString('pt-BR', { month: 'short', year: 'numeric' }) : ''}
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <ProfileAvatar
-          name={sellerData.fullName}
-          email={sellerData.email}
-          phone={sellerData.phone}
-          cpf={sellerData.cpf}
-          city={sellerData.city}
-          state={sellerData.state}
-          bio={sellerData.bio}
-          joinDate={sellerData.joinDate}
-          avatarUrl={sellerData.avatarUrl ?? undefined}
+          name={user.name}
+          email={user.email}
+          phone=""
+          cpf=""
+          city=""
+          state=""
+          bio=""
+          joinDate={user.createdAt ? new Date(user.createdAt).toLocaleDateString('pt-BR', { month: 'short', year: 'numeric' }) : ''}
+          avatarUrl={undefined}
         />
         <div className="lg:col-span-2">
           <ProfileForm
             defaultValues={{
-              fullName: sellerData.fullName,
-              email: sellerData.email,
-              phone: sellerData.phone,
-              cpf: sellerData.cpf,
-              city: sellerData.city,
-              state: sellerData.state,
-              bio: sellerData.bio,
+              fullName: user.name,
+              email: user.email,
+              phone: '',
+              cpf: '',
+              city: '',
+              state: '',
+              bio: '',
             }}
           />
         </div>
