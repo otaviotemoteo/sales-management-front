@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useMemo } from 'react'
-import { Plus } from 'lucide-react'
+import { useState } from 'react'
+import { Plus, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
@@ -10,52 +10,37 @@ import { CustomerCard } from '@/components/seller/clientes/customer-card'
 import { CustomerForm } from '@/components/seller/clientes/customer-form'
 import { CustomerDetailsModal } from '@/components/seller/clientes/customer-details-modal'
 import { CustomerSalesHistory } from '@/components/seller/clientes/customer-sales-history'
-import customersData from '@/data/mockup/customers.json'
-import salesData from '@/data/mockup/sales.json'
-
-type Customer = (typeof customersData)[0]
-
-type LastSaleInfo = { date: string; items: number; productName?: string; amount: number }
-
-function getLastSale(customerId: string): LastSaleInfo | null {
-  const customerSales = salesData.filter((s) => s.customerId === customerId)
-  if (customerSales.length === 0) return null
-  const sorted = [...customerSales].sort((a, b) => {
-    const [da, ma, ya] = a.date.split('/').map(Number)
-    const [db, mb, yb] = b.date.split('/').map(Number)
-    return new Date(yb, mb - 1, db).getTime() - new Date(ya, ma - 1, da).getTime()
-  })
-  const last = sorted[0]
-  return {
-    date: last.date,
-    items: last.products.length,
-    productName: last.products.length === 1 ? last.products[0].name : undefined,
-    amount: last.amount,
-  }
-}
+import { useCustomers } from '@/hooks/use-customers'
+import type { CustomerResponse } from '@/types/customer'
 
 export default function ClientesPage() {
-  const [search, setSearch] = useState('')
+  const { customers, isLoading, error, refresh, searchCustomers } = useCustomers({ size: 100 })
   const [newClientOpen, setNewClientOpen] = useState(false)
-  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null)
+  const [selectedCustomer, setSelectedCustomer] = useState<CustomerResponse | null>(null)
   const [customerDetailsOpen, setCustomerDetailsOpen] = useState(false)
 
-  const filtered = useMemo(() => {
-    const q = search.toLowerCase()
-    return customersData.filter(
-      (c) =>
-        c.name.toLowerCase().includes(q) ||
-        c.email.toLowerCase().includes(q) ||
-        c.city.toLowerCase().includes(q)
+  const handleSearch = (query: string) => {
+    if (query.trim()) {
+      searchCustomers(query)
+    } else {
+      refresh()
+    }
+  }
+
+  if (isLoading && customers.length === 0) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+      </div>
     )
-  }, [search])
+  }
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Meus Clientes</h1>
-          <p className="text-muted-foreground mt-1">{customersData.length} clientes cadastrados</p>
+          <p className="text-muted-foreground mt-1">{customers.length} clientes cadastrados</p>
         </div>
         <Dialog open={newClientOpen} onOpenChange={setNewClientOpen}>
           <DialogTrigger asChild>
@@ -69,30 +54,31 @@ export default function ClientesPage() {
               <DialogTitle>Cadastrar Novo Cliente</DialogTitle>
             </DialogHeader>
             <div className="pt-2">
-              <CustomerForm onSubmit={() => setNewClientOpen(false)} />
+              <CustomerForm onSubmit={() => { setNewClientOpen(false); refresh() }} />
             </div>
           </DialogContent>
         </Dialog>
       </div>
 
-      <CustomerSearch onSearch={setSearch} />
+      <CustomerSearch onSearch={handleSearch} />
 
-      {filtered.length === 0 ? (
+      {error && (
+        <Card className="p-6 text-center">
+          <p className="text-destructive">{error}</p>
+          <Button variant="outline" size="sm" className="mt-2" onClick={refresh}>Tentar novamente</Button>
+        </Card>
+      )}
+
+      {!error && customers.length === 0 ? (
         <Card className="p-12 text-center">
           <p className="text-muted-foreground">Nenhum cliente encontrado</p>
         </Card>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filtered.map((customer) => (
+          {customers.map((customer) => (
             <CustomerCard
               key={customer.id}
-              id={customer.id}
-              name={customer.name}
-              email={customer.email}
-              phone={customer.phone}
-              city={customer.city}
-              totalSpent={customer.totalSpent}
-              lastSaleInfo={getLastSale(customer.id)}
+              customer={customer}
               onView={() => { setSelectedCustomer(customer); setCustomerDetailsOpen(true) }}
             />
           ))}
@@ -106,18 +92,9 @@ export default function ClientesPage() {
           </DialogHeader>
           {selectedCustomer && (
             <div className="space-y-4 pt-2">
-              <CustomerDetailsModal
-                customer={{ ...selectedCustomer, notes: selectedCustomer.notes ?? undefined }}
-              />
+              <CustomerDetailsModal customer={selectedCustomer} />
               <CustomerSalesHistory
-                sales={salesData
-                  .filter((s) => s.customerId === selectedCustomer.id)
-                  .map((s) => ({
-                    id: s.id,
-                    date: s.date,
-                    amount: s.amount,
-                    status: s.status as 'pending' | 'completed' | 'cancelled',
-                  }))}
+                sales={[]}
                 customerId={selectedCustomer.id}
               />
             </div>
