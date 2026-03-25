@@ -1,10 +1,12 @@
 'use client'
 
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import Link from 'next/link'
-import { ArrowLeft } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { ArrowLeft, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
@@ -17,6 +19,7 @@ import {
 } from '@/components/ui/form'
 import { Card } from '@/components/ui/card'
 import { AuthSidePanel } from '@/components/auth/auth-side-panel'
+import { useAuth } from '@/hooks/use-auth'
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'E-mail inválido' }),
@@ -26,13 +29,27 @@ const loginSchema = z.object({
 type LoginValues = z.infer<typeof loginSchema>
 
 export default function LoginPage() {
+  const { login } = useAuth()
+  const router = useRouter()
+  const [serverError, setServerError] = useState<string | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
   const form = useForm<LoginValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: '', password: '' },
   })
 
-  function onSubmit(values: LoginValues) {
-    console.log(values)
+  async function onSubmit(values: LoginValues) {
+    setServerError(null)
+    setIsSubmitting(true)
+    try {
+      await login(values.email, values.password)
+      router.push('/vendedor/dashboard')
+    } catch (err) {
+      setServerError(err instanceof Error ? err.message : 'Erro ao fazer login')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -96,7 +113,11 @@ export default function LoginPage() {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="w-full" size="lg">
+                {serverError && (
+                  <p className="text-sm text-destructive text-center">{serverError}</p>
+                )}
+                <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
+                  {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
                   Entrar
                 </Button>
               </form>
