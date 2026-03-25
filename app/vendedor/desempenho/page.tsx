@@ -1,19 +1,60 @@
 'use client'
 
 import { useState } from 'react'
+import { Loader2 } from 'lucide-react'
 import { PeriodSelector } from '@/components/seller/desempenho/period-selector'
 import { StatsOverview } from '@/components/seller/desempenho/stats-overview'
 import { SalesChart } from '@/components/seller/desempenho/sales-chart'
 import { PaymentMethodsChart } from '@/components/seller/desempenho/payment-methods-chart'
 import { TopProducts } from '@/components/seller/desempenho/top-products'
-import { PerformanceCard } from '@/components/seller/desempenho/performance-card'
-import performanceData from '@/data/mockup/performance.json'
+import { useDashboard } from '@/hooks/use-dashboard'
+import { PAYMENT_METHOD_LABELS } from '@/lib/constants'
 
 type Period = 'day' | 'week' | 'month' | 'year'
 
 export default function DesempenhoPage() {
   const [period, setPeriod] = useState<Period>('month')
-  const data = performanceData[period]
+  const { dashboard, isLoading } = useDashboard({ period })
+
+  if (isLoading && !dashboard) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+      </div>
+    )
+  }
+
+  const salesCount = dashboard?.salesCount ?? 0
+  const totalAmount = dashboard?.totalSalesAmount ?? 0
+  const averageTicket = salesCount > 0 ? totalAmount / salesCount : 0
+
+  // Transform salesTrend to chart data format
+  const chartData = dashboard?.salesTrend?.map(t => ({
+    date: t.date,
+    sales: t.count,
+    revenue: t.amount,
+  })) ?? []
+
+  // Transform salesByPaymentMethod to chart format
+  const paymentMethods = dashboard?.salesByPaymentMethod
+    ? Object.entries(dashboard.salesByPaymentMethod).map(([method, count]) => {
+        const total = Object.values(dashboard.salesByPaymentMethod).reduce((a, b) => a + b, 0)
+        return {
+          method: PAYMENT_METHOD_LABELS[method] ?? method,
+          count,
+          percentage: total > 0 ? Math.round((count / total) * 100) : 0,
+        }
+      })
+    : []
+
+  // Transform topProducts
+  const topProducts = dashboard?.topProducts?.map(p => ({
+    id: String(p.productId),
+    name: p.productName,
+    quantity: p.quantity,
+    revenue: p.revenue,
+    growth: 0,
+  })) ?? []
 
   return (
     <div className="space-y-6">
@@ -25,30 +66,18 @@ export default function DesempenhoPage() {
       <PeriodSelector selectedPeriod={period} onPeriodChange={setPeriod} />
 
       <StatsOverview
-        totalSales={data.totalSales}
-        totalRevenue={data.totalRevenue}
-        totalCustomers={data.totalCustomers}
-        averageTicket={data.averageTicket}
+        totalSales={salesCount}
+        totalRevenue={totalAmount}
+        totalCustomers={0}
+        averageTicket={averageTicket}
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <SalesChart data={data.chartData} />
-        <PaymentMethodsChart methods={data.paymentMethods} />
+        <SalesChart data={chartData} />
+        <PaymentMethodsChart methods={paymentMethods} />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {data.performanceCards.map((card) => (
-          <PerformanceCard
-            key={card.title}
-            title={card.title}
-            value={card.value}
-            change={card.change}
-            changeType={card.changeType as 'increase' | 'decrease'}
-          />
-        ))}
-      </div>
-
-      <TopProducts products={data.topProducts} />
+      <TopProducts products={topProducts} />
     </div>
   )
 }
