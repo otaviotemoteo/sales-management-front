@@ -3,33 +3,14 @@
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Printer, Download } from 'lucide-react'
+import type { SaleResponse } from '@/types/sale'
+import { PAYMENT_METHOD_LABELS, formatSaleId, formatDate, formatCurrency } from '@/lib/constants'
 
 interface SaleReceiptProps {
-  saleId: string
-  customer: string
-  date: string
-  items: Array<{
-    name: string
-    quantity: number
-    unitPrice: number
-    total: number
-  }>
-  subtotal: number
-  tax: number
-  total: number
-  paymentMethod: string
+  sale: SaleResponse
 }
 
-export function SaleReceipt({
-  saleId,
-  customer,
-  date,
-  items,
-  subtotal,
-  tax,
-  total,
-  paymentMethod,
-}: SaleReceiptProps) {
+export function SaleReceipt({ sale }: SaleReceiptProps) {
   return (
     <Card className="p-4 w-full">
       <div className="text-center mb-6 pb-6 border-b border-border">
@@ -40,23 +21,25 @@ export function SaleReceipt({
       <div className="space-y-4 mb-6 pb-6 border-b border-border">
         <div className="text-sm">
           <p className="text-muted-foreground">Venda #</p>
-          <p className="font-semibold text-foreground">{saleId}</p>
+          <p className="font-semibold text-foreground">{formatSaleId(sale.id)}</p>
         </div>
         <div className="text-sm">
           <p className="text-muted-foreground">Cliente</p>
-          <p className="font-semibold text-foreground">{customer}</p>
+          <p className="font-semibold text-foreground">{sale.customer.name}</p>
         </div>
         <div className="text-sm">
           <p className="text-muted-foreground">Data/Hora</p>
-          <p className="font-semibold text-foreground">{date}</p>
+          <p className="font-semibold text-foreground">{formatDate(sale.saleDate)}</p>
         </div>
       </div>
 
       <div className="space-y-2 mb-6 pb-6 border-b border-border text-sm">
-        {items.map((item, idx) => (
-          <div key={idx} className="flex justify-between">
-            <span className="text-foreground">{item.name}</span>
-            <span className="text-foreground">R$ {item.total.toFixed(2)}</span>
+        {sale.items.map((item) => (
+          <div key={item.id} className="flex justify-between">
+            <span className="text-foreground">
+              {item.quantity > 1 ? `${item.quantity}x ` : ''}{item.product.name}
+            </span>
+            <span className="text-foreground">{formatCurrency(item.totalPrice)}</span>
           </div>
         ))}
       </div>
@@ -64,20 +47,24 @@ export function SaleReceipt({
       <div className="space-y-2 mb-6 text-sm">
         <div className="flex justify-between text-muted-foreground">
           <span>Subtotal:</span>
-          <span>R$ {subtotal.toFixed(2)}</span>
+          <span>{formatCurrency(sale.totalAmount)}</span>
         </div>
-        <div className="flex justify-between text-muted-foreground">
-          <span>Taxas:</span>
-          <span>R$ {tax.toFixed(2)}</span>
-        </div>
+        {sale.discount > 0 && (
+          <div className="flex justify-between text-muted-foreground">
+            <span>Desconto:</span>
+            <span>-{formatCurrency(sale.discount)}</span>
+          </div>
+        )}
         <div className="flex justify-between text-lg font-bold border-t border-border pt-2">
           <span className="text-foreground">Total:</span>
-          <span className="text-foreground">R$ {total.toFixed(2)}</span>
+          <span className="text-foreground">{formatCurrency(sale.finalAmount)}</span>
         </div>
       </div>
 
       <div className="text-center mb-6 text-sm">
-        <p className="text-muted-foreground">Pagamento: <span className="font-semibold text-foreground">{paymentMethod}</span></p>
+        <p className="text-muted-foreground">
+          Pagamento: <span className="font-semibold text-foreground">{PAYMENT_METHOD_LABELS[sale.paymentMethod] ?? sale.paymentMethod}</span>
+        </p>
       </div>
 
       <div className="flex gap-2">
