@@ -1,30 +1,58 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import { Loader2 } from 'lucide-react'
 import { VendasStats } from '@/components/admin/vendas/vendas-stats'
 import { VendasFilters } from '@/components/admin/vendas/vendas-filters'
 import { VendasTable, type SaleRow } from '@/components/admin/vendas/vendas-table'
 import { SaleEditDialog } from '@/components/admin/vendas/sale-edit-dialog'
 import { SaleDetailModal } from '@/components/admin/vendas/sale-detail-modal'
-import salesData from '@/data/mockup/sales.json'
-import sellersData from '@/data/mockup/sellers.json'
+import { useSales } from '@/hooks/use-sales'
+import { useUsers } from '@/hooks/use-users'
+import { formatSaleId, formatDate } from '@/lib/constants'
+import type { SaleResponse } from '@/types/sale'
 
 type Status = 'completed' | 'pending' | 'cancelled'
 
-// Enrich sales with seller names deterministically for mockup purposes
-const sellerPool = sellersData.map((s) => ({ id: s.id, name: s.fullName.split(' ')[0] }))
+const STATUS_TO_MOCK: Record<string, Status> = {
+  CONFIRMED: 'completed',
+  PENDING: 'pending',
+  CANCELLED: 'cancelled',
+}
 
-const initialSales: SaleRow[] = salesData.map((sale, idx) => ({
-  ...sale,
-  status: sale.status as Status,
-  seller: sellerPool[idx % sellerPool.length].name,
-  sellerId: sellerPool[idx % sellerPool.length].id,
-}))
+const PAYMENT_TO_MOCK: Record<string, string> = {
+  PIX: 'pix',
+  CREDIT_CARD: 'credit',
+  DEBIT_CARD: 'debit',
+  CASH: 'cash',
+}
 
-const sellerOptions = sellersData.map((s) => ({ id: s.id, name: s.fullName }))
+function mapSaleToRow(sale: SaleResponse): SaleRow {
+  return {
+    id: formatSaleId(sale.id),
+    customer: sale.customer?.name ?? 'Cliente',
+    seller: sale.seller?.name?.split(' ')[0] ?? 'Vendedor',
+    sellerId: String(sale.seller?.id ?? ''),
+    date: formatDate(sale.saleDate),
+    amount: sale.finalAmount,
+    status: STATUS_TO_MOCK[sale.status] ?? 'pending',
+    paymentMethod: PAYMENT_TO_MOCK[sale.paymentMethod] ?? sale.paymentMethod,
+    items: sale.items?.length ?? 0,
+    subtotal: sale.totalAmount,
+    tax: sale.discount ?? 0,
+    total: sale.finalAmount,
+    products: sale.items?.map(i => ({
+      name: i.product?.name ?? 'Produto',
+      quantity: i.quantity,
+      unitPrice: i.unitPrice,
+      total: i.totalPrice,
+    })) ?? [],
+  }
+}
 
 export default function AdminVendasPage() {
-  const [sales, setSales] = useState<SaleRow[]>(initialSales)
+  const { sales, isLoading, refresh } = useSales({ own: false, size: 100 })
+  const { users: sellers } = useUsers({ role: 'SELLER', size: 100 })
   const [search, setSearch] = useState('')
   const [seller, setSeller] = useState('all')
   const [status, setStatus] = useState('all')
@@ -33,15 +61,22 @@ export default function AdminVendasPage() {
   const [detailSale, setDetailSale] = useState<SaleRow | null>(null)
   const [detailOpen, setDetailOpen] = useState(false)
 
+  const saleRows = useMemo(() => sales.map(mapSaleToRow), [sales])
+
+  const sellerOptions = useMemo(() =>
+    sellers.map(s => ({ id: String(s.id), name: s.name })),
+    [sellers]
+  )
+
   const filtered = useMemo(() => {
     const q = search.toLowerCase()
-    return sales.filter((s) => {
+    return saleRows.filter((s) => {
       const matchSearch = !q || s.customer.toLowerCase().includes(q) || s.id.toLowerCase().includes(q)
       const matchSeller = seller === 'all' || s.sellerId === seller
       const matchStatus = status === 'all' || s.status === status
       return matchSearch && matchSeller && matchStatus
     })
-  }, [sales, search, seller, status])
+  }, [saleRows, search, seller, status])
 
   const stats = useMemo(() => {
     const totalSales = filtered.length
@@ -50,7 +85,6 @@ export default function AdminVendasPage() {
     const completedCount = filtered.filter((s) => s.status === 'completed').length
     const completionRate = totalSales > 0 ? (completedCount / totalSales) * 100 : 0
 
-    // Payment method breakdown
     const methodCounts: Record<string, number> = {}
     filtered.forEach((s) => { methodCounts[s.paymentMethod] = (methodCounts[s.paymentMethod] ?? 0) + 1 })
     const total = filtered.length || 1
@@ -62,14 +96,14 @@ export default function AdminVendasPage() {
     return { totalSales, totalRevenue, pendingValue, completionRate, paymentBreakdown }
   }, [filtered])
 
-  function handleStatusChange(id: string, newStatus: Status) {
-    setSales((prev) => prev.map((s) => (s.id === id ? { ...s, status: newStatus } : s)))
+  function handleStatusChange(_id: string, _newStatus: Status) {
+    refresh()
   }
 
-  function handleSaveEdit(id: string, updates: { amount: number; status: Status }) {
-    setSales((prev) => prev.map((s) => (s.id === id ? { ...s, ...updates } : s)))
+  function handleSaveEdit(_id: string, _updates: { amount: number; status: Status }) {
     setEditOpen(false)
     setEditSale(null)
+    refresh()
   }
 
   function openEdit(sale: SaleRow) {
@@ -80,6 +114,14 @@ export default function AdminVendasPage() {
   function openDetail(sale: SaleRow) {
     setDetailSale(sale)
     setDetailOpen(true)
+  }
+
+  if (isLoading && sales.length === 0) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+      </div>
+    )
   }
 
   return (
