@@ -1,32 +1,28 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { Plus } from 'lucide-react'
+import { Plus, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { ProductCard } from '@/components/admin/produtos/product-card'
 import { ProductFilters } from '@/components/admin/produtos/product-filters'
 import { ProductForm } from '@/components/admin/produtos/product-form'
-import productsData from '@/data/mockup/products.json'
-
-type Product = {
-  id: string
-  name: string
-  price: number
-  category: string
-  stock: number
-  active: boolean
-}
-
-const initialProducts: Product[] = productsData.map((p) => ({ ...p, active: true }))
+import { useProducts } from '@/hooks/use-products'
+import * as productsService from '@/services/products.service'
 
 export default function ProdutosPage() {
-  const [products, setProducts] = useState<Product[]>(initialProducts)
+  const { products, isLoading, refresh } = useProducts({ size: 100 })
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('Todas')
   const [newProductOpen, setNewProductOpen] = useState(false)
-  const [editProduct, setEditProduct] = useState<Product | null>(null)
+  const [editProduct, setEditProduct] = useState<{
+    id: string
+    name: string
+    price: number
+    category: string
+    stock: number
+  } | null>(null)
 
   const filtered = useMemo(() => {
     const q = search.toLowerCase()
@@ -37,27 +33,34 @@ export default function ProdutosPage() {
     })
   }, [products, search, category])
 
-  function handleCreate(values: { name: string; price: number; category: string; stock: number }) {
-    const newProduct: Product = {
-      id: `p${String(products.length + 1).padStart(3, '0')}`,
-      ...values,
-      active: true,
-    }
-    setProducts((prev) => [newProduct, ...prev])
+  async function handleCreate(values: { name: string; price: number; category: string; stock: number }) {
+    await productsService.createProduct(values)
     setNewProductOpen(false)
+    refresh()
   }
 
-  function handleEdit(values: { name: string; price: number; category: string; stock: number }) {
+  async function handleEdit(values: { name: string; price: number; category: string; stock: number }) {
     if (!editProduct) return
-    setProducts((prev) =>
-      prev.map((p) => (p.id === editProduct.id ? { ...p, ...values } : p))
-    )
+    const numericId = parseInt(editProduct.id, 10)
+    await productsService.updateProduct(numericId, values)
     setEditProduct(null)
+    refresh()
   }
 
-  function handleToggleActive(id: string) {
-    setProducts((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, active: !p.active } : p))
+  async function handleToggleActive(id: string) {
+    const numericId = parseInt(id, 10)
+    const product = products.find(p => p.id === numericId)
+    if (product) {
+      await productsService.updateProduct(numericId, { active: !product.active })
+      refresh()
+    }
+  }
+
+  if (isLoading && products.length === 0) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+      </div>
     )
   }
 
@@ -102,20 +105,25 @@ export default function ProdutosPage() {
           {filtered.map((product) => (
             <ProductCard
               key={product.id}
-              id={product.id}
+              id={String(product.id)}
               name={product.name}
               category={product.category}
               price={product.price}
               stock={product.stock}
               active={product.active}
-              onEdit={() => setEditProduct(product)}
-              onToggleActive={() => handleToggleActive(product.id)}
+              onEdit={() => setEditProduct({
+                id: String(product.id),
+                name: product.name,
+                price: product.price,
+                category: product.category,
+                stock: product.stock,
+              })}
+              onToggleActive={() => handleToggleActive(String(product.id))}
             />
           ))}
         </div>
       )}
 
-      {/* Edit Dialog */}
       <Dialog open={!!editProduct} onOpenChange={(open) => { if (!open) setEditProduct(null) }}>
         <DialogContent className="max-w-lg">
           <DialogHeader>
