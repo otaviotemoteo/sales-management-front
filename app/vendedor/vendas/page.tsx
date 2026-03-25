@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { Plus } from 'lucide-react'
+import { Plus, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { SalesFilters } from '@/components/seller/vendas/sales-filters'
@@ -11,45 +11,59 @@ import { SaleActionsMenu } from '@/components/seller/vendas/sale-actions-menu'
 import { NewSaleForm } from '@/components/seller/vendas/new-sale-form'
 import { SaleReceipt } from '@/components/seller/vendas/sale-receipt'
 import { Card } from '@/components/ui/card'
-import salesData from '@/data/mockup/sales.json'
+import { useSales } from '@/hooks/use-sales'
+import type { SaleResponse } from '@/types/sale'
+import { SALE_STATUS_LABELS } from '@/lib/constants'
+import { formatSaleId } from '@/lib/constants'
 
-type Status = 'all' | 'completed' | 'pending' | 'cancelled'
+type Status = 'all' | 'CONFIRMED' | 'PENDING' | 'CANCELLED'
 
 const tabs: { value: Status; label: string }[] = [
   { value: 'all', label: 'Todas' },
-  { value: 'completed', label: 'Concluídas' },
-  { value: 'pending', label: 'Pendentes' },
-  { value: 'cancelled', label: 'Canceladas' },
+  { value: 'CONFIRMED', label: 'Concluídas' },
+  { value: 'PENDING', label: 'Pendentes' },
+  { value: 'CANCELLED', label: 'Canceladas' },
 ]
 
 export default function VendasPage() {
+  const { sales, isLoading, error, refresh } = useSales({ own: true, size: 100 })
   const [search, setSearch] = useState('')
   const [activeTab, setActiveTab] = useState<Status>('all')
-  const [selectedSale, setSelectedSale] = useState<(typeof salesData)[0] | null>(null)
+  const [selectedSale, setSelectedSale] = useState<SaleResponse | null>(null)
   const [saleDetailsOpen, setSaleDetailsOpen] = useState(false)
   const [newSaleOpen, setNewSaleOpen] = useState(false)
 
   const filtered = useMemo(() => {
-    return salesData.filter((s) => {
-      const matchesSearch = s.customer.toLowerCase().includes(search.toLowerCase()) || s.id.toLowerCase().includes(search.toLowerCase())
+    return sales.filter((s) => {
+      const matchesSearch =
+        s.customer.name.toLowerCase().includes(search.toLowerCase()) ||
+        formatSaleId(s.id).toLowerCase().includes(search.toLowerCase())
       const matchesTab = activeTab === 'all' || s.status === activeTab
       return matchesSearch && matchesTab
     })
-  }, [search, activeTab])
+  }, [sales, search, activeTab])
 
   const counts = useMemo(() => ({
-    all: salesData.length,
-    completed: salesData.filter((s) => s.status === 'completed').length,
-    pending: salesData.filter((s) => s.status === 'pending').length,
-    cancelled: salesData.filter((s) => s.status === 'cancelled').length,
-  }), [])
+    all: sales.length,
+    CONFIRMED: sales.filter((s) => s.status === 'CONFIRMED').length,
+    PENDING: sales.filter((s) => s.status === 'PENDING').length,
+    CANCELLED: sales.filter((s) => s.status === 'CANCELLED').length,
+  }), [sales])
+
+  if (isLoading && sales.length === 0) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-foreground">Minhas Vendas</h1>
-          <p className="text-muted-foreground mt-1">{salesData.length} vendas registradas</p>
+          <p className="text-muted-foreground mt-1">{sales.length} vendas registradas</p>
         </div>
         <Dialog open={newSaleOpen} onOpenChange={setNewSaleOpen}>
           <DialogTrigger asChild>
@@ -63,7 +77,7 @@ export default function VendasPage() {
               <DialogTitle>Registrar Nova Venda</DialogTitle>
             </DialogHeader>
             <div className="pt-2">
-              <NewSaleForm onSubmit={() => setNewSaleOpen(false)} />
+              <NewSaleForm onSubmit={() => { setNewSaleOpen(false); refresh() }} />
             </div>
           </DialogContent>
         </Dialog>
@@ -78,7 +92,14 @@ export default function VendasPage() {
         counts={counts}
       />
 
-      {filtered.length === 0 ? (
+      {error && (
+        <Card className="p-6 text-center">
+          <p className="text-destructive">{error}</p>
+          <Button variant="outline" size="sm" className="mt-2" onClick={refresh}>Tentar novamente</Button>
+        </Card>
+      )}
+
+      {!error && filtered.length === 0 ? (
         <Card className="p-12 text-center">
           <p className="text-muted-foreground">Nenhuma venda encontrada</p>
         </Card>
@@ -87,19 +108,11 @@ export default function VendasPage() {
           {filtered.map((sale) => (
             <div key={sale.id} className="relative">
               <SaleCard
-                id={sale.id}
-                customer={sale.customer}
-                date={sale.date}
-                amount={sale.amount}
-                status={sale.status as 'pending' | 'completed' | 'cancelled'}
-                paymentMethod={sale.paymentMethod}
-                products={sale.products}
+                sale={sale}
                 onView={() => { setSelectedSale(sale); setSaleDetailsOpen(true) }}
               />
               <div className="absolute top-3 right-3">
-                <SaleActionsMenu
-                  saleId={sale.id}
-                />
+                <SaleActionsMenu saleId={String(sale.id)} />
               </div>
             </div>
           ))}
@@ -111,18 +124,7 @@ export default function VendasPage() {
           <DialogHeader>
             <DialogTitle>Detalhes da Venda</DialogTitle>
           </DialogHeader>
-          {selectedSale && (
-            <SaleReceipt
-              saleId={selectedSale.id}
-              customer={selectedSale.customer}
-              date={selectedSale.date}
-              items={selectedSale.products}
-              subtotal={selectedSale.subtotal}
-              tax={selectedSale.tax}
-              total={selectedSale.total}
-              paymentMethod={selectedSale.paymentMethod}
-            />
-          )}
+          {selectedSale && <SaleReceipt sale={selectedSale} />}
         </DialogContent>
       </Dialog>
     </div>
