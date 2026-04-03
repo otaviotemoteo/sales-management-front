@@ -14,7 +14,8 @@ import { useCustomers } from '@/hooks/use-customers'
 import type { CustomerResponse } from '@/types/customer'
 
 export default function ClientesPage() {
-  const { customers, isLoading, error, refresh, searchCustomers } = useCustomers({ size: 100 })
+  const { customers, isLoading, error, refresh, searchCustomers, createCustomer } = useCustomers({ size: 100 })
+  const [isCreating, setIsCreating] = useState(false)
   const [newClientOpen, setNewClientOpen] = useState(false)
   const [selectedCustomer, setSelectedCustomer] = useState<CustomerResponse | null>(null)
   const [customerDetailsOpen, setCustomerDetailsOpen] = useState(false)
@@ -54,7 +55,20 @@ export default function ClientesPage() {
               <DialogTitle>Cadastrar Novo Cliente</DialogTitle>
             </DialogHeader>
             <div className="pt-2">
-              <CustomerForm onSubmit={() => { setNewClientOpen(false); refresh() }} />
+              <CustomerForm
+                isLoading={isCreating}
+                onSubmit={async (data) => {
+                  setIsCreating(true)
+                  try {
+                    await createCustomer(data)
+                    setNewClientOpen(false)
+                  } catch {
+                    // Error is handled by the hook
+                  } finally {
+                    setIsCreating(false)
+                  }
+                }}
+              />
             </div>
           </DialogContent>
         </Dialog>
@@ -93,10 +107,7 @@ export default function ClientesPage() {
           {selectedCustomer && (
             <div className="space-y-4 pt-2">
               <CustomerDetailsModal customer={selectedCustomer} />
-              <CustomerSalesHistory
-                sales={[]}
-                customerId={selectedCustomer.id}
-              />
+              <CustomerSalesHistory customerId={selectedCustomer.id} />
             </div>
           )}
         </DialogContent>

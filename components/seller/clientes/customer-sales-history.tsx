@@ -1,20 +1,40 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { Loader2 } from 'lucide-react'
 import type { SaleResponse } from '@/types/sale'
 import { SALE_STATUS_LABELS, formatSaleId, formatDate, formatCurrency } from '@/lib/constants'
+import * as salesService from '@/services/sales.service'
 
 interface CustomerSalesHistoryProps {
-  sales: SaleResponse[]
   customerId: number
 }
 
-export function CustomerSalesHistory({ sales }: CustomerSalesHistoryProps) {
+export function CustomerSalesHistory({ customerId }: CustomerSalesHistoryProps) {
+  const [sales, setSales] = useState<SaleResponse[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    if (!customerId) return
+    setIsLoading(true)
+    const endDate = new Date().toISOString()
+    const startDate = new Date(Date.now() - 365 * 24 * 60 * 60 * 1000).toISOString()
+    salesService.getCustomerStatement(customerId, startDate, endDate)
+      .then(setSales)
+      .catch(() => setSales([]))
+      .finally(() => setIsLoading(false))
+  }, [customerId])
+
   return (
     <Card className="p-6">
       <h3 className="font-semibold text-foreground mb-4">Histórico de Vendas</h3>
-      {sales.length === 0 ? (
+      {isLoading ? (
+        <div className="flex items-center justify-center py-6">
+          <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
+        </div>
+      ) : sales.length === 0 ? (
         <p className="text-sm text-muted-foreground text-center py-6">
           Nenhuma venda registrada
         </p>
