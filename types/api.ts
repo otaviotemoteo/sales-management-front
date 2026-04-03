@@ -15,6 +15,7 @@ export interface PaginationParams {
   size?: number
   sortBy?: string
   direction?: 'ASC' | 'DESC'
+  [key: string]: string | number | undefined
 }
 
 export class ApiError extends Error {
