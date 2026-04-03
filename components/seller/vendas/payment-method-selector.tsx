@@ -5,10 +5,10 @@ import { Card } from '@/components/ui/card'
 import { DollarSign, Zap, CreditCard, Banknote } from 'lucide-react'
 
 const paymentMethods = [
-  { id: 'cash', label: 'Dinheiro', icon: DollarSign },
-  { id: 'pix', label: 'PIX', icon: Zap },
-  { id: 'debit', label: 'Débito', icon: CreditCard },
-  { id: 'credit', label: 'Crédito', icon: Banknote },
+  { id: 'CASH', label: 'Dinheiro', icon: DollarSign },
+  { id: 'PIX', label: 'PIX', icon: Zap },
+  { id: 'DEBIT_CARD', label: 'Débito', icon: CreditCard },
+  { id: 'CREDIT_CARD', label: 'Crédito', icon: Banknote },
 ]
 
 interface PaymentMethodSelectorProps {

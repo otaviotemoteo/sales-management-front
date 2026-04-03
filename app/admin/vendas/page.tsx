@@ -10,6 +10,8 @@ import { SaleDetailModal } from '@/components/admin/vendas/sale-detail-modal'
 import { useSales } from '@/hooks/use-sales'
 import { useUsers } from '@/hooks/use-users'
 import { formatSaleId, formatDate } from '@/lib/constants'
+import { useToast } from '@/hooks/use-toast'
+import * as salesService from '@/services/sales.service'
 import type { SaleResponse } from '@/types/sale'
 
 type Status = 'completed' | 'pending' | 'cancelled'
@@ -30,6 +32,7 @@ const PAYMENT_TO_MOCK: Record<string, string> = {
 function mapSaleToRow(sale: SaleResponse): SaleRow {
   return {
     id: formatSaleId(sale.id),
+    numericId: sale.id,
     customer: sale.customer?.name ?? 'Cliente',
     seller: sale.seller?.name?.split(' ')[0] ?? 'Vendedor',
     sellerId: String(sale.seller?.id ?? ''),
@@ -51,6 +54,7 @@ function mapSaleToRow(sale: SaleResponse): SaleRow {
 }
 
 export default function AdminVendasPage() {
+  const { toast } = useToast()
   const { sales, isLoading, refresh } = useSales({ own: false, size: 100 })
   const { users: sellers } = useUsers({ role: 'SELLER', size: 100 })
   const [search, setSearch] = useState('')
@@ -96,14 +100,39 @@ export default function AdminVendasPage() {
     return { totalSales, totalRevenue, pendingValue, completionRate, paymentBreakdown }
   }, [filtered])
 
-  function handleStatusChange(_id: string, _newStatus: Status) {
-    refresh()
+  const MOCK_TO_API_STATUS: Record<Status, string> = {
+    completed: 'CONFIRMED',
+    pending: 'PENDING',
+    cancelled: 'CANCELLED',
   }
 
-  function handleSaveEdit(_id: string, _updates: { amount: number; status: Status }) {
-    setEditOpen(false)
-    setEditSale(null)
-    refresh()
+  async function handleStatusChange(id: string, newStatus: Status) {
+    const row = saleRows.find(s => s.id === id)
+    if (!row) return
+    try {
+      await salesService.updateSale(row.numericId, { status: MOCK_TO_API_STATUS[newStatus] })
+      refresh()
+    } catch {
+      toast({ title: 'Erro ao atualizar status', variant: 'destructive' })
+    }
+  }
+
+  async function handleSaveEdit(id: string, updates: { amount: number; status: Status }) {
+    const row = saleRows.find(s => s.id === id)
+    if (!row) return
+    try {
+      await salesService.updateSale(row.numericId, {
+        finalAmount: updates.amount,
+        status: MOCK_TO_API_STATUS[updates.status],
+      })
+      toast({ title: 'Venda atualizada com sucesso' })
+    } catch {
+      toast({ title: 'Erro ao atualizar venda', variant: 'destructive' })
+    } finally {
+      setEditOpen(false)
+      setEditSale(null)
+      refresh()
+    }
   }
 
   function openEdit(sale: SaleRow) {

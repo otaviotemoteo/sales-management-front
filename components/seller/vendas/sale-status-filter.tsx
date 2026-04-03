@@ -9,18 +9,16 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { ChevronDown } from 'lucide-react'
 
-type Status = 'all' | 'completed' | 'pending' | 'cancelled'
-
 interface Tab {
-  value: Status
+  value: string
   label: string
 }
 
 interface SaleStatusFilterProps {
-  value: Status
-  onChange: (value: Status) => void
+  value: string
+  onChange: (value: string) => void
   tabs: Tab[]
-  counts: Record<Status, number>
+  counts: Record<string, number>
 }
 
 export function SaleStatusFilter({ value, onChange, tabs, counts }: SaleStatusFilterProps) {
@@ -56,7 +54,7 @@ export function SaleStatusFilter({ value, onChange, tabs, counts }: SaleStatusFi
 
       {/* Desktop: tabs */}
       <div className="hidden sm:block">
-        <Tabs value={value} onValueChange={(v) => onChange(v as Status)}>
+        <Tabs value={value} onValueChange={(v) => onChange(v)}>
           <TabsList>
             {tabs.map((t) => (
               <TabsTrigger key={t.value} value={t.value}>
