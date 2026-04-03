@@ -30,6 +30,7 @@ const paymentLabel: Record<string, string> = {
 
 export interface SaleRow {
   id: string
+  numericId: number
   customer: string
   seller: string
   sellerId: string

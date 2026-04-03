@@ -12,9 +12,9 @@ import { NewSaleForm } from '@/components/seller/vendas/new-sale-form'
 import { SaleReceipt } from '@/components/seller/vendas/sale-receipt'
 import { Card } from '@/components/ui/card'
 import { useSales } from '@/hooks/use-sales'
+import { useToast } from '@/hooks/use-toast'
 import type { SaleResponse } from '@/types/sale'
-import { SALE_STATUS_LABELS } from '@/lib/constants'
-import { formatSaleId } from '@/lib/constants'
+import { SALE_STATUS_LABELS, formatSaleId } from '@/lib/constants'
 
 type Status = 'all' | 'CONFIRMED' | 'PENDING' | 'CANCELLED'
 
@@ -26,7 +26,8 @@ const tabs: { value: Status; label: string }[] = [
 ]
 
 export default function VendasPage() {
-  const { sales, isLoading, error, refresh } = useSales({ own: true, size: 100 })
+  const { toast } = useToast()
+  const { sales, isLoading, error, refresh, cancelSale } = useSales({ own: true, size: 100 })
   const [search, setSearch] = useState('')
   const [activeTab, setActiveTab] = useState<Status>('all')
   const [selectedSale, setSelectedSale] = useState<SaleResponse | null>(null)
@@ -77,7 +78,7 @@ export default function VendasPage() {
               <DialogTitle>Registrar Nova Venda</DialogTitle>
             </DialogHeader>
             <div className="pt-2">
-              <NewSaleForm onSubmit={() => { setNewSaleOpen(false); refresh() }} />
+              <NewSaleForm onSuccess={() => { setNewSaleOpen(false); refresh() }} />
             </div>
           </DialogContent>
         </Dialog>
@@ -87,7 +88,7 @@ export default function VendasPage() {
 
       <SaleStatusFilter
         value={activeTab}
-        onChange={setActiveTab}
+        onChange={(v) => setActiveTab(v as Status)}
         tabs={tabs}
         counts={counts}
       />
@@ -112,7 +113,19 @@ export default function VendasPage() {
                 onView={() => { setSelectedSale(sale); setSaleDetailsOpen(true) }}
               />
               <div className="absolute top-3 right-3">
-                <SaleActionsMenu saleId={String(sale.id)} />
+                <SaleActionsMenu
+                  saleId={String(sale.id)}
+                  onEdit={() => { setSelectedSale(sale); setSaleDetailsOpen(true) }}
+                  onDownload={() => { setSelectedSale(sale); setSaleDetailsOpen(true) }}
+                  onDelete={async () => {
+                    try {
+                      await cancelSale(sale.id)
+                      toast({ title: 'Venda cancelada com sucesso' })
+                    } catch {
+                      toast({ title: 'Erro ao cancelar venda', variant: 'destructive' })
+                    }
+                  }}
+                />
               </div>
             </div>
           ))}
