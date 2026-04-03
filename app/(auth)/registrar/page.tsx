@@ -50,8 +50,8 @@ export default function RegisterPage() {
     setServerError(null)
     setIsSubmitting(true)
     try {
-      await registerUser(values.name, values.email, values.password)
-      router.push('/vendedor/dashboard')
+      const user = await registerUser(values.name, values.email, values.password)
+      router.push(user.role === 'ADMIN' ? '/admin/dashboard' : '/vendedor/dashboard')
     } catch (err) {
       setServerError(err instanceof Error ? err.message : 'Erro ao criar conta')
     } finally {

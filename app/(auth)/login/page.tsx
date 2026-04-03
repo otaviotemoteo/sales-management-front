@@ -43,8 +43,8 @@ export default function LoginPage() {
     setServerError(null)
     setIsSubmitting(true)
     try {
-      await login(values.email, values.password)
-      router.push('/vendedor/dashboard')
+      const user = await login(values.email, values.password)
+      router.push(user.role === 'ADMIN' ? '/admin/dashboard' : '/vendedor/dashboard')
     } catch (err) {
       setServerError(err instanceof Error ? err.message : 'Erro ao fazer login')
     } finally {

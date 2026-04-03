@@ -8,8 +8,8 @@ interface AuthContextValue {
   user: UserResponse | null
   isLoading: boolean
   isAuthenticated: boolean
-  login: (email: string, password: string) => Promise<void>
-  register: (name: string, email: string, password: string) => Promise<void>
+  login: (email: string, password: string) => Promise<UserResponse>
+  register: (name: string, email: string, password: string) => Promise<UserResponse>
   logout: () => Promise<void>
 }
 
@@ -29,11 +29,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = useCallback(async (email: string, password: string) => {
     const { user } = await authService.login({ email, password })
     setUser(user)
+    return user
   }, [])
 
   const register = useCallback(async (name: string, email: string, password: string) => {
-    const { user } = await authService.register({ name, email, password, role: 'SELLER' })
+    const { user } = await authService.register({ name, email, password, role: 'ADMIN' })
     setUser(user)
+    return user
   }, [])
 
   const logout = useCallback(async () => {
