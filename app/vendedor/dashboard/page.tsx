@@ -13,6 +13,7 @@ import { TopProducts } from '@/components/seller/desempenho/top-products'
 import { useAuth } from '@/hooks/use-auth'
 import { useSales } from '@/hooks/use-sales'
 import { useDashboard } from '@/hooks/use-dashboard'
+import { useCustomers } from '@/hooks/use-customers'
 import { SALE_STATUS_LABELS, formatDate, formatCurrency } from '@/lib/constants'
 
 const statusVariant: Record<string, 'default' | 'secondary' | 'destructive'> = {
@@ -35,8 +36,9 @@ const dateLabel = now.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numer
 
 export default function DashboardPage() {
   const { user } = useAuth()
-  const { sales, isLoading: salesLoading } = useSales({ own: true, size: 6 })
+  const { sales, isLoading: salesLoading, refresh: refreshSales } = useSales({ own: true, size: 6 })
   const { dashboard, isLoading: dashLoading } = useDashboard({ period: 'month' })
+  const { pagination: customersPag } = useCustomers({ size: 1 })
   const [newSaleOpen, setNewSaleOpen] = useState(false)
 
   const isLoading = salesLoading || dashLoading
@@ -72,7 +74,7 @@ export default function DashboardPage() {
               <DialogTitle>Registrar Nova Venda</DialogTitle>
             </DialogHeader>
             <div className="pt-2">
-              <NewSaleForm onSubmit={() => setNewSaleOpen(false)} />
+              <NewSaleForm onSuccess={() => { setNewSaleOpen(false); refreshSales() }} />
             </div>
           </DialogContent>
         </Dialog>
@@ -81,7 +83,7 @@ export default function DashboardPage() {
       <StatsOverview
         totalSales={dashboard?.salesCount ?? 0}
         totalRevenue={dashboard?.totalSalesAmount ?? 0}
-        totalCustomers={0}
+        totalCustomers={customersPag?.totalElements ?? 0}
         averageTicket={dashboard && dashboard.salesCount > 0 ? dashboard.totalSalesAmount / dashboard.salesCount : 0}
       />
 
