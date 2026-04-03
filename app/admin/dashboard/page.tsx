@@ -9,7 +9,11 @@ import { PendingPaymentsList } from '@/components/admin/dashboard/pending-paymen
 import { PeriodSelector } from '@/components/seller/desempenho/period-selector'
 import { TopProducts } from '@/components/seller/desempenho/top-products'
 import { useDashboard } from '@/hooks/use-dashboard'
-import { PAYMENT_METHOD_LABELS } from '@/lib/constants'
+import { useSales } from '@/hooks/use-sales'
+import { useCustomers } from '@/hooks/use-customers'
+import { useProducts } from '@/hooks/use-products'
+import { useUsers } from '@/hooks/use-users'
+import { PAYMENT_METHOD_LABELS, formatSaleId, formatDate, formatCurrency } from '@/lib/constants'
 import { useAuth } from '@/hooks/use-auth'
 
 type Period = 'day' | 'week' | 'month' | 'year'
@@ -23,6 +27,10 @@ export default function AdminDashboardPage() {
   const { user } = useAuth()
   const [period, setPeriod] = useState<Period>('month')
   const { dashboard, isLoading } = useDashboard({ period })
+  const { pagination: customersPag } = useCustomers({ size: 1 })
+  const { pagination: productsPag } = useProducts({ size: 1 })
+  const { pagination: sellersPag } = useUsers({ role: 'SELLER', size: 1 })
+  const { sales: allSales } = useSales({ own: false, size: 100 })
 
   if (isLoading && !dashboard) {
     return (
@@ -71,9 +79,9 @@ export default function AdminDashboardPage() {
       <AdminStatsOverview
         totalSales={dashboard?.salesCount ?? 0}
         totalRevenue={dashboard?.totalSalesAmount ?? 0}
-        totalCustomers={0}
-        activeSellers={0}
-        totalProducts={0}
+        totalCustomers={customersPag?.totalElements ?? 0}
+        activeSellers={sellersPag?.totalElements ?? 0}
+        totalProducts={productsPag?.totalElements ?? 0}
         pendingPaymentsCount={dashboard?.pendingPaymentsCount ?? 0}
         pendingPaymentsValue={dashboard?.pendingPaymentsAmount ?? 0}
       />
@@ -85,7 +93,15 @@ export default function AdminDashboardPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <PaymentMethodsChart methods={paymentMethods} />
-        <PendingPaymentsList payments={[]} />
+        <PendingPaymentsList payments={allSales
+          .filter(s => s.paymentStatus === 'PENDING' && s.status !== 'CANCELLED')
+          .map(s => ({
+            id: formatSaleId(s.id),
+            customer: s.customer?.name ?? 'Cliente',
+            seller: s.seller?.name?.split(' ')[0] ?? 'Vendedor',
+            amount: s.finalAmount,
+            date: formatDate(s.saleDate),
+          }))} />
       </div>
 
       <TopProducts products={topProducts} />
