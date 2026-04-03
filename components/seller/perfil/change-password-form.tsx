@@ -99,9 +99,12 @@ export function ChangePasswordForm({ onSubmit, isLoading }: ChangePasswordFormPr
           </div>
         </div>
 
-        <Button className="w-full" disabled={isLoading}>
-          {isLoading ? 'Alterando...' : 'Alterar Senha'}
+        <Button className="w-full" disabled>
+          Em breve
         </Button>
+        <p className="text-xs text-muted-foreground text-center">
+          Funcionalidade em desenvolvimento
+        </p>
       </form>
     </Card>
   )

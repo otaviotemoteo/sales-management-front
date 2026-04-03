@@ -17,16 +17,23 @@ import { PauseCircle, Trash2, AlertTriangle } from 'lucide-react'
 
 const CONFIRM_PHRASE = 'deletar minha conta'
 
-export function AccountActionsCard() {
+interface AccountActionsCardProps {
+  onDeactivate?: () => void
+  onDelete?: () => void
+}
+
+export function AccountActionsCard({ onDeactivate, onDelete }: AccountActionsCardProps) {
   const [deactivateOpen, setDeactivateOpen] = useState(false)
   const [deleteOpen, setDeleteOpen] = useState(false)
   const [confirmText, setConfirmText] = useState('')
 
   const handleDeactivate = () => {
+    onDeactivate?.()
     setDeactivateOpen(false)
   }
 
   const handleDelete = () => {
+    onDelete?.()
     setConfirmText('')
     setDeleteOpen(false)
   }

@@ -5,7 +5,6 @@ import { ProfileAvatar } from '@/components/seller/perfil/profile-avatar'
 import { ProfileForm } from '@/components/seller/perfil/profile-form'
 import { ProfileStats } from '@/components/seller/perfil/profile-stats'
 import { ChangePasswordForm } from '@/components/seller/perfil/change-password-form'
-import { AccountActionsCard } from '@/components/seller/perfil/account-actions-card'
 import { useAuth } from '@/hooks/use-auth'
 import { useDashboard } from '@/hooks/use-dashboard'
 
@@ -25,7 +24,7 @@ export default function PerfilPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-foreground">Meu Perfil</h1>
-        <p className="text-muted-foreground mt-1">Gerencie suas informações pessoais</p>
+        <p className="text-muted-foreground mt-1">Suas informações pessoais</p>
       </div>
 
       <ProfileStats
@@ -62,13 +61,8 @@ export default function PerfilPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="order-2 lg:order-1">
-          <AccountActionsCard />
-        </div>
-        <div className="lg:col-span-2 order-1 lg:order-2">
-          <ChangePasswordForm />
-        </div>
+      <div className="lg:col-span-2">
+        <ChangePasswordForm />
       </div>
     </div>
   )
