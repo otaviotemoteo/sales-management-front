@@ -10,24 +10,17 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import {
+  SALE_STATUS_LABELS,
+  PAYMENT_METHOD_LABELS,
+  formatCurrency,
+} from '@/lib/constants'
+import type { SaleStatus, PaymentMethod } from '@/types/sale'
 
-const statusLabel: Record<string, string> = {
-  completed: 'Concluída',
-  pending: 'Pendente',
-  cancelled: 'Cancelada',
-}
-
-const statusVariant: Record<string, 'default' | 'secondary' | 'destructive'> = {
-  completed: 'default',
-  pending: 'secondary',
-  cancelled: 'destructive',
-}
-
-const paymentLabel: Record<string, string> = {
-  pix: 'PIX',
-  credit: 'Crédito',
-  debit: 'Débito',
-  cash: 'Dinheiro',
+const statusVariant: Record<SaleStatus, 'default' | 'secondary' | 'destructive'> = {
+  CONFIRMED: 'default',
+  PENDING: 'secondary',
+  CANCELLED: 'destructive',
 }
 
 interface SaleRow {
@@ -36,8 +29,8 @@ interface SaleRow {
   seller: string
   date: string
   amount: number
-  paymentMethod: string
-  status: string
+  paymentMethod: PaymentMethod
+  status: SaleStatus
 }
 
 interface SalesReportTableProps {
@@ -74,13 +67,15 @@ export function SalesReportTable({ sales }: SalesReportTableProps) {
               <TableCell className="font-medium text-foreground">{sale.customer}</TableCell>
               <TableCell className="text-muted-foreground">{sale.seller}</TableCell>
               <TableCell className="text-muted-foreground">{sale.date}</TableCell>
-              <TableCell className="text-muted-foreground">{paymentLabel[sale.paymentMethod] ?? sale.paymentMethod}</TableCell>
+              <TableCell className="text-muted-foreground">
+                {PAYMENT_METHOD_LABELS[sale.paymentMethod] ?? sale.paymentMethod}
+              </TableCell>
               <TableCell className="text-center font-semibold text-foreground whitespace-nowrap">
-                R$ {sale.amount.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                {formatCurrency(sale.amount)}
               </TableCell>
               <TableCell className="px-6">
                 <Badge variant={statusVariant[sale.status] ?? 'secondary'}>
-                  {statusLabel[sale.status] ?? sale.status}
+                  {SALE_STATUS_LABELS[sale.status] ?? sale.status}
                 </Badge>
               </TableCell>
             </TableRow>
