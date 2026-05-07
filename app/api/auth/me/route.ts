@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { apiClient } from '@/lib/api-client'
 
 export async function GET(request: NextRequest) {
   const token = request.cookies.get('auth-token')?.value
@@ -25,7 +26,7 @@ export async function GET(request: NextRequest) {
       return response
     }
 
-    const user = {
+    const fallbackUser = {
       id: payload.userId || payload.sub,
       name: payload.name || payload.userName || '',
       email: payload.email || payload.sub || '',
@@ -34,7 +35,20 @@ export async function GET(request: NextRequest) {
       createdAt: '',
     }
 
-    return NextResponse.json({ user })
+    const userId = payload.userId || payload.sub
+    if (userId) {
+      try {
+        const backendRes = await apiClient(`/users/${userId}`, { token })
+        if (backendRes.ok) {
+          const fullUser = await backendRes.json()
+          return NextResponse.json({ user: { ...fallbackUser, ...fullUser } })
+        }
+      } catch {
+        // fall through to JWT-only response
+      }
+    }
+
+    return NextResponse.json({ user: fallbackUser })
   } catch {
     const response = NextResponse.json({ user: null }, { status: 401 })
     response.cookies.delete('auth-token')
