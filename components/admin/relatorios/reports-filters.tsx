@@ -11,9 +11,9 @@ const periods = [
 
 const statuses = [
   { value: 'all', label: 'Todos os status' },
-  { value: 'completed', label: 'Concluída' },
-  { value: 'pending', label: 'Pendente' },
-  { value: 'cancelled', label: 'Cancelada' },
+  { value: 'CONFIRMED', label: 'Concluída' },
+  { value: 'PENDING', label: 'Pendente' },
+  { value: 'CANCELLED', label: 'Cancelada' },
 ]
 
 interface ReportsFiltersProps {
