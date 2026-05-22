@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -8,23 +9,27 @@ import { Label } from '@/components/ui/label'
 interface SellerFormValues {
   fullName: string
   email: string
-  phone: string
 }
 
 interface SellerFormProps {
   initialValues?: Partial<SellerFormValues>
-  onSubmit: (values: SellerFormValues) => void
+  onSubmit: (values: SellerFormValues) => void | Promise<void>
   onCancel: () => void
 }
 
 export function SellerForm({ initialValues, onSubmit, onCancel }: SellerFormProps) {
   const [fullName, setFullName] = useState(initialValues?.fullName ?? '')
   const [email, setEmail] = useState(initialValues?.email ?? '')
-  const [phone, setPhone] = useState(initialValues?.phone ?? '')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    onSubmit({ fullName, email, phone })
+    setIsSubmitting(true)
+    try {
+      await onSubmit({ fullName, email })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -54,24 +59,12 @@ export function SellerForm({ initialValues, onSubmit, onCancel }: SellerFormProp
         />
       </div>
 
-      <div>
-        <Label htmlFor="seller-phone">Telefone</Label>
-        <Input
-          id="seller-phone"
-          type="tel"
-          placeholder="(11) 99999-9999"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          required
-          className="mt-1.5"
-        />
-      </div>
-
       <div className="flex gap-3 pt-2">
-        <Button type="button" variant="outline" className="flex-1" onClick={onCancel}>
+        <Button type="button" variant="outline" className="flex-1" onClick={onCancel} disabled={isSubmitting}>
           Cancelar
         </Button>
-        <Button type="submit" className="flex-1">
+        <Button type="submit" className="flex-1" disabled={isSubmitting}>
+          {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
           {initialValues?.fullName ? 'Salvar alterações' : 'Cadastrar vendedor'}
         </Button>
       </div>
