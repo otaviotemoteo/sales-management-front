@@ -13,6 +13,7 @@ export interface UserResponse {
   state?: string
   bio?: string
   avatarUrl?: string
+  mustSetPassword?: boolean
 }
 
 export interface LoginRequest {
@@ -36,7 +37,7 @@ export interface AuthResponse {
 export interface CreateUserRequest {
   name: string
   email: string
-  password: string
+  password?: string
   role: UserRole
 }
 
