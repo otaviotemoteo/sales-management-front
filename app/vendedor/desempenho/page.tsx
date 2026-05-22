@@ -1,7 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { Loader2 } from 'lucide-react'
+import { Loader2, LineChart } from 'lucide-react'
+import { Card } from '@/components/ui/card'
+import { EmptyState } from '@/components/ui/empty-state'
 import { PeriodSelector } from '@/components/seller/desempenho/period-selector'
 import { StatsOverview } from '@/components/seller/desempenho/stats-overview'
 import { SalesChart } from '@/components/seller/desempenho/sales-chart'
@@ -76,12 +78,24 @@ export default function DesempenhoPage() {
         averageTicket={averageTicket}
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <SalesChart data={chartData} />
-        <PaymentMethodsChart methods={paymentMethods} />
-      </div>
+      {salesCount === 0 ? (
+        <Card className="p-6">
+          <EmptyState
+            icon={LineChart}
+            title="Tudo funcionando! Você ainda não registrou vendas."
+            description="Assim que você fizer sua primeira venda, seus gráficos e métricas aparecerão aqui."
+          />
+        </Card>
+      ) : (
+        <>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <SalesChart data={chartData} />
+            <PaymentMethodsChart methods={paymentMethods} />
+          </div>
 
-      <TopProducts products={topProducts} />
+          <TopProducts products={topProducts} />
+        </>
+      )}
     </div>
   )
 }
