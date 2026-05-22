@@ -32,6 +32,32 @@ export async function register(data: RegisterRequest): Promise<{ user: UserRespo
   return res.json()
 }
 
+export async function checkEmail(email: string): Promise<{ firstAccess: boolean }> {
+  const res = await fetch('/api/auth/check-email', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email }),
+  })
+
+  if (!res.ok) return { firstAccess: false }
+  return res.json()
+}
+
+export async function firstAccess(email: string): Promise<{ user: UserResponse }> {
+  const res = await fetch('/api/auth/first-access', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email }),
+  })
+
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}))
+    throw new ApiError(body.message || 'Erro ao acessar', res.status)
+  }
+
+  return res.json()
+}
+
 export async function logout(): Promise<void> {
   await fetch('/api/auth/logout', { method: 'POST' })
 }
