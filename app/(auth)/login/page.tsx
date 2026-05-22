@@ -20,19 +20,21 @@ import {
 import { Card } from '@/components/ui/card'
 import { AuthSidePanel } from '@/components/auth/auth-side-panel'
 import { useAuth } from '@/hooks/use-auth'
+import * as authService from '@/services/auth.service'
 
 const loginSchema = z.object({
   email: z.string().email({ message: 'E-mail inválido' }),
-  password: z.string().min(6, { message: 'Senha deve ter no mínimo 6 caracteres' }),
+  password: z.string(),
 })
 
 type LoginValues = z.infer<typeof loginSchema>
 
 export default function LoginPage() {
-  const { login } = useAuth()
+  const { login, firstAccessLogin } = useAuth()
   const router = useRouter()
   const [serverError, setServerError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [step, setStep] = useState<'email' | 'password'>('email')
 
   const form = useForm<LoginValues>({
     resolver: zodResolver(loginSchema),
@@ -43,6 +45,21 @@ export default function LoginPage() {
     setServerError(null)
     setIsSubmitting(true)
     try {
+      if (step === 'email') {
+        const { firstAccess } = await authService.checkEmail(values.email)
+        if (firstAccess) {
+          await firstAccessLogin(values.email)
+          router.push('/onboarding/seller')
+          return
+        }
+        setStep('password')
+        return
+      }
+
+      if (values.password.length < 6) {
+        form.setError('password', { message: 'Senha deve ter no mínimo 6 caracteres' })
+        return
+      }
       const user = await login(values.email, values.password)
       router.push(user.role === 'ADMIN' ? '/admin/dashboard' : '/vendedor/dashboard')
     } catch (err) {
@@ -50,6 +67,13 @@ export default function LoginPage() {
     } finally {
       setIsSubmitting(false)
     }
+  }
+
+  function handleBackToEmail() {
+    setStep('email')
+    setServerError(null)
+    form.setValue('password', '')
+    form.clearErrors('password')
   }
 
   return (
@@ -74,7 +98,9 @@ export default function LoginPage() {
           <Card className="p-8 space-y-6">
             <div className="space-y-1">
               <h1 className="text-2xl font-bold text-foreground">Entrar</h1>
-              <p className="text-muted-foreground">Bem-vindo de volta</p>
+              <p className="text-muted-foreground">
+                {step === 'email' ? 'Informe seu e-mail para continuar' : 'Bem-vindo de volta'}
+              </p>
             </div>
 
             <Form {...form}>
@@ -89,6 +115,7 @@ export default function LoginPage() {
                         <Input
                           type="email"
                           placeholder="seu@email.com"
+                          disabled={step === 'password'}
                           {...field}
                         />
                       </FormControl>
@@ -96,30 +123,42 @@ export default function LoginPage() {
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Senha</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="password"
-                          placeholder="••••••••"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                {step === 'password' && (
+                  <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Senha</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="password"
+                            placeholder="••••••••"
+                            autoFocus
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
                 {serverError && (
                   <p className="text-sm text-destructive text-center">{serverError}</p>
                 )}
                 <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
                   {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
-                  Entrar
+                  {step === 'email' ? 'Continuar' : 'Entrar'}
                 </Button>
+                {step === 'password' && (
+                  <button
+                    type="button"
+                    onClick={handleBackToEmail}
+                    className="w-full text-center text-sm text-muted-foreground hover:text-foreground"
+                  >
+                    Usar outro e-mail
+                  </button>
+                )}
               </form>
             </Form>
 
