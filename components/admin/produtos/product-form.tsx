@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -37,7 +38,7 @@ interface ProductFormValues {
 
 interface ProductFormProps {
   initialValues?: Partial<ProductFormValues>
-  onSubmit: (values: ProductFormValues) => void
+  onSubmit: (values: ProductFormValues) => void | Promise<void>
   onCancel: () => void
 }
 
@@ -46,15 +47,21 @@ export function ProductForm({ initialValues, onSubmit, onCancel }: ProductFormPr
   const [price, setPrice] = useState(priceToMasked(initialValues?.price))
   const [category, setCategory] = useState(initialValues?.category ?? '')
   const [stock, setStock] = useState(String(initialValues?.stock ?? ''))
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    onSubmit({
-      name,
-      price: parseCurrencyInput(price),
-      category,
-      stock: Number(stock),
-    })
+    setIsSubmitting(true)
+    try {
+      await onSubmit({
+        name,
+        price: parseCurrencyInput(price),
+        category,
+        stock: Number(stock),
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -115,10 +122,11 @@ export function ProductForm({ initialValues, onSubmit, onCancel }: ProductFormPr
       </div>
 
       <div className="flex gap-3 pt-2">
-        <Button type="button" variant="outline" className="flex-1" onClick={onCancel}>
+        <Button type="button" variant="outline" className="flex-1" onClick={onCancel} disabled={isSubmitting}>
           Cancelar
         </Button>
-        <Button type="submit" className="flex-1">
+        <Button type="submit" className="flex-1" disabled={isSubmitting}>
+          {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
           {initialValues?.name ? 'Salvar alterações' : 'Cadastrar produto'}
         </Button>
       </div>
