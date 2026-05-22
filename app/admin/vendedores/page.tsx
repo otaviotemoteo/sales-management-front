@@ -90,7 +90,7 @@ export default function VendedoresPage() {
     )
   }, [sellers, search])
 
-  async function handleCreate(values: { fullName: string; email: string; phone: string }) {
+  async function handleCreate(values: { fullName: string; email: string }) {
     await usersService.createUser({
       name: values.fullName,
       email: values.email,
@@ -100,7 +100,7 @@ export default function VendedoresPage() {
     refresh()
   }
 
-  async function handleEdit(values: { fullName: string; email: string; phone: string }) {
+  async function handleEdit(values: { fullName: string; email: string }) {
     if (!editSeller) return
     const numericId = parseInt(editSeller.id, 10)
     await usersService.updateUser(numericId, {
