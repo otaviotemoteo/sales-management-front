@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { BarChart3, Users, TrendingUp, User, ArrowRight, Plus, Loader2 } from 'lucide-react'
+import { BarChart3, Users, TrendingUp, User, ArrowRight, Plus, Loader2, ShoppingBag } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -14,6 +14,7 @@ import { useAuth } from '@/hooks/use-auth'
 import { useSales } from '@/hooks/use-sales'
 import { useDashboard } from '@/hooks/use-dashboard'
 import { useCustomers } from '@/hooks/use-customers'
+import { EmptyState } from '@/components/ui/empty-state'
 import { SALE_STATUS_LABELS, formatDate, formatCurrency } from '@/lib/constants'
 
 const statusVariant: Record<string, 'default' | 'secondary' | 'destructive'> = {
@@ -115,7 +116,11 @@ export default function DashboardPage() {
               </div>
             ))}
             {sales.length === 0 && (
-              <p className="text-sm text-muted-foreground text-center py-4">Nenhuma venda recente</p>
+              <EmptyState
+                icon={ShoppingBag}
+                title="Nenhuma venda ainda…"
+                description="Faça a primeira! É só clicar em Nova Venda."
+              />
             )}
           </div>
         </Card>
