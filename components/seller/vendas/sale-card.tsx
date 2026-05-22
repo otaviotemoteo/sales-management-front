@@ -24,12 +24,11 @@ export function SaleCard({ sale, onView }: SaleCardProps) {
         <div className="flex-1 min-w-0">
           <h3 className="font-semibold text-foreground">{sale.customer.name}</h3>
           <p className="text-xs text-muted-foreground mt-1">{formatDate(sale.saleDate)}</p>
-          {sale.status === 'CONFIRMED' && (
+          {sale.paymentStatus === 'PAID' ? (
             <span className="inline-flex items-center mt-2 px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700 border border-green-200">
               Pago com {PAYMENT_METHOD_LABELS[sale.paymentMethod] ?? sale.paymentMethod}
             </span>
-          )}
-          {sale.status === 'PENDING' && (
+          ) : (
             <span className="inline-flex items-center mt-2 px-2 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-700 border border-orange-200">
               Pagamento pendente
             </span>
