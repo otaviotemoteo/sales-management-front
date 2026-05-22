@@ -10,6 +10,7 @@ interface AuthContextValue {
   isAuthenticated: boolean
   login: (email: string, password: string) => Promise<UserResponse>
   register: (name: string, email: string, password: string) => Promise<UserResponse>
+  firstAccessLogin: (email: string) => Promise<UserResponse>
   logout: () => Promise<void>
   refreshUser: () => Promise<void>
 }
@@ -48,6 +49,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return user
   }, [])
 
+  const firstAccessLogin = useCallback(async (email: string) => {
+    const { user } = await authService.firstAccess(email)
+    setUser(user)
+    return user
+  }, [])
+
   const logout = useCallback(async () => {
     await authService.logout()
     setUser(null)
@@ -60,6 +67,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       isAuthenticated: !!user,
       login,
       register,
+      firstAccessLogin,
       logout,
       refreshUser,
     }}>
