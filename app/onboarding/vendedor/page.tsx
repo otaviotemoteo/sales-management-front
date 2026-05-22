@@ -31,7 +31,7 @@ export default function OnboardingVendedorPage() {
       .catch(() => setReady(true))
   }, [authLoading, user, router])
 
-  async function handleCreate(values: { fullName: string; email: string; phone: string }) {
+  async function handleCreate(values: { fullName: string; email: string }) {
     try {
       await usersService.createUser({
         name: values.fullName,
