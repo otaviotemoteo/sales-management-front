@@ -94,7 +94,6 @@ export default function VendedoresPage() {
     await usersService.createUser({
       name: values.fullName,
       email: values.email,
-      password: 'VendaFlow@123',
       role: 'SELLER',
     })
     setNewSellerOpen(false)
