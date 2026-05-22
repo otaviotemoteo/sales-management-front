@@ -73,6 +73,15 @@ export async function updateOwnProfile(
   return handleResponse(res);
 }
 
+export async function setInitialPassword(newPassword: string): Promise<void> {
+  const res = await fetch("/api/users/me/set-password", {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ newPassword }),
+  });
+  return handleVoidResponse(res, "Erro ao definir senha");
+}
+
 export async function changePassword(
   data: ChangePasswordRequest,
 ): Promise<void> {
