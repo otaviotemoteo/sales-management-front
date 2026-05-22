@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { Plus, Search, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -12,6 +12,7 @@ import { SellerForm } from '@/components/admin/vendedores/seller-form'
 import { useUsers } from '@/hooks/use-users'
 import * as usersService from '@/services/users.service'
 import type { UserResponse } from '@/types/auth'
+import type { SellerStatsResponse } from '@/types/dashboard'
 
 type SellerView = {
   id: string
@@ -29,15 +30,21 @@ type SellerView = {
   }
 }
 
-function mapUserToSeller(user: UserResponse): SellerView {
+function mapUserToSeller(user: UserResponse, stats?: SellerStatsResponse): SellerView {
   return {
     id: String(user.id),
     fullName: user.name,
     email: user.email,
-    phone: '',
+    phone: user.phone ?? '',
     status: user.active ? 'active' : 'inactive',
     joinedAt: user.createdAt ? new Date(user.createdAt).toISOString().slice(0, 10) : '',
-    stats: { totalSales: 0, totalRevenue: 0, totalCustomers: 0, averageTicket: 0, rating: 0 },
+    stats: {
+      totalSales: stats?.totalSales ?? 0,
+      totalRevenue: stats?.totalRevenue ?? 0,
+      totalCustomers: stats?.totalCustomers ?? 0,
+      averageTicket: stats?.averageTicket ?? 0,
+      rating: stats?.rating ?? 0,
+    },
   }
 }
 
@@ -48,8 +55,31 @@ export default function VendedoresPage() {
   const [selectedSeller, setSelectedSeller] = useState<SellerView | null>(null)
   const [detailsOpen, setDetailsOpen] = useState(false)
   const [editSeller, setEditSeller] = useState<SellerView | null>(null)
+  const [statsById, setStatsById] = useState<Record<number, SellerStatsResponse>>({})
 
-  const sellers = useMemo(() => users.map(mapUserToSeller), [users])
+  useEffect(() => {
+    if (users.length === 0) return
+    let cancelled = false
+    Promise.all(
+      users.map(async (u) => {
+        try {
+          return [u.id, await usersService.getSellerStats(u.id)] as const
+        } catch {
+          return null
+        }
+      })
+    ).then((entries) => {
+      if (cancelled) return
+      const map: Record<number, SellerStatsResponse> = {}
+      for (const entry of entries) {
+        if (entry) map[entry[0]] = entry[1]
+      }
+      setStatsById(map)
+    })
+    return () => { cancelled = true }
+  }, [users])
+
+  const sellers = useMemo(() => users.map((u) => mapUserToSeller(u, statsById[u.id])), [users, statsById])
 
   const filtered = useMemo(() => {
     const q = search.toLowerCase()
