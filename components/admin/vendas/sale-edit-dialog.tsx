@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -24,11 +24,13 @@ export function SaleEditDialog({ sale, open, onOpenChange, onSave }: SaleEditDia
   const [amount, setAmount] = useState(String(sale?.amount ?? ''))
   const [status, setStatus] = useState<Status>(sale?.status ?? 'completed')
 
-  // Sync state when sale changes
-  if (sale && String(sale.amount) !== amount && !open) {
-    setAmount(String(sale.amount))
-    setStatus(sale.status)
-  }
+  // Prefill the fields with the sale's current values whenever the dialog opens
+  useEffect(() => {
+    if (open && sale) {
+      setAmount(String(sale.amount))
+      setStatus(sale.status)
+    }
+  }, [open, sale])
 
   function handleOpen(isOpen: boolean) {
     if (isOpen && sale) {
