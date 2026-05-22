@@ -9,13 +9,15 @@ export function SellerOnboardingGuard({ children }: { children: React.ReactNode 
   const { user, isLoading } = useAuth()
   const router = useRouter()
 
-  const mustOnboard = !!user?.mustSetPassword
+  const mustSetPassword = !!user?.mustSetPassword
+  const profileEmpty = !!user && !user.phone && !user.cpf && !user.city && !user.state
+  const mustOnboard = mustSetPassword || profileEmpty
 
   useEffect(() => {
-    if (!isLoading && mustOnboard) {
-      router.replace('/onboarding/seller')
-    }
-  }, [isLoading, mustOnboard, router])
+    if (isLoading || !user) return
+    if (mustSetPassword) router.replace('/onboarding/seller')
+    else if (profileEmpty) router.replace('/onboarding/seller/perfil')
+  }, [isLoading, user, mustSetPassword, profileEmpty, router])
 
   if (isLoading || mustOnboard) {
     return (
