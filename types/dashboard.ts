@@ -20,3 +20,11 @@ export interface DashboardResponse {
   salesByPaymentMethod: Record<string, number>
   salesTrend: SalesTrendDTO[]
 }
+
+export interface SellerStatsResponse {
+  totalSales: number
+  totalRevenue: number
+  totalCustomers: number
+  averageTicket: number
+  rating: number
+}
