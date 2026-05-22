@@ -18,6 +18,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Pencil, Loader2 } from 'lucide-react'
+import { onlyDigits, formatPhone, formatCpf } from '@/lib/masks'
 
 interface ProfileFormValues {
   fullName: string
@@ -34,24 +35,6 @@ interface ProfileFormProps {
   onSave?: (values: ProfileFormValues) => Promise<void>
 }
 
-const digits = (value: string) => value.replace(/\D/g, '')
-
-function formatPhone(value: string): string {
-  const d = digits(value).slice(0, 11)
-  if (d.length <= 2) return d
-  if (d.length <= 6) return `(${d.slice(0, 2)}) ${d.slice(2)}`
-  if (d.length <= 10) return `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`
-  return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`
-}
-
-function formatCpf(value: string): string {
-  const d = digits(value).slice(0, 11)
-  if (d.length <= 3) return d
-  if (d.length <= 6) return `${d.slice(0, 3)}.${d.slice(3)}`
-  if (d.length <= 9) return `${d.slice(0, 3)}.${d.slice(3, 6)}.${d.slice(6)}`
-  return `${d.slice(0, 3)}.${d.slice(3, 6)}.${d.slice(6, 9)}-${d.slice(9)}`
-}
-
 const optional = (schema: z.ZodString) =>
   z.union([z.literal(''), schema]).optional()
 
@@ -60,12 +43,12 @@ const profileSchema = z.object({
   phone: optional(
     z
       .string()
-      .refine((v) => digits(v).length === 10 || digits(v).length === 11, {
+      .refine((v) => onlyDigits(v).length === 10 || onlyDigits(v).length === 11, {
         message: 'Telefone inválido',
       }),
   ),
   cpf: optional(
-    z.string().refine((v) => digits(v).length === 11, {
+    z.string().refine((v) => onlyDigits(v).length === 11, {
       message: 'CPF deve conter 11 dígitos',
     }),
   ),
@@ -104,7 +87,7 @@ export function ProfileForm({ defaultValues = {}, onSave }: ProfileFormProps) {
     await onSave?.({
       ...values,
       email,
-      cpf: values.cpf ? digits(values.cpf) : '',
+      cpf: values.cpf ? onlyDigits(values.cpf) : '',
     } as ProfileFormValues)
     setRevealed(false)
   }
