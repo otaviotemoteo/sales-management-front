@@ -47,5 +47,7 @@ export interface CreateSaleRequest {
 }
 
 export interface UpdateSaleRequest {
-  [key: string]: unknown
+  status?: SaleStatus
+  finalAmount?: number
+  notes?: string
 }
