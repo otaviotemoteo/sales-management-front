@@ -5,6 +5,7 @@ import type {
   ChangePasswordRequest,
 } from "@/types/auth";
 import type { PageResponse, PaginationParams } from "@/types/api";
+import type { SellerStatsResponse } from "@/types/dashboard";
 import {
   buildQuery,
   handleResponse,
@@ -53,6 +54,11 @@ export async function deleteUser(id: number): Promise<void> {
 
 export async function reactivateUser(id: number): Promise<UserResponse> {
   const res = await fetch(`/api/users/${id}/reactivate`, { method: "PATCH" });
+  return handleResponse(res);
+}
+
+export async function getSellerStats(id: number): Promise<SellerStatsResponse> {
+  const res = await fetch(`/api/users/${id}/stats`);
   return handleResponse(res);
 }
 
