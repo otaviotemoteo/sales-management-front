@@ -8,6 +8,26 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 
 const categories = ['Informática', 'Periféricos', 'Áudio', 'Armazenamento', 'Componentes', 'Mobiliário']
 
+/** Treats the typed digits as cents and renders BRL like "1.234,56". */
+function formatCurrencyInput(value: string): string {
+  const digits = value.replace(/\D/g, '')
+  if (!digits) return ''
+  return (parseInt(digits, 10) / 100).toLocaleString('pt-BR', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })
+}
+
+function parseCurrencyInput(masked: string): number {
+  const digits = masked.replace(/\D/g, '')
+  return digits ? parseInt(digits, 10) / 100 : 0
+}
+
+function priceToMasked(price?: number): string {
+  if (price == null) return ''
+  return price.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+}
+
 interface ProductFormValues {
   name: string
   price: number
@@ -23,7 +43,7 @@ interface ProductFormProps {
 
 export function ProductForm({ initialValues, onSubmit, onCancel }: ProductFormProps) {
   const [name, setName] = useState(initialValues?.name ?? '')
-  const [price, setPrice] = useState(String(initialValues?.price ?? ''))
+  const [price, setPrice] = useState(priceToMasked(initialValues?.price))
   const [category, setCategory] = useState(initialValues?.category ?? '')
   const [stock, setStock] = useState(String(initialValues?.stock ?? ''))
 
@@ -31,7 +51,7 @@ export function ProductForm({ initialValues, onSubmit, onCancel }: ProductFormPr
     e.preventDefault()
     onSubmit({
       name,
-      price: Number(price),
+      price: parseCurrencyInput(price),
       category,
       stock: Number(stock),
     })
@@ -56,12 +76,11 @@ export function ProductForm({ initialValues, onSubmit, onCancel }: ProductFormPr
           <Label htmlFor="prod-price">Preço (R$)</Label>
           <Input
             id="prod-price"
-            type="number"
-            step="0.01"
-            min="0"
+            type="text"
+            inputMode="numeric"
             placeholder="0,00"
             value={price}
-            onChange={(e) => setPrice(e.target.value)}
+            onChange={(e) => setPrice(formatCurrencyInput(e.target.value))}
             required
             className="mt-1.5"
           />
