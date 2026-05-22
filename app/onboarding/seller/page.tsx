@@ -44,10 +44,11 @@ export default function SellerOnboardingPage() {
     defaultValues: { newPassword: '', confirmPassword: '' },
   })
 
-  // Already has a password → nothing to do here.
+  // Already has a password → move on to the profile step (or the dashboard if done).
   useEffect(() => {
     if (!isLoading && user && !user.mustSetPassword) {
-      router.replace('/vendedor/dashboard')
+      const profileEmpty = !user.phone && !user.cpf && !user.city && !user.state
+      router.replace(profileEmpty ? '/onboarding/seller/perfil' : '/vendedor/dashboard')
     }
   }, [isLoading, user, router])
 
@@ -63,8 +64,8 @@ export default function SellerOnboardingPage() {
     try {
       await usersService.setInitialPassword(values.newPassword)
       await refreshUser()
-      toast({ title: 'Senha definida! Bem-vindo(a)!' })
-      router.replace('/vendedor/dashboard')
+      toast({ title: 'Senha definida!' })
+      router.replace('/onboarding/seller/perfil')
     } catch (err) {
       toast({
         title: 'Erro ao definir senha',
