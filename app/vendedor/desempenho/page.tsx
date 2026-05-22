@@ -8,13 +8,17 @@ import { SalesChart } from '@/components/seller/desempenho/sales-chart'
 import { PaymentMethodsChart } from '@/components/seller/desempenho/payment-methods-chart'
 import { TopProducts } from '@/components/seller/desempenho/top-products'
 import { useDashboard } from '@/hooks/use-dashboard'
+import { useAuth } from '@/hooks/use-auth'
+import { useCustomers } from '@/hooks/use-customers'
 import { PAYMENT_METHOD_LABELS } from '@/lib/constants'
 
 type Period = 'day' | 'week' | 'month' | 'year'
 
 export default function DesempenhoPage() {
+  const { user } = useAuth()
   const [period, setPeriod] = useState<Period>('month')
-  const { dashboard, isLoading } = useDashboard({ period })
+  const { dashboard, isLoading } = useDashboard({ period, sellerId: user?.id, autoFetch: !!user?.id })
+  const { pagination: customersPag } = useCustomers({ size: 1 })
 
   if (isLoading && !dashboard) {
     return (
@@ -68,7 +72,7 @@ export default function DesempenhoPage() {
       <StatsOverview
         totalSales={salesCount}
         totalRevenue={totalAmount}
-        totalCustomers={0}
+        totalCustomers={customersPag?.totalElements ?? 0}
         averageTicket={averageTicket}
       />
 
