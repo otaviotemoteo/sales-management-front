@@ -37,7 +37,7 @@ const dateLabel = now.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numer
 export default function DashboardPage() {
   const { user } = useAuth()
   const { sales, isLoading: salesLoading, refresh: refreshSales } = useSales({ own: true, size: 6 })
-  const { dashboard, isLoading: dashLoading } = useDashboard({ period: 'month' })
+  const { dashboard, isLoading: dashLoading } = useDashboard({ period: 'month', sellerId: user?.id, autoFetch: !!user?.id })
   const { pagination: customersPag } = useCustomers({ size: 1 })
   const [newSaleOpen, setNewSaleOpen] = useState(false)
 
