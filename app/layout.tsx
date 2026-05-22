@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} ${dmSans.variable} ${allison.variable}`}>
+      <body suppressHydrationWarning className={`font-sans ${GeistSans.variable} ${GeistMono.variable} ${dmSans.variable} ${allison.variable}`}>
         <AuthProvider>
           <Suspense fallback={null}>
             {children}
