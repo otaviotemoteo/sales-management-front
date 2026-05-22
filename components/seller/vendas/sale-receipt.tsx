@@ -4,7 +4,7 @@ import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Printer, Download } from 'lucide-react'
 import type { SaleResponse } from '@/types/sale'
-import { PAYMENT_METHOD_LABELS, formatSaleId, formatDate, formatCurrency } from '@/lib/constants'
+import { PAYMENT_METHOD_LABELS, PAYMENT_STATUS_LABELS, formatSaleId, formatDate, formatCurrency } from '@/lib/constants'
 
 interface SaleReceiptProps {
   sale: SaleResponse
@@ -63,7 +63,7 @@ export function SaleReceipt({ sale }: SaleReceiptProps) {
 
       <div className="text-center mb-6 text-sm">
         <p className="text-muted-foreground">
-          Pagamento: <span className="font-semibold text-foreground">{PAYMENT_METHOD_LABELS[sale.paymentMethod] ?? sale.paymentMethod}</span>
+          Pagamento: <span className="font-semibold text-foreground">{PAYMENT_METHOD_LABELS[sale.paymentMethod] ?? sale.paymentMethod} · {PAYMENT_STATUS_LABELS[sale.paymentStatus] ?? sale.paymentStatus}</span>
         </p>
       </div>
 
