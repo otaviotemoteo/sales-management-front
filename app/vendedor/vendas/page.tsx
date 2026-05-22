@@ -37,7 +37,7 @@ export default function VendasPage() {
   const filtered = useMemo(() => {
     return sales.filter((s) => {
       const matchesSearch =
-        s.customer.name.toLowerCase().includes(search.toLowerCase()) ||
+        (s.customer?.name ?? '').toLowerCase().includes(search.toLowerCase()) ||
         formatSaleId(s.id).toLowerCase().includes(search.toLowerCase())
       const matchesTab = activeTab === 'all' || s.status === activeTab
       return matchesSearch && matchesTab
