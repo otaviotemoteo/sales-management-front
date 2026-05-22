@@ -7,6 +7,12 @@ export interface UserResponse {
   role: UserRole
   active: boolean
   createdAt: string
+  phone?: string
+  cpf?: string
+  city?: string
+  state?: string
+  bio?: string
+  avatarUrl?: string
 }
 
 export interface LoginRequest {
@@ -38,4 +44,14 @@ export interface UpdateUserRequest {
   name?: string
   email?: string
   active?: boolean
+  phone?: string
+  cpf?: string
+  city?: string
+  state?: string
+  bio?: string
+}
+
+export interface ChangePasswordRequest {
+  currentPassword: string
+  newPassword: string
 }
