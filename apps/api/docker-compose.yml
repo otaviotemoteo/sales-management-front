@@ -1,0 +1,63 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: sales-db
+    environment:
+      POSTGRES_DB: sales_db
+      POSTGRES_USER: sales_user
+      POSTGRES_PASSWORD: sales_pass
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - sales-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sales_user -d sales_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: sales-redis
+    ports:
+      - "6380:6379"
+    networks:
+      - sales-net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    container_name: sales-app
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILE: dev
+      DB_HOST: postgres
+      REDIS_HOST: redis
+      DB_HOST_PORT: 5434
+      REDIS_HOST_PORT: 6380
+      JWT_SECRET: ${JWT_SECRET:-my-super-secret-key-change-in-production-at-least-256-bits}
+    networks:
+      - sales-net
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    env_file:
+      - .env
+
+networks:
+  sales-net:
+    driver: bridge
+
+volumes:
+  postgres_data:
