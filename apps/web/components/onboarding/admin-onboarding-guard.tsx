@@ -14,8 +14,8 @@ export function AdminOnboardingGuard({ children }: { children: React.ReactNode }
     getOnboardingCounts()
       .then(({ productCount, sellerCount }) => {
         if (cancelled) return
-        if (productCount === 0) router.replace('/onboarding/produto')
-        else if (sellerCount === 0) router.replace('/onboarding/vendedor')
+        if (productCount === 0) router.replace('/onboarding/product')
+        else if (sellerCount === 0) router.replace('/onboarding/seller-invite')
         else setAllowed(true)
       })
       .catch(() => {

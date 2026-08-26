@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const publicPaths = ['/', '/login', '/registrar']
+const publicPaths = ['/', '/login', '/register']
 
 function getRoleFromToken(token: string): string | null {
   try {
@@ -17,7 +17,7 @@ function getRoleFromToken(token: string): string | null {
 }
 
 function getDashboardForRole(role: string): string {
-  return role === 'ADMIN' ? '/admin/dashboard' : '/vendedor/dashboard'
+  return role === 'ADMIN' ? '/admin/dashboard' : '/seller/dashboard'
 }
 
 export function middleware(request: NextRequest) {
@@ -58,9 +58,9 @@ export function middleware(request: NextRequest) {
 
   // Role-based route protection
   if (pathname.startsWith('/admin') && role !== 'ADMIN') {
-    return NextResponse.redirect(new URL('/vendedor/dashboard', request.url))
+    return NextResponse.redirect(new URL('/seller/dashboard', request.url))
   }
-  if (pathname.startsWith('/vendedor') && role !== 'SELLER') {
+  if (pathname.startsWith('/seller') && role !== 'SELLER') {
     return NextResponse.redirect(new URL('/admin/dashboard', request.url))
   }
 

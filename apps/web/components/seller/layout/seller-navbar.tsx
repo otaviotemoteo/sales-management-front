@@ -10,11 +10,11 @@ import { cn } from '@/lib/utils'
 import { useAuth } from '@/hooks/use-auth'
 
 const navItems = [
-  { href: '/vendedor/dashboard', label: 'Dashboard', icon: Home },
-  { href: '/vendedor/vendas', label: 'Vendas', icon: ShoppingCart },
-  { href: '/vendedor/clientes', label: 'Clientes', icon: Users },
-  { href: '/vendedor/desempenho', label: 'Desempenho', icon: TrendingUp },
-  { href: '/vendedor/perfil', label: 'Perfil', icon: User },
+  { href: '/seller/dashboard', label: 'Dashboard', icon: Home },
+  { href: '/seller/sales', label: 'Sales', icon: ShoppingCart },
+  { href: '/seller/customers', label: 'Customers', icon: Users },
+  { href: '/seller/performance', label: 'Desempenho', icon: TrendingUp },
+  { href: '/seller/profile', label: 'Perfil', icon: User },
 ]
 
 export function SellerNavbar() {
@@ -31,7 +31,7 @@ export function SellerNavbar() {
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
 
           <div className="flex items-center gap-6">
-            <Link href="/vendedor/dashboard" className="flex items-center gap-2">
+            <Link href="/seller/dashboard" className="flex items-center gap-2">
               <BarChart3 className="w-5 h-5 text-primary" />
               <span className="font-bold text-lg text-foreground">VendaFlow</span>
             </Link>
@@ -65,7 +65,7 @@ export function SellerNavbar() {
               className="hidden md:flex items-center gap-2 text-sm px-3.5 py-2 rounded-md text-foreground/60 hover:text-foreground hover:bg-accent/60 transition-colors"
             >
               <LogOut className="w-4 h-4" />
-              Sair
+              Sign out
             </button>
 
             <div className="md:hidden">

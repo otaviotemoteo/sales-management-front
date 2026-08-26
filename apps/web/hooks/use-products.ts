@@ -28,7 +28,7 @@ export function useProducts(options: UseProductsOptions = {}) {
       const result = await productsService.getProducts({ page, size, sortBy, direction })
       setData(result)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao carregar produtos')
+      setError(err instanceof Error ? err.message : 'Could not load products')
     } finally {
       setIsLoading(false)
     }
@@ -57,7 +57,7 @@ export function useProducts(options: UseProductsOptions = {}) {
       const result = await productsService.searchProducts(query, { page: 0, size })
       setData(result)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao buscar produtos')
+      setError(err instanceof Error ? err.message : 'Could not search products')
     } finally {
       setIsLoading(false)
     }

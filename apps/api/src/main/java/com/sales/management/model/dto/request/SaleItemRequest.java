@@ -15,14 +15,14 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class SaleItemRequest {
 
-    @NotNull(message = "Produto é obrigatório")
+    @NotNull(message = "Product is required")
     private Long productId;
 
-    @NotNull(message = "Quantidade é obrigatória")
+    @NotNull(message = "Quantity is required")
     @Min(value = 1, message = "Quantidade deve ser pelo menos 1")
     private Integer quantity;
 
-    @NotNull(message = "Preço unitário é obrigatório")
-    @Min(value = 0, message = "Preço deve ser positivo")
+    @NotNull(message = "Unit price is required")
+    @Min(value = 0, message = "Price must be positive")
     private BigDecimal unitPrice;
 }

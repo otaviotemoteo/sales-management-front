@@ -6,8 +6,8 @@ import { AdminStatsOverview } from '@/components/admin/dashboard/admin-stats-ove
 import { SalesEvolutionChart } from '@/components/admin/dashboard/sales-evolution-chart'
 import { PaymentMethodsChart } from '@/components/admin/dashboard/payment-methods-chart'
 import { PendingPaymentsList } from '@/components/admin/dashboard/pending-payments-list'
-import { PeriodSelector } from '@/components/seller/desempenho/period-selector'
-import { TopProducts } from '@/components/seller/desempenho/top-products'
+import { PeriodSelector } from '@/components/seller/performance/period-selector'
+import { TopProducts } from '@/components/seller/performance/top-products'
 import { useDashboard } from '@/hooks/use-dashboard'
 import { useSales } from '@/hooks/use-sales'
 import { useCustomers } from '@/hooks/use-customers'
@@ -46,15 +46,15 @@ export default function AdminDashboardPage() {
     revenue: t.amount,
   })) ?? []
 
+  // Shape must match what the pie chart reads: nameKey="name", dataKey="value"
+  // and an explicit fill per slice. It used to be built as method/count/
+  // percentage, which the chart silently rendered as an empty circle.
   const paymentMethods = dashboard?.salesByPaymentMethod
-    ? Object.entries(dashboard.salesByPaymentMethod).map(([method, count]) => {
-        const total = Object.values(dashboard.salesByPaymentMethod).reduce((a, b) => a + b, 0)
-        return {
-          method: PAYMENT_METHOD_LABELS[method] ?? method,
-          count,
-          percentage: total > 0 ? Math.round((count / total) * 100) : 0,
-        }
-      })
+    ? Object.entries(dashboard.salesByPaymentMethod).map(([method, count], i) => ({
+        name: PAYMENT_METHOD_LABELS[method] ?? method,
+        value: count,
+        color: `var(--color-chart-${(i % 5) + 1})`,
+      }))
     : []
 
   const topProducts = dashboard?.topProducts?.map((p, i) => ({
@@ -97,8 +97,8 @@ export default function AdminDashboardPage() {
           .filter(s => s.paymentStatus === 'PENDING' && s.status !== 'CANCELLED')
           .map(s => ({
             id: formatSaleId(s.id),
-            customer: s.customer?.name ?? 'Cliente',
-            seller: s.seller?.name?.split(' ')[0] ?? 'Vendedor',
+            customer: s.customer?.name ?? 'Customer',
+            seller: s.seller?.name?.split(' ')[0] ?? 'Seller',
             amount: s.finalAmount,
             date: formatDate(s.saleDate),
           }))} />

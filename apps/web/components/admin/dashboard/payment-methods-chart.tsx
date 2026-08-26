@@ -19,7 +19,7 @@ export function PaymentMethodsChart({ methods }: PaymentMethodsChartProps) {
 
   return (
     <Card className="p-6">
-      <h3 className="font-semibold text-foreground mb-6">Formas de Pagamento</h3>
+      <h3 className="font-semibold text-foreground mb-6">Payment methods</h3>
       <div className="flex flex-col sm:flex-row items-center gap-6">
         <ChartContainer config={chartConfig} className="h-48 w-48 shrink-0">
           <PieChart>

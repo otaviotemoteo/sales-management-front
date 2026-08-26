@@ -1,6 +1,6 @@
 export const SALE_STATUS_LABELS: Record<string, string> = {
   PENDING: 'Pendente',
-  CONFIRMED: 'Concluída',
+  CONFIRMED: 'Completed',
   CANCELLED: 'Cancelada',
 }
 
@@ -13,8 +13,8 @@ export const SALE_STATUS_COLORS: Record<string, string> = {
 export const PAYMENT_METHOD_LABELS: Record<string, string> = {
   CASH: 'Dinheiro',
   PIX: 'PIX',
-  DEBIT_CARD: 'Cartão de Débito',
-  CREDIT_CARD: 'Cartão de Crédito',
+  DEBIT_CARD: 'Debit card',
+  CREDIT_CARD: 'Credit card',
 }
 
 export const PAYMENT_STATUS_LABELS: Record<string, string> = {

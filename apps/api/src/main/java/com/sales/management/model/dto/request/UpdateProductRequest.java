@@ -15,19 +15,19 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class UpdateProductRequest {
 
-    @Size(max = 200, message = "Nome deve ter no máximo 200 caracteres")
+    @Size(max = 200, message = "Name must be at most 200 characters")
     private String name;
 
-    @Size(max = 1000, message = "Descrição deve ter no máximo 1000 caracteres")
+    @Size(max = 1000, message = "Description must be at most 1000 characters")
     private String description;
 
-    @DecimalMin(value = "0.01", message = "Preço deve ser maior que zero")
+    @DecimalMin(value = "0.01", message = "Price must be greater than zero")
     private BigDecimal price;
 
-    @Size(max = 50, message = "Categoria deve ter no máximo 50 caracteres")
+    @Size(max = 50, message = "Category must be at most 50 characters")
     private String category;
 
-    @Size(max = 500, message = "URL da imagem deve ter no máximo 500 caracteres")
+    @Size(max = 500, message = "Image URL must be at most 500 characters")
     private String imageUrl;
 
     private Integer stock;

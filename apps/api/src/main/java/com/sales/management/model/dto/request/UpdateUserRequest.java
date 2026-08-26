@@ -14,30 +14,30 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UpdateUserRequest {
 
-    @Size(max = 100, message = "Nome deve ter no máximo 100 caracteres")
+    @Size(max = 100, message = "Name must be at most 100 characters")
     private String name;
 
-    @Email(message = "Email inválido")
-    @Size(max = 100, message = "Email deve ter no máximo 100 caracteres")
+    @Email(message = "Invalid email")
+    @Size(max = 100, message = "Email must be at most 100 characters")
     private String email;
 
     private Boolean active;
 
-    @Pattern(regexp = "^\\+?[0-9 ()\\-]{8,20}$", message = "Telefone inválido")
+    @Pattern(regexp = "^\\+?[0-9 ()\\-]{8,20}$", message = "Invalid phone number")
     private String phone;
 
-    @Pattern(regexp = "^[0-9]{11}$", message = "CPF deve conter 11 dígitos numéricos")
+    @Pattern(regexp = "^[0-9]{11}$", message = "CPF must contain 11 digits")
     private String cpf;
 
-    @Size(max = 100, message = "Cidade deve ter no máximo 100 caracteres")
+    @Size(max = 100, message = "City must be at most 100 characters")
     private String city;
 
     @Pattern(regexp = "^[A-Z]{2}$", message = "Estado deve ser a sigla de 2 letras (ex: SP)")
     private String state;
 
-    @Size(max = 1000, message = "Biografia deve ter no máximo 1000 caracteres")
+    @Size(max = 1000, message = "Bio must be at most 1000 characters")
     private String bio;
 
-    @Size(max = 500, message = "URL do avatar deve ter no máximo 500 caracteres")
+    @Size(max = 500, message = "Avatar URL must be at most 500 characters")
     private String avatarUrl;
 }

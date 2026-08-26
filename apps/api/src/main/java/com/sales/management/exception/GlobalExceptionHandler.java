@@ -77,7 +77,7 @@ public class GlobalExceptionHandler {
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.UNAUTHORIZED.value())
                 .error("Unauthorized")
-                .message("Email ou senha inválidos")
+                .message("Invalid email or password")
                 .path(request.getDescription(false).replace("uri=", ""))
                 .build();
         return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
@@ -90,7 +90,7 @@ public class GlobalExceptionHandler {
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.FORBIDDEN.value())
                 .error("Forbidden")
-                .message("Você não tem permissão para acessar este recurso")
+                .message("You do not have permission to access this resource")
                 .path(request.getDescription(false).replace("uri=", ""))
                 .build();
         return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
@@ -110,7 +110,7 @@ public class GlobalExceptionHandler {
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.BAD_REQUEST.value())
                 .error("Validation Failed")
-                .message("Erro de validação nos campos")
+                .message("Field validation failed")
                 .path(request.getDescription(false).replace("uri=", ""))
                 .validationErrors(errors)
                 .build();

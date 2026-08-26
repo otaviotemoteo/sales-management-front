@@ -3,11 +3,11 @@ import { BarChart3 } from "lucide-react";
 
 const footerSections = [
   {
-    title: "Produto",
+    title: "Product",
     links: [
       { href: "/features", label: "Funcionalidades" },
-      { href: "/pricing", label: "Preços" },
-      { href: "/demo", label: "Demonstração" },
+      { href: "/pricing", label: "Pricing" },
+      { href: "/demo", label: "Demo" },
     ],
   },
   {
@@ -22,7 +22,7 @@ const footerSections = [
     title: "Suporte",
     links: [
       { href: "/help", label: "Central de Ajuda" },
-      { href: "/docs", label: "Documentação" },
+      { href: "/docs", label: "Documentation" },
       { href: "/privacy", label: "Privacidade" },
     ],
   },
@@ -32,7 +32,7 @@ export function Footer() {
   return (
     <footer className="border-t border-border bg-muted/30">
         <div className="py-8 pt-8 text-center text-sm text-muted-foreground">
-          <p>© 2025 VendaFlow. Todos os direitos reservados.</p>
+          <p>© 2025 Sales Management. All rights reserved.</p>
         </div>
     </footer>
   );

@@ -27,7 +27,7 @@ export function useCustomers(options: UseCustomersOptions = {}) {
       const result = await customersService.getCustomers({ page, size, sortBy, direction })
       setData(result)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao carregar clientes')
+      setError(err instanceof Error ? err.message : 'Could not load customers')
     } finally {
       setIsLoading(false)
     }
@@ -44,7 +44,7 @@ export function useCustomers(options: UseCustomersOptions = {}) {
       const result = await customersService.searchCustomers(query, { page: 0, size })
       setData(result)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao buscar clientes')
+      setError(err instanceof Error ? err.message : 'Could not search customers')
     } finally {
       setIsLoading(false)
     }

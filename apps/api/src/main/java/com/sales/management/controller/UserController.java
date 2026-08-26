@@ -30,7 +30,7 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
-@Tag(name = "Users", description = "Gerenciamento de usuários")
+@Tag(name = "Users", description = "User management")
 @SecurityRequirement(name = "bearerAuth")
 public class UserController {
 
@@ -38,14 +38,14 @@ public class UserController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    @Operation(summary = "Criar novo usuário (Admin only)")
+    @Operation(summary = "Create a user (admin only)")
     public ResponseEntity<UserResponse> createUser(@Valid @RequestBody CreateUserRequest request) {
         return new ResponseEntity<>(userService.createUser(request), HttpStatus.CREATED);
     }
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    @Operation(summary = "Listar todos os usuários (Admin only)")
+    @Operation(summary = "List all users (admin only)")
     public ResponseEntity<Page<UserResponse>> getAllUsers(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -58,13 +58,13 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    @Operation(summary = "Obter perfil do usuário autenticado")
+    @Operation(summary = "Get the authenticated user's profile")
     public ResponseEntity<UserResponse> getOwnProfile(@AuthenticationPrincipal User currentUser) {
         return ResponseEntity.ok(userService.getOwnProfile(currentUser));
     }
 
     @PatchMapping("/me")
-    @Operation(summary = "Atualizar perfil do usuário autenticado")
+    @Operation(summary = "Update the authenticated user's profile")
     public ResponseEntity<UserResponse> updateOwnProfile(
             @AuthenticationPrincipal User currentUser,
             @Valid @RequestBody UpdateUserRequest request
@@ -73,7 +73,7 @@ public class UserController {
     }
 
     @PatchMapping("/me/password")
-    @Operation(summary = "Alterar a própria senha")
+    @Operation(summary = "Change your own password")
     public ResponseEntity<Void> changeOwnPassword(
             @AuthenticationPrincipal User currentUser,
             @Valid @RequestBody ChangePasswordRequest request
@@ -83,7 +83,7 @@ public class UserController {
     }
 
     @PatchMapping("/me/set-password")
-    @Operation(summary = "Definir senha no primeiro acesso")
+    @Operation(summary = "Set the password on first access")
     public ResponseEntity<Void> setOwnPassword(
             @AuthenticationPrincipal User currentUser,
             @Valid @RequestBody SetPasswordRequest request
@@ -93,14 +93,14 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Buscar usuário por ID")
+    @Operation(summary = "Get a user by id")
     public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    @Operation(summary = "Atualizar usuário (Admin only)")
+    @Operation(summary = "Update a user (admin only)")
     public ResponseEntity<UserResponse> updateUser(
             @PathVariable Long id,
             @Valid @RequestBody UpdateUserRequest request
@@ -110,7 +110,7 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    @Operation(summary = "Desativar usuário (Admin only)")
+    @Operation(summary = "Deactivate a user (admin only)")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
@@ -118,14 +118,14 @@ public class UserController {
 
     @PatchMapping("/{id}/reactivate")
     @PreAuthorize("hasRole('ADMIN')")
-    @Operation(summary = "Reativar usuário (Admin only)")
+    @Operation(summary = "Reactivate a user (admin only)")
     public ResponseEntity<UserResponse> reactivateUser(@PathVariable Long id) {
         return ResponseEntity.ok(userService.reactivateUser(id));
     }
 
     @GetMapping("/role/{role}")
     @PreAuthorize("hasRole('ADMIN')")
-    @Operation(summary = "Listar usuários por role (Admin only)")
+    @Operation(summary = "List users by role (admin only)")
     public ResponseEntity<Page<UserResponse>> getUsersByRole(
             @PathVariable UserRole role,
             @RequestParam(defaultValue = "0") int page,
@@ -137,7 +137,7 @@ public class UserController {
 
     @GetMapping("/search")
     @PreAuthorize("hasRole('ADMIN')")
-    @Operation(summary = "Buscar usuários por nome ou email (Admin only)")
+    @Operation(summary = "Search users by name or email (admin only)")
     public ResponseEntity<Page<UserResponse>> searchUsers(
             @RequestParam String query,
             @RequestParam(defaultValue = "0") int page,
@@ -149,7 +149,7 @@ public class UserController {
 
     @GetMapping("/{id}/stats")
     @PreAuthorize("hasRole('ADMIN')")
-    @Operation(summary = "Métricas agregadas de um vendedor (Admin only)")
+    @Operation(summary = "Aggregated metrics for one seller (admin only)")
     public ResponseEntity<SellerStatsResponse> getSellerStats(
             @PathVariable Long id,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,

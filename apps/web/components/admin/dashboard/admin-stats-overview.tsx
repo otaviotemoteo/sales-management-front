@@ -25,7 +25,7 @@ export function AdminStatsOverview({
   const stats = [
     {
       icon: ShoppingCart,
-      label: 'Total de Vendas',
+      label: 'Total sales',
       value: totalSales,
       color: 'bg-blue-100 text-blue-600',
     },
@@ -37,19 +37,19 @@ export function AdminStatsOverview({
     },
     {
       icon: Users,
-      label: 'Clientes',
+      label: 'Customers',
       value: totalCustomers,
       color: 'bg-purple-100 text-purple-600',
     },
     {
       icon: UserCheck,
-      label: 'Vendedores Ativos',
+      label: 'Active sellers',
       value: activeSellers,
       color: 'bg-indigo-100 text-indigo-600',
     },
     {
       icon: Package,
-      label: 'Produtos',
+      label: 'Products',
       value: totalProducts,
       color: 'bg-orange-100 text-orange-600',
     },

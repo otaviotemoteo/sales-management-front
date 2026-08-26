@@ -19,8 +19,8 @@ public class DevDataSeeder implements CommandLineRunner {
 
     public static final String ADMIN_EMAIL = "admin@sales.local";
     public static final String ADMIN_PASSWORD = "admin123";
-    public static final String SELLER_EMAIL = "vendedor@sales.local";
-    public static final String SELLER_PASSWORD = "vendedor123";
+    public static final String SELLER_EMAIL = "seller@sales.local";
+    public static final String SELLER_PASSWORD = "seller123";
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -28,8 +28,8 @@ public class DevDataSeeder implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) {
-        seed("Admin Demo", ADMIN_EMAIL, ADMIN_PASSWORD, UserRole.ADMIN);
-        seed("Vendedor Demo", SELLER_EMAIL, SELLER_PASSWORD, UserRole.SELLER);
+        seed("Demo Admin", ADMIN_EMAIL, ADMIN_PASSWORD, UserRole.ADMIN);
+        seed("Demo Seller", SELLER_EMAIL, SELLER_PASSWORD, UserRole.SELLER);
     }
 
     private void seed(String name, String email, String rawPassword, UserRole role) {

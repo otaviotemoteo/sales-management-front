@@ -41,7 +41,7 @@ public class RedisConfig {
     private long defaultTtl;
 
     /**
-     * Configuração da conexão com Redis
+     * Redis connection configuration
      */
     @Bean
     public LettuceConnectionFactory redisConnectionFactory() {
@@ -57,7 +57,7 @@ public class RedisConfig {
     }
 
     /**
-     * RedisTemplate customizado para operações manuais
+     * Custom RedisTemplate for manual operations
      */
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
@@ -86,7 +86,7 @@ public class RedisConfig {
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory connectionFactory) {
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofSeconds(defaultTtl)) // TTL padrão
+                .entryTtl(Duration.ofSeconds(defaultTtl)) // default TTL
                 .serializeKeysWith(
                         RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer())
                 )
@@ -95,7 +95,7 @@ public class RedisConfig {
                                 new GenericJackson2JsonRedisSerializer(objectMapper())
                         )
                 )
-                .disableCachingNullValues(); // Não cacheia valores null
+                .disableCachingNullValues(); // never cache nulls
 
         Map<String, RedisCacheConfiguration> cacheConfigs = new HashMap<>();
         cacheConfigs.put("products", config.entryTtl(Duration.ofMinutes(5)));
@@ -110,7 +110,7 @@ public class RedisConfig {
     }
 
     /**
-     * ObjectMapper customizado para serialização JSON
+     * Custom ObjectMapper for JSON serialisation
      */
     private ObjectMapper objectMapper() {
         ObjectMapper mapper = new ObjectMapper();

@@ -6,21 +6,21 @@ import { cn } from '@/lib/utils'
 import { useInView } from '@/hooks/use-in-view'
 
 const adminFeatures = [
-  'Dashboard completo com métricas gerais',
-  'Gestão de produtos e categorias',
-  'Controle de vendedores e permissões',
-  'Relatórios detalhados por período',
-  'Exportação de dados em PDF',
-  'Logs de auditoria completos',
+  'A dashboard with the overall metrics',
+  'Product and category management',
+  'Seller and permission management',
+  'Detailed reports by period',
+  'Data export to PDF',
+  'Full audit logs',
 ]
 
 const sellerFeatures = [
-  'Registro rápido de vendas',
-  'Cadastro de novos clientes',
-  'Histórico de vendas pessoais',
+  'Quick sale entry',
+  'New customer registration',
+  'Your own sales history',
   'Acompanhamento de metas',
   'Interface mobile otimizada',
-  'Notificações de pagamentos',
+  'Payment notifications',
 ]
 
 export function ModulesSection() {
@@ -67,7 +67,7 @@ export function ModulesSection() {
             <Users className="w-6 h-6 text-accent-foreground" />
           </div>
           <h3 className="text-2xl font-bold text-foreground">
-            Para Vendedores
+            Para Sellers
           </h3>
           <ul className="space-y-3">
             {sellerFeatures.map((item, i) => (

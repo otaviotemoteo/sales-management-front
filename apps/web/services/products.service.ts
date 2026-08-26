@@ -47,7 +47,7 @@ export async function updateProduct(
 
 export async function deleteProduct(id: number): Promise<void> {
   const res = await fetch(`/api/products/${id}`, { method: "DELETE" });
-  return handleVoidResponse(res, "Erro ao desativar produto");
+  return handleVoidResponse(res, "Could not deactivate the product");
 }
 
 export async function searchProducts(

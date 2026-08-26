@@ -8,11 +8,11 @@ import { cn } from '@/lib/utils'
 import { useAuth } from '@/hooks/use-auth'
 
 const navItems = [
-  { href: '/vendedor/dashboard', label: 'Dashboard', icon: Home },
-  { href: '/vendedor/vendas', label: 'Vendas', icon: ShoppingCart },
-  { href: '/vendedor/clientes', label: 'Clientes', icon: Users },
-  { href: '/vendedor/desempenho', label: 'Desempenho', icon: TrendingUp },
-  { href: '/vendedor/perfil', label: 'Perfil', icon: User },
+  { href: '/seller/dashboard', label: 'Dashboard', icon: Home },
+  { href: '/seller/sales', label: 'Sales', icon: ShoppingCart },
+  { href: '/seller/customers', label: 'Customers', icon: Users },
+  { href: '/seller/performance', label: 'Desempenho', icon: TrendingUp },
+  { href: '/seller/profile', label: 'Perfil', icon: User },
 ]
 
 interface SellerMobileNavProps {
@@ -85,7 +85,7 @@ export function SellerMobileNav({ open, onClose }: SellerMobileNavProps) {
             onClick={async () => { onClose(); await logout(); router.push('/login') }}
           >
             <LogOut className="w-4 h-4" />
-            <span>Sair</span>
+            <span>Sign out</span>
           </Button>
         </div>
       </aside>

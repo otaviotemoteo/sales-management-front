@@ -9,10 +9,10 @@ import { useAuth } from '@/hooks/use-auth'
 
 const navItems = [
   { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/admin/vendas', label: 'Vendas', icon: ShoppingCart },
-  { href: '/admin/produtos', label: 'Produtos', icon: Package },
-  { href: '/admin/vendedores', label: 'Vendedores', icon: Users },
-  { href: '/admin/relatorios', label: 'Relatórios', icon: FileText },
+  { href: '/admin/sales', label: 'Sales', icon: ShoppingCart },
+  { href: '/admin/products', label: 'Products', icon: Package },
+  { href: '/admin/sellers', label: 'Sellers', icon: Users },
+  { href: '/admin/reports', label: 'Reports', icon: FileText },
 ]
 
 interface AdminMobileNavProps {
@@ -86,7 +86,7 @@ export function AdminMobileNav({ open, onClose }: AdminMobileNavProps) {
             onClick={async () => { onClose(); await logout(); router.push('/login') }}
           >
             <LogOut className="w-4 h-4" />
-            <span>Sair</span>
+            <span>Sign out</span>
           </Button>
         </div>
       </aside>

@@ -23,7 +23,7 @@ import { useAuth } from '@/hooks/use-auth'
 import * as authService from '@/services/auth.service'
 
 const loginSchema = z.object({
-  email: z.string().email({ message: 'E-mail inválido' }),
+  email: z.string().email({ message: 'Invalid email' }),
   password: z.string(),
 })
 
@@ -57,13 +57,13 @@ export default function LoginPage() {
       }
 
       if (values.password.length < 6) {
-        form.setError('password', { message: 'Senha deve ter no mínimo 6 caracteres' })
+        form.setError('password', { message: 'Password must be at least 6 characters' })
         return
       }
       const user = await login(values.email, values.password)
-      router.push(user.role === 'ADMIN' ? '/admin/dashboard' : '/vendedor/dashboard')
+      router.push(user.role === 'ADMIN' ? '/admin/dashboard' : '/seller/dashboard')
     } catch (err) {
-      setServerError(err instanceof Error ? err.message : 'Erro ao fazer login')
+      setServerError(err instanceof Error ? err.message : 'Could not sign in')
     } finally {
       setIsSubmitting(false)
     }
@@ -80,8 +80,8 @@ export default function LoginPage() {
     <div className="min-h-screen grid md:grid-cols-2">
       {/* Left decorative panel */}
       <AuthSidePanel
-        headline="Gerencie suas vendas com inteligência."
-        quote="O segredo do sucesso é conhecer seus números."
+        headline="Run your sales with the numbers in front of you."
+        quote="Knowing your numbers is the whole game."
       />
 
       {/* Right form panel */}
@@ -97,9 +97,9 @@ export default function LoginPage() {
         <div className="w-full max-w-sm space-y-6">
           <Card className="p-8 space-y-6">
             <div className="space-y-1">
-              <h1 className="text-2xl font-bold text-foreground">Entrar</h1>
+              <h1 className="text-2xl font-bold text-foreground">Sign in</h1>
               <p className="text-muted-foreground">
-                {step === 'email' ? 'Informe seu e-mail para continuar' : 'Bem-vindo de volta'}
+                {step === 'email' ? 'Enter your email to continue' : 'Bem-vindo de volta'}
               </p>
             </div>
 
@@ -114,7 +114,7 @@ export default function LoginPage() {
                       <FormControl>
                         <Input
                           type="email"
-                          placeholder="seu@email.com"
+                          placeholder="you@example.com"
                           disabled={step === 'password'}
                           {...field}
                         />
@@ -129,7 +129,7 @@ export default function LoginPage() {
                     name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Senha</FormLabel>
+                        <FormLabel>Password</FormLabel>
                         <FormControl>
                           <Input
                             type="password"
@@ -148,7 +148,7 @@ export default function LoginPage() {
                 )}
                 <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
                   {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
-                  {step === 'email' ? 'Continuar' : 'Entrar'}
+                  {step === 'email' ? 'Continuar' : 'Sign in'}
                 </Button>
                 {step === 'password' && (
                   <button
@@ -163,12 +163,12 @@ export default function LoginPage() {
             </Form>
 
             <p className="text-center text-sm text-muted-foreground">
-              Não tem conta?{' '}
+              No account yet?{' '}
               <Link
-                href="/registrar"
+                href="/register"
                 className="text-primary hover:underline font-medium"
               >
-                Criar conta grátis
+                Create a free account
               </Link>
             </p>
           </Card>

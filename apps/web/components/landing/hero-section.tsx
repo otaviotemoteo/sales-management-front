@@ -29,7 +29,7 @@ export function HeroSection() {
             style={{ animationDelay: '0ms' }}
           >
             <Zap className="w-4 h-4" />
-            <span>Sistema completo de gestão de vendas</span>
+            <span>A complete sales management system</span>
           </div>
 
           <h1
@@ -54,8 +54,8 @@ export function HeroSection() {
             style={{ animationDelay: '200ms' }}
           >
             Plataforma completa para gerenciar produtos, vendedores, clientes e
-            vendas. Dashboards inteligentes, relatórios detalhados e controle de
-            pagamentos em um só lugar.
+            sales. Dashboards, detailed reports and control over
+            payments, all in one place.
           </p>
 
           <div
@@ -68,8 +68,8 @@ export function HeroSection() {
             style={{ animationDelay: '300ms' }}
           >
             <Button size="lg" className="text-base" asChild>
-              <Link href="/registrar">
-                Começar Grátis
+              <Link href="/register">
+                Get started free
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
             </Button>
@@ -93,7 +93,7 @@ export function HeroSection() {
             <Card className="p-6 space-y-4 shadow-xl">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-muted-foreground">
-                  Vendas Hoje
+                  Sales Hoje
                 </span>
                 <TrendingUp className="w-5 h-5 text-green-500" />
               </div>

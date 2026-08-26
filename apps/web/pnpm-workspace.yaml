@@ -1,0 +1,10 @@
+# These two packages need their install scripts to run: @tailwindcss/oxide
+# builds the native CSS engine and sharp fetches its image binaries. Without
+# this, pnpm 10+ blocks both by default and `pnpm build` fails.
+# allowBuilds is the pnpm 11 key; onlyBuiltDependencies is the pnpm 10 one.
+allowBuilds:
+  '@tailwindcss/oxide': true
+  sharp: true
+onlyBuiltDependencies:
+  - '@tailwindcss/oxide'
+  - sharp

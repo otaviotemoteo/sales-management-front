@@ -10,8 +10,8 @@ export async function login(data: LoginRequest): Promise<{ user: UserResponse }>
 
   if (!res.ok) {
     const body = await res.json().catch(() => ({}))
-    if (res.status === 401) throw new AuthError(body.message || 'E-mail ou senha inválidos')
-    throw new ApiError(body.message || 'Erro ao fazer login', res.status)
+    if (res.status === 401) throw new AuthError(body.message || 'Invalid email or password')
+    throw new ApiError(body.message || 'Could not sign in', res.status)
   }
 
   return res.json()
@@ -26,7 +26,7 @@ export async function register(data: RegisterRequest): Promise<{ user: UserRespo
 
   if (!res.ok) {
     const body = await res.json().catch(() => ({}))
-    throw new ApiError(body.message || 'Erro ao criar conta', res.status, body.errors)
+    throw new ApiError(body.message || 'Could not create the account', res.status, body.errors)
   }
 
   return res.json()
@@ -52,7 +52,7 @@ export async function firstAccess(email: string): Promise<{ user: UserResponse }
 
   if (!res.ok) {
     const body = await res.json().catch(() => ({}))
-    throw new ApiError(body.message || 'Erro ao acessar', res.status)
+    throw new ApiError(body.message || 'Could not sign in', res.status)
   }
 
   return res.json()

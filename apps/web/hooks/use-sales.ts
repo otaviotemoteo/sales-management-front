@@ -28,7 +28,7 @@ export function useSales(options: UseSalesOptions = {}) {
         : await salesService.getAllSales({ page, size })
       setData(result)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao carregar vendas')
+      setError(err instanceof Error ? err.message : 'Could not load sales')
     } finally {
       setIsLoading(false)
     }

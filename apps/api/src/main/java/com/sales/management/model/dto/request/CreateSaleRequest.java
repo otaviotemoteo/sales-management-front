@@ -19,17 +19,17 @@ import java.util.List;
 @AllArgsConstructor
 public class CreateSaleRequest {
 
-    @NotNull(message = "Cliente é obrigatório")
+    @NotNull(message = "Customer is required")
     private Long customerId;
 
     @NotEmpty(message = "Deve haver pelo menos um item")
     @Valid
     private List<SaleItemRequest> items;
 
-    @NotNull(message = "Método de pagamento é obrigatório")
+    @NotNull(message = "Payment method is required")
     private PaymentMethod paymentMethod;
 
-    @NotNull(message = "Status de pagamento é obrigatório")
+    @NotNull(message = "Payment status is required")
     private PaymentStatus paymentStatus;
 
     private BigDecimal discount;

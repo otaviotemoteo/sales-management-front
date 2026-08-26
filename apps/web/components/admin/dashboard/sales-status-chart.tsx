@@ -14,7 +14,7 @@ interface SalesStatusChartProps {
 }
 
 const COLORS: Record<string, string> = {
-  'Concluída': '#22c55e',
+  'Completed': '#22c55e',
   'Pendente': '#eab308',
   'Cancelada': '#ef4444',
 }
@@ -37,8 +37,8 @@ export function SalesStatusChart({ statuses }: SalesStatusChartProps) {
 
   return (
     <Card className="p-6">
-      <h3 className="font-semibold text-foreground mb-1">Status das Vendas</h3>
-      <p className="text-sm text-muted-foreground mb-4">{total} vendas no período</p>
+      <h3 className="font-semibold text-foreground mb-1">Sales status</h3>
+      <p className="text-sm text-muted-foreground mb-4">{total} sales in the period</p>
 
       <div className="flex items-center gap-6">
         <div className="shrink-0">

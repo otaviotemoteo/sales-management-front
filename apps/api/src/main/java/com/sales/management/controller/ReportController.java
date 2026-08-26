@@ -15,14 +15,14 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping("/reports")
 @RequiredArgsConstructor
-@Tag(name = "Reports", description = "Relatórios e dashboards")
+@Tag(name = "Reports", description = "Reports and dashboards")
 @SecurityRequirement(name = "bearerAuth")
 public class ReportController {
 
     private final ReportService reportService;
 
     @GetMapping("/dashboard")
-    @Operation(summary = "Obter métricas do dashboard")
+    @Operation(summary = "Get dashboard metrics")
     public ResponseEntity<DashboardResponse> getDashboard(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,

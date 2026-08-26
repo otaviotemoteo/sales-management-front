@@ -14,13 +14,13 @@ interface SalesEvolutionChartProps {
 
 const chartConfig = {
   revenue: { label: 'Faturamento (R$)', color: 'var(--color-primary)' },
-  sales: { label: 'Vendas', color: 'var(--color-chart-2)' },
+  sales: { label: 'Sales', color: 'var(--color-chart-2)' },
 }
 
 export function SalesEvolutionChart({ data }: SalesEvolutionChartProps) {
   return (
     <Card className="p-6">
-      <h3 className="font-semibold text-foreground mb-6">Evolução de Vendas</h3>
+      <h3 className="font-semibold text-foreground mb-6">Sales over time</h3>
       <ChartContainer config={chartConfig} className="h-72 w-full">
         <AreaChart data={data} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
           <defs>

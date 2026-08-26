@@ -12,12 +12,12 @@ export function CTASection() {
         </h2>
         <p className="text-lg text-primary-foreground/90 max-w-2xl mx-auto text-pretty">
           Comece gratuitamente hoje e descubra como o VendaFlow pode
-          revolucionar a gestão do seu negócio.
+          transform how your business is run.
         </p>
         <div className="flex justify-center pt-4">
           <Button size="lg" variant="secondary" className="text-base" asChild>
-            <Link href="/registrar">
-              Criar Conta Grátis
+            <Link href="/register">
+              Create a free account
               <ArrowRight className="ml-2 w-5 h-5" />
             </Link>
           </Button>

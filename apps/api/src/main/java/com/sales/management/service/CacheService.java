@@ -31,7 +31,7 @@ public class CacheService {
      * Busca valor do cache
      * @param key Chave do cache
      * @param clazz Classe do objeto
-     * @return Objeto ou null se não existir
+     * @return the object, or null when absent
      */
     public <T> T get(String key, Class<T> clazz) {
         try {
@@ -51,10 +51,10 @@ public class CacheService {
     }
 
     /**
-     * Busca valor do cache (para tipos genéricos como List, Map)
+     * Reads a value from the cache (for generic types such as List, Map)
      * @param key Chave do cache
-     * @param typeReference TypeReference para tipos genéricos
-     * @return Objeto ou null se não existir
+     * @param typeReference TypeReference for generic types
+     * @return the object, or null when absent
      */
     public <T> T get(String key, TypeReference<T> typeReference) {
         try {
@@ -74,7 +74,7 @@ public class CacheService {
     }
 
     /**
-     * Salva valor no cache com TTL padrão
+     * Stores a value in the cache with the default TTL
      * @param key Chave
      * @param value Valor
      */
@@ -98,7 +98,7 @@ public class CacheService {
     }
 
     /**
-     * Deleta uma chave específica
+     * Deletes one specific key
      * @param key Chave
      */
     public void delete(String key) {
@@ -111,22 +111,22 @@ public class CacheService {
     }
 
     /**
-     * Deleta múltiplas chaves por padrão (wildcards)
-     * @param pattern Padrão (ex: "products:*", "sales:user:123:*")
+     * Deletes multiple keys by pattern (wildcards)
+     * @param pattern the key pattern, e.g. "products:*", "sales:user:123:*"
      */
     public void deletePattern(String pattern) {
         try {
             Set<String> keys = redisTemplate.keys(pattern);
             
             if (keys == null || keys.isEmpty()) {
-                logger.info("Nenhuma chave encontrada para padrão: {}", pattern);
+                logger.info("No keys found for pattern: {}", pattern);
                 return;
             }
 
             redisTemplate.delete(keys);
             logger.info("{} chaves deletadas [{}]", keys.size(), pattern);
         } catch (Exception e) {
-            logger.error("Erro ao deletar padrão [{}]: {}", pattern, e.getMessage());
+            logger.error("Error deleting pattern [{}]: {}", pattern, e.getMessage());
         }
     }
 
@@ -140,15 +140,15 @@ public class CacheService {
             Boolean exists = redisTemplate.hasKey(key);
             return exists != null && exists;
         } catch (Exception e) {
-            logger.error("Erro ao verificar existência [{}]: {}", key, e.getMessage());
+            logger.error("Error checking existence [{}]: {}", key, e.getMessage());
             return false;
         }
     }
 
     /**
-     * Obtém o tempo restante (TTL) de uma chave
+     * Returns the remaining time to live for a key
      * @param key Chave
-     * @return Segundos restantes ou -1 se não existir
+     * @return seconds remaining, or -1 when the key does not exist
      */
     public long getTTL(String key) {
         try {
@@ -173,11 +173,11 @@ public class CacheService {
     }
 
     /**
-     * Helper: busca do cache ou executa função e salva
+     * Helper: read from cache, or run the supplier and store it
      * @param key Chave
      * @param clazz Classe do retorno
-     * @param supplier Função que busca os dados (se não estiver em cache)
-     * @return Dados (do cache ou da função)
+     * @param supplier supplies the data when it is not cached
+     * @return the data, from the cache or from the supplier
      */
     public <T> T getOrCompute(String key, Class<T> clazz, java.util.function.Supplier<T> supplier) {
         T cached = get(key, clazz);
@@ -186,7 +186,7 @@ public class CacheService {
             return cached;
         }
 
-        // Não está em cache, busca os dados
+        // Not cached: fetch it
         T data = supplier.get();
         
         if (data != null) {
@@ -197,7 +197,7 @@ public class CacheService {
     }
 
     /**
-     * Helper: busca do cache ou executa função e salva (com TTL customizado)
+     * Helper: read from cache, or run the supplier and store it (custom TTL)
      */
     public <T> T getOrCompute(String key, Class<T> clazz, java.util.function.Supplier<T> supplier, long ttlSeconds) {
         T cached = get(key, clazz);

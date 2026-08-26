@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
     const data = await backendRes.json()
     return NextResponse.json(data, { status: backendRes.status })
   } catch {
-    return NextResponse.json({ message: 'Erro ao conectar com o servidor' }, { status: 500 })
+    return NextResponse.json({ message: 'Could not reach the server' }, { status: 500 })
   }
 }
 
@@ -31,6 +31,6 @@ export async function POST(request: NextRequest) {
     const data = await backendRes.json()
     return NextResponse.json(data, { status: backendRes.status })
   } catch {
-    return NextResponse.json({ message: 'Erro ao conectar com o servidor' }, { status: 500 })
+    return NextResponse.json({ message: 'Could not reach the server' }, { status: 500 })
   }
 }

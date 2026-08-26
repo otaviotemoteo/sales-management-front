@@ -14,7 +14,7 @@ export async function getDashboard(
   if (!res.ok) {
     const body = await res.json().catch(() => ({}))
     if (res.status === 401) throw new AuthError()
-    throw new ApiError(body.message || 'Erro ao carregar dashboard', res.status)
+    throw new ApiError(body.message || 'Could not load the dashboard', res.status)
   }
 
   return res.json()

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SetPasswordRequest {
 
-    @NotBlank(message = "Nova senha é obrigatória")
-    @Size(min = 6, message = "Nova senha deve ter no mínimo 6 caracteres")
+    @NotBlank(message = "New password is required")
+    @Size(min = 6, message = "New password must be at least 6 characters")
     private String newPassword;
 }

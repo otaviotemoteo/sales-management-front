@@ -26,5 +26,4 @@ export interface SellerStatsResponse {
   totalRevenue: number
   totalCustomers: number
   averageTicket: number
-  rating: number
 }

@@ -33,7 +33,7 @@ public class UserService {
 
     @Transactional
     public UserResponse createUser(CreateUserRequest request) {
-        // Validar email único
+        // Validate the email is unique
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new BadRequestException(Constants.EMAIL_ALREADY_EXISTS);
         }
@@ -58,7 +58,7 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(Constants.USER_NOT_FOUND));
 
-        // Validar email único (se estiver mudando)
+        // Validate the email is unique, when it is changing
         if (request.getEmail() != null && !request.getEmail().equals(user.getEmail())) {
             if (userRepository.existsByEmail(request.getEmail())) {
                 throw new BadRequestException(Constants.EMAIL_ALREADY_EXISTS);
@@ -172,7 +172,7 @@ public class UserService {
     @Transactional
     public void setOwnPassword(User currentUser, SetPasswordRequest request) {
         if (currentUser.getPassword() != null) {
-            throw new BadRequestException("Senha já definida. Use a opção de alterar senha.");
+            throw new BadRequestException("Password already set. Use the change-password option.");
         }
         currentUser.setPassword(passwordEncoder.encode(request.getNewPassword()));
         userRepository.save(currentUser);

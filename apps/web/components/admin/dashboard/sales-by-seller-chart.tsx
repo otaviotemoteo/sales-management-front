@@ -14,13 +14,13 @@ interface SalesBySellerChartProps {
 
 const chartConfig = {
   revenue: { label: 'Faturamento (R$)', color: 'var(--color-primary)' },
-  sales: { label: 'Vendas', color: 'var(--color-chart-2)' },
+  sales: { label: 'Sales', color: 'var(--color-chart-2)' },
 }
 
 export function SalesBySellerChart({ data }: SalesBySellerChartProps) {
   return (
     <Card className="p-6">
-      <h3 className="font-semibold text-foreground mb-6">Vendas por Vendedor</h3>
+      <h3 className="font-semibold text-foreground mb-6">Sales by seller</h3>
       <ChartContainer config={chartConfig} className="h-72 w-full">
         <BarChart data={data} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />

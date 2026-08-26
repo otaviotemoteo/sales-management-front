@@ -16,32 +16,32 @@ import java.util.Map;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-@Tag(name = "Authentication", description = "Endpoints de autenticação")
+@Tag(name = "Authentication", description = "Authentication endpoints")
 public class AuthController {
 
     private final AuthService authService;
 
     @PostMapping("/register")
-    @Operation(summary = "Registrar novo usuário")
+    @Operation(summary = "Register a new user")
     public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest request) {
         return ResponseEntity.ok(authService.register(request));
     }
 
     @PostMapping("/login")
-    @Operation(summary = "Login de usuário")
+    @Operation(summary = "User sign-in")
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
         return ResponseEntity.ok(authService.login(request));
     }
 
     @PostMapping("/check-email")
-    @Operation(summary = "Verificar se o e-mail é um primeiro acesso de vendedor")
+    @Operation(summary = "Check whether the email is a seller's first access")
     public ResponseEntity<Map<String, Boolean>> checkEmail(@RequestBody Map<String, String> request) {
         boolean firstAccess = authService.isFirstAccess(request.get("email"));
         return ResponseEntity.ok(Map.of("firstAccess", firstAccess));
     }
 
     @PostMapping("/first-access")
-    @Operation(summary = "Primeiro acesso de vendedor (sem senha)")
+    @Operation(summary = "Seller first access (no password yet)")
     public ResponseEntity<AuthResponse> firstAccess(@RequestBody Map<String, String> request) {
         return ResponseEntity.ok(authService.firstAccess(request.get("email")));
     }

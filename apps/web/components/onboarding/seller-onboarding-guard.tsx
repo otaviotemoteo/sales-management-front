@@ -16,7 +16,7 @@ export function SellerOnboardingGuard({ children }: { children: React.ReactNode 
   useEffect(() => {
     if (isLoading || !user) return
     if (mustSetPassword) router.replace('/onboarding/seller')
-    else if (profileEmpty) router.replace('/onboarding/seller/perfil')
+    else if (profileEmpty) router.replace('/onboarding/seller/profile')
   }, [isLoading, user, mustSetPassword, profileEmpty, router])
 
   if (isLoading || mustOnboard) {

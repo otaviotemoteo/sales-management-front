@@ -30,7 +30,7 @@ export function useUsers(options: UseUsersOptions = {}) {
         : await usersService.getUsers({ page, size, sortBy, direction })
       setData(result)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao carregar usuários')
+      setError(err instanceof Error ? err.message : 'Could not load users')
     } finally {
       setIsLoading(false)
     }
@@ -47,7 +47,7 @@ export function useUsers(options: UseUsersOptions = {}) {
       const result = await usersService.searchUsers(query, { page: 0, size })
       setData(result)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao buscar usuários')
+      setError(err instanceof Error ? err.message : 'Could not search users')
     } finally {
       setIsLoading(false)
     }

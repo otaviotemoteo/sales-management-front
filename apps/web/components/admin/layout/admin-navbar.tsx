@@ -11,10 +11,10 @@ import { useAuth } from '@/hooks/use-auth'
 
 const navItems = [
   { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/admin/vendas', label: 'Vendas', icon: ShoppingCart },
-  { href: '/admin/produtos', label: 'Produtos', icon: Package },
-  { href: '/admin/vendedores', label: 'Vendedores', icon: Users },
-  { href: '/admin/relatorios', label: 'Relatórios', icon: FileText },
+  { href: '/admin/sales', label: 'Sales', icon: ShoppingCart },
+  { href: '/admin/products', label: 'Products', icon: Package },
+  { href: '/admin/sellers', label: 'Sellers', icon: Users },
+  { href: '/admin/reports', label: 'Reports', icon: FileText },
 ]
 
 export function AdminNavbar() {
@@ -66,7 +66,7 @@ export function AdminNavbar() {
               className="hidden md:flex items-center gap-2 text-sm px-3.5 py-2 rounded-md text-foreground/60 hover:text-foreground hover:bg-accent/60 transition-colors"
             >
               <LogOut className="w-4 h-4" />
-              Sair
+              Sign out
             </button>
 
             <div className="md:hidden">

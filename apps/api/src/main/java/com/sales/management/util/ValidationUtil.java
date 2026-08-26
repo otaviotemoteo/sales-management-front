@@ -14,19 +14,19 @@ public class ValidationUtil {
     
     public static void validateEmail(String email) {
         if (email == null || !EMAIL_PATTERN.matcher(email).matches()) {
-            throw new BadRequestException("Email inválido");
+            throw new BadRequestException("Invalid email");
         }
     }
     
     public static void validatePhone(String phone) {
         if (phone == null || !PHONE_PATTERN.matcher(phone).matches()) {
-            throw new BadRequestException("Telefone inválido");
+            throw new BadRequestException("Invalid phone number");
         }
     }
     
     public static void validateNotEmpty(String value, String fieldName) {
         if (value == null || value.trim().isEmpty()) {
-            throw new BadRequestException(fieldName + " não pode ser vazio");
+            throw new BadRequestException(fieldName + " cannot be empty");
         }
     }
     

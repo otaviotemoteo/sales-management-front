@@ -51,7 +51,7 @@ export function useDashboard(options: UseDashboardOptions = {}) {
       const result = await dashboardService.getDashboard(startDate, endDate, sellerId)
       setDashboard(result)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao carregar dashboard')
+      setError(err instanceof Error ? err.message : 'Could not load the dashboard')
     } finally {
       setIsLoading(false)
     }

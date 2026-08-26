@@ -16,18 +16,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CreateUserRequest {
 
-    @NotBlank(message = "Nome é obrigatório")
-    @Size(max = 100, message = "Nome deve ter no máximo 100 caracteres")
+    @NotBlank(message = "Name is required")
+    @Size(max = 100, message = "Name must be at most 100 characters")
     private String name;
 
-    @NotBlank(message = "Email é obrigatório")
-    @Email(message = "Email inválido")
-    @Size(max = 100, message = "Email deve ter no máximo 100 caracteres")
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email")
+    @Size(max = 100, message = "Email must be at most 100 characters")
     private String email;
 
     // Optional: sellers are created without a password and set it on first access.
     private String password;
 
-    @NotNull(message = "Role é obrigatório")
+    @NotNull(message = "Role is required")
     private UserRole role;
 }

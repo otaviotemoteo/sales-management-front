@@ -21,11 +21,11 @@ export function PendingPaymentsList({ payments }: PendingPaymentsListProps) {
     <Card className="p-6">
       <div className="flex items-center gap-2 mb-4">
         <Clock className="w-4 h-4 text-red-500" />
-        <h3 className="font-semibold text-foreground">Pagamentos Pendentes</h3>
+        <h3 className="font-semibold text-foreground">Payments Pendentes</h3>
         <Badge variant="destructive" className="ml-auto text-xs">{payments.length}</Badge>
       </div>
       {payments.length === 0 ? (
-        <p className="text-sm text-muted-foreground text-center py-8">Nenhum pagamento pendente</p>
+        <p className="text-sm text-muted-foreground text-center py-8">No outstanding payments</p>
       ) : (
         <div className="space-y-3">
           {payments.map((payment) => (

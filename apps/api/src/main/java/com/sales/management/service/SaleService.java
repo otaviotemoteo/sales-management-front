@@ -44,7 +44,7 @@ public class SaleService {
     @Transactional
     @CacheEvict(value = {"dashboard", "sellerStats"}, allEntries = true)
     public SaleResponse createSale(CreateSaleRequest request) {
-        // Obter usuário logado
+        // Get the signed-in user
         User seller = getCurrentUser();
 
         // Validar cliente
@@ -118,7 +118,7 @@ public class SaleService {
         Sale sale = saleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(Constants.SALE_NOT_FOUND));
 
-        // Validar autorização
+        // Check authorisation
         validateSaleAccess(sale);
 
         // Atualizar campos informados
@@ -254,7 +254,7 @@ public class SaleService {
             return;
         }
         
-        // Vendedor só pode acessar suas próprias vendas
+        // A seller can only reach their own sales
         if (!sale.getSeller().getId().equals(currentUser.getId())) {
             throw new UnauthorizedException(Constants.UNAUTHORIZED_ACCESS);
         }

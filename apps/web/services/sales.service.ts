@@ -54,7 +54,7 @@ export async function updateSale(
 
 export async function cancelSale(id: number): Promise<void> {
   const res = await fetch(`/api/sales/${id}`, { method: "DELETE" });
-  return handleVoidResponse(res, "Erro ao cancelar venda");
+  return handleVoidResponse(res, "Could not cancel the sale");
 }
 
 export async function markPaid(id: number): Promise<SaleResponse> {

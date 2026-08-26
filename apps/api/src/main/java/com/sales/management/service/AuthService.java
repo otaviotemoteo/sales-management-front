@@ -31,12 +31,12 @@ public class AuthService {
 
     @Transactional
     public AuthResponse register(RegisterRequest request) {
-        // Validar se email já existe
+        // Validate the email is not already taken
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new BadRequestException(Constants.EMAIL_ALREADY_EXISTS);
         }
 
-        // Criar usuário
+        // Create the user
         User user = User.builder()
                 .name(request.getName())
                 .email(request.getEmail())
@@ -65,7 +65,7 @@ public class AuthService {
                 )
         );
 
-        // Buscar usuário
+        // Look the user up
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new BadRequestException(Constants.INVALID_CREDENTIALS));
 

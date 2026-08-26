@@ -56,14 +56,14 @@ public class ReportService {
         // Crescimento vs janela anterior equivalente
         applyGrowth(topProducts, startDate, endDate, sellerId);
 
-        // Vendas por método de pagamento
+        // Sales by payment method
         Map<String, Long> salesByPaymentMethod = sales.stream()
                 .collect(Collectors.groupingBy(
                     s -> s.getPayment().getPaymentMethod().toString(),
                     Collectors.counting()
                 ));
 
-        // Tendência de vendas (por dia)
+        // Sales trend, by day
         List<DashboardResponse.SalesTrendDTO> salesTrend = calculateSalesTrend(sales);
 
         return DashboardResponse.builder()
@@ -150,7 +150,7 @@ public class ReportService {
     }
 
     private List<DashboardResponse.SalesTrendDTO> calculateSalesTrend(List<Sale> sales) {
-        // Implementar lógica de agregação por data
+        // Aggregate by date
         return List.of();
     }
 }

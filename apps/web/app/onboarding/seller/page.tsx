@@ -24,11 +24,11 @@ import * as usersService from '@/services/users.service'
 
 const schema = z
   .object({
-    newPassword: z.string().min(6, { message: 'Senha deve ter no mínimo 6 caracteres' }),
+    newPassword: z.string().min(6, { message: 'Password must be at least 6 characters' }),
     confirmPassword: z.string(),
   })
   .refine((d) => d.newPassword === d.confirmPassword, {
-    message: 'As senhas não coincidem',
+    message: 'Passwords do not match',
     path: ['confirmPassword'],
   })
 
@@ -48,7 +48,7 @@ export default function SellerOnboardingPage() {
   useEffect(() => {
     if (!isLoading && user && !user.mustSetPassword) {
       const profileEmpty = !user.phone && !user.cpf && !user.city && !user.state
-      router.replace(profileEmpty ? '/onboarding/seller/perfil' : '/vendedor/dashboard')
+      router.replace(profileEmpty ? '/onboarding/seller/profile' : '/seller/dashboard')
     }
   }, [isLoading, user, router])
 
@@ -64,11 +64,11 @@ export default function SellerOnboardingPage() {
     try {
       await usersService.setInitialPassword(values.newPassword)
       await refreshUser()
-      toast({ title: 'Senha definida!' })
-      router.replace('/onboarding/seller/perfil')
+      toast({ title: 'Password set.' })
+      router.replace('/onboarding/seller/profile')
     } catch (err) {
       toast({
-        title: 'Erro ao definir senha',
+        title: 'Could not set the password',
         description: err instanceof Error ? err.message : 'Tente novamente',
         variant: 'destructive',
       })
@@ -83,8 +83,8 @@ export default function SellerOnboardingPage() {
         <div className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-primary/10 text-primary">
           <Sparkles className="w-5 h-5" />
         </div>
-        <h1 className="text-2xl font-bold text-foreground">Vamos te preparar para vender!</h1>
-        <p className="text-muted-foreground">Defina sua senha para acessar sua conta.</p>
+        <h1 className="text-2xl font-bold text-foreground">Let's get you ready to sell.</h1>
+        <p className="text-muted-foreground">Set your password to reach your account.</p>
       </div>
 
       <div className="space-y-4">
@@ -105,9 +105,9 @@ export default function SellerOnboardingPage() {
             name="newPassword"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Senha</FormLabel>
+                <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input type="password" placeholder="Crie uma senha" autoFocus {...field} />
+                  <Input type="password" placeholder="Create a password" autoFocus {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -118,9 +118,9 @@ export default function SellerOnboardingPage() {
             name="confirmPassword"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Confirmar senha</FormLabel>
+                <FormLabel>Confirm password</FormLabel>
                 <FormControl>
-                  <Input type="password" placeholder="Repita a senha" {...field} />
+                  <Input type="password" placeholder="Repeat the password" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -128,7 +128,7 @@ export default function SellerOnboardingPage() {
           />
           <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
             {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
-            Definir senha e começar
+            Set password and start
           </Button>
         </form>
       </Form>

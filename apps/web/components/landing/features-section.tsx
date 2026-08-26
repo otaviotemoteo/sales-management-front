@@ -19,33 +19,33 @@ import { useInView } from '@/hooks/use-in-view'
 const features = [
   {
     icon: Package,
-    title: 'Gestão de Produtos',
+    title: 'Product management',
     description:
-      'Cadastre e gerencie produtos com fotos, preços, categorias e estoque de forma simples e rápida.',
+      'Add and manage products with photos, prices, categories and stock, simply and quickly.',
   },
   {
     icon: Users,
-    title: 'Controle de Vendedores',
+    title: 'Seller management',
     description:
-      'Gerencie sua equipe de vendas, acompanhe performance individual e defina permissões de acesso.',
+      'Manage your sales team, follow individual performance, and set access permissions.',
   },
   {
     icon: BarChart3,
-    title: 'Registro de Vendas',
+    title: 'Sales log',
     description:
-      'Registre vendas rapidamente com seleção de produtos, clientes e formas de pagamento integradas.',
+      'Record sales quickly, with product selection, customers and payment methods built in.',
   },
   {
     icon: DollarSign,
-    title: 'Fechamento por Cliente',
+    title: 'Closing by customer',
     description:
-      'Agrupe vendas por cliente, visualize histórico completo e gerencie pagamentos pendentes.',
+      'Group sales by customer, see the full history, and manage outstanding payments.',
   },
   {
     icon: TrendingUp,
     title: 'Dashboard Inteligente',
     description:
-      'Métricas em tempo real, gráficos de evolução e relatórios detalhados para tomada de decisão.',
+      'Real-time metrics, trend charts and detailed reports to decide on.',
   },
   {
     icon: Smartphone,
@@ -58,13 +58,13 @@ const features = [
 const paymentMethods = [
   { name: 'Dinheiro', icon: DollarSign },
   { name: 'PIX', icon: Zap },
-  { name: 'Cartão Débito', icon: CheckCircle2 },
-  { name: 'Cartão Crédito', icon: CheckCircle2 },
+  { name: 'Debit card', icon: CheckCircle2 },
+  { name: 'Credit card', icon: CheckCircle2 },
 ]
 
 const stats = [
-  { value: '< 2s', label: 'Tempo de carregamento', icon: Clock },
-  { value: '100%', label: 'Segurança de dados', icon: Shield },
+  { value: '< 2s', label: 'Load time', icon: Clock },
+  { value: '100%', label: 'Data security', icon: Shield },
   { value: '24/7', label: 'Disponibilidade', icon: Zap },
 ]
 
@@ -79,7 +79,7 @@ export function FeaturesSection() {
       <section className="container mx-auto px-4 py-20">
         <div className="text-center space-y-4 mb-16">
           <h2 className="text-3xl lg:text-5xl font-bold text-foreground text-balance">
-            Tudo que você precisa para vender mais
+            Everything you need to sell more
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
             Funcionalidades completas para administradores e vendedores
@@ -116,10 +116,10 @@ export function FeaturesSection() {
       <section className="container mx-auto px-4 py-20">
         <div className="text-center space-y-4 mb-12">
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground text-balance">
-            Múltiplas formas de pagamento
+            Multiple payment methods
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Registre vendas com diferentes métodos de pagamento e acompanhe o status
+            Record sales with different payment methods and track their status
           </p>
         </div>
 

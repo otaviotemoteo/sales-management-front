@@ -11,14 +11,14 @@ export function useProfile() {
   const [error, setError] = useState<string | null>(null)
 
   const updateProfile = async (data: UpdateUserRequest) => {
-    if (!user) throw new Error('Não autenticado')
+    if (!user) throw new Error('Not authenticated')
     setIsUpdating(true)
     setError(null)
     try {
       const updated = await usersService.updateUser(user.id, data)
       return updated
     } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Erro ao atualizar perfil'
+      const msg = err instanceof Error ? err.message : 'Could not update the profile'
       setError(msg)
       throw err
     } finally {

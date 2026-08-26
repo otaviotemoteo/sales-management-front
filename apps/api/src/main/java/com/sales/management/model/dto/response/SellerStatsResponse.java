@@ -16,13 +16,8 @@ public class SellerStatsResponse {
     private BigDecimal totalRevenue;
     private Long totalCustomers;
     private BigDecimal averageTicket;
-    private BigDecimal rating;
 
-    public SellerStatsResponse(Long totalSales, BigDecimal totalRevenue, Long totalCustomers, BigDecimal averageTicket) {
-        this.totalSales = totalSales;
-        this.totalRevenue = totalRevenue;
-        this.totalCustomers = totalCustomers;
-        this.averageTicket = averageTicket;
-        this.rating = BigDecimal.ZERO;
-    }
+    // No hand-written constructor: with the placeholder rating field gone, the
+    // four remaining fields make @AllArgsConstructor generate exactly the same
+    // signature, and having both is a compile error.
 }

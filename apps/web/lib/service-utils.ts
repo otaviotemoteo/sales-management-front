@@ -15,7 +15,7 @@ export async function handleResponse<T>(res: Response): Promise<T> {
   if (!res.ok) {
     const body = await res.json().catch(() => ({}))
     if (res.status === 401) throw new AuthError()
-    throw new ApiError(body.message || 'Erro no servidor', res.status, body.errors)
+    throw new ApiError(body.message || 'Server error', res.status, body.errors)
   }
   return res.json()
 }

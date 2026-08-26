@@ -13,9 +13,9 @@ const dmSans = DM_Sans({ subsets: ["latin"], variable: "--font-dm-sans" })
 const allison = Allison({ weight: "400", subsets: ["latin"], variable: "--font-allison" })
 
 export const metadata: Metadata = {
-  title: "VendaFlow - Sistema de Gestão de Vendas",
+  title: "Sales Management",
   description:
-    "Plataforma completa para gerenciar produtos, vendedores, clientes e vendas com dashboards inteligentes e relatórios detalhados.",
+    "A complete way to manage products, sellers, customers and sales, with dashboards and detailed reports.",
   generator: "v0.app",
 }
 

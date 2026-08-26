@@ -47,7 +47,7 @@ export async function updateCustomer(
 
 export async function deleteCustomer(id: number): Promise<void> {
   const res = await fetch(`/api/customers/${id}`, { method: "DELETE" });
-  return handleVoidResponse(res, "Erro ao deletar cliente");
+  return handleVoidResponse(res, "Could not delete the customer");
 }
 
 export async function searchCustomers(

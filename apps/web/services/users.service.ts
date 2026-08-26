@@ -49,7 +49,7 @@ export async function updateUser(
 
 export async function deleteUser(id: number): Promise<void> {
   const res = await fetch(`/api/users/${id}`, { method: "DELETE" });
-  return handleVoidResponse(res, "Erro ao desativar usuário");
+  return handleVoidResponse(res, "Could not deactivate the user");
 }
 
 export async function reactivateUser(id: number): Promise<UserResponse> {
@@ -79,7 +79,7 @@ export async function setInitialPassword(newPassword: string): Promise<void> {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ newPassword }),
   });
-  return handleVoidResponse(res, "Erro ao definir senha");
+  return handleVoidResponse(res, "Could not set the password");
 }
 
 export async function changePassword(
@@ -90,7 +90,7 @@ export async function changePassword(
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
-  return handleVoidResponse(res, "Erro ao alterar senha");
+  return handleVoidResponse(res, "Could not change the password");
 }
 
 export async function searchUsers(
